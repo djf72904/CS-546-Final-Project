@@ -1,19 +1,14 @@
-import {MongoClient} from 'mongodb';
-import {mongoConfig} from './settings.js';
+// config/database.js
+import mongoose from 'mongoose';
+async function connectToDatabase() {
+  try {
+    await mongoose.connect('mongodb://localhost:27017/?directConnection=true&serverSelectionTimeoutMS=2000&appName=mongosh+2.3.1');
 
-let _connection = undefined;
-let _db = undefined;
-
-const dbConnection = async () => {
-  if (!_connection) {
-    _connection = await MongoClient.connect(mongoConfig.serverUrl);
-    _db = _connection.db(mongoConfig.database);
+    console.log('Database Connected');
+  } catch (error) {
+    console.error('Database Connection Error:', error);
+    process.exit(1); // Exit the application on error
   }
+}
 
-  return _db;
-};
-const closeConnection = async () => {
-  await _connection.close();
-};
-
-export {dbConnection, closeConnection};
+export default connectToDatabase;
