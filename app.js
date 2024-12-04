@@ -28,7 +28,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 //middleware
 handleMiddleware(app, routerInfo, authSendHandler, authChecker);
 
-// app.use(authChecker);
 
 handleRoutes(app, [
     ['/', indexRouter],
