@@ -7,7 +7,18 @@ body {
   font: 14px "Sora", Helvetica, Arial, sans-serif;
 }
 
-a {
-  color: #00B7FF;
-}
 
+@layer base {
+  .primary__btn {
+    @apply text-white bg-blue-500 hover:bg-blue-600 px-4 py-2 rounded-md;
+  }
+  .secondary__btn {
+    @apply text-blue-500 hover:text-blue-700;
+  }
+  .danger__btn {
+    @apply text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md;
+  }
+  .avatar {
+    @apply bg-blue-500 text-white p-2.5 rounded-full;
+  }
+}

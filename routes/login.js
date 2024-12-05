@@ -2,6 +2,7 @@ import express from 'express';
 import {User} from "../scripts/db/config/schema.js";
 import {comparePassword, createSecretToken} from "../scripts/handlers/authHandlers.js";
 import app from "../app.js";
+import {getProfile} from "../scripts/db/data/profiles.js";
 let router = express.Router();
 
 /* GET users listing. */
@@ -35,7 +36,10 @@ router.post('/', async (req, res) => {
     httpOnly: true,
   });
 
-  return res.status(200).json({token, success: true});
+  const profile = await getProfile(user._id);
+
+  return res.status(200).json({token, success: true, profile});
 });
+
 
 export default router;

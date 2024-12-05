@@ -7,6 +7,8 @@ import usersRouter from './routes/users.js';
 import loginRouter from './routes/login.js';
 import profileRouter from './routes/profile.js';
 import registerRouter from './routes/register.js';
+import leaderboardRouter from './routes/leaderboard.js';
+import testsRouter from './routes/tests.js';
 import './scripts/handlers/authHandlers.js';
 import {authChecker, authSendHandler, routerInfo} from "./middleware.js";
 import connectToDatabase from "./config/mongoConnection.js";
@@ -26,7 +28,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 //middleware
-handleMiddleware(app, routerInfo, authSendHandler, authChecker);
+handleMiddleware(app, routerInfo, authSendHandler);
 
 
 handleRoutes(app, [
@@ -35,6 +37,8 @@ handleRoutes(app, [
     ['/login', loginRouter],
     ['/register', registerRouter],
     ['/profile', profileRouter],
+    ['/leaderboard', leaderboardRouter],
+    ['/test', testsRouter],
     ['/logout', (req, res) => {
       res.clearCookie("token");
       res.redirect('/');

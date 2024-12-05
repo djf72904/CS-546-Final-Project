@@ -1,4 +1,4 @@
-<html>
+<html lang="en">
   <head>
     <title>Login</title>
     <link rel='stylesheet' href='/css/tailwind.css' />
@@ -51,6 +51,7 @@
       if (result.success) {
         // Redirect to the index page after successful login
         window.location.href = '/';
+        // localStorage.setItem('user', JSON.stringify(result.user));
       } else {
         alert(result.message); // Show error message if login failed
       }

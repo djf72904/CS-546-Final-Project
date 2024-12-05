@@ -1,6 +1,6 @@
-<html>
+<html lang="en">
   <head>
-    <title>Login</title>
+    <title>Profile</title>
     <link rel='stylesheet' href='/css/tailwind.css' />
     <link rel='stylesheet' href='/css/style.css' />
   </head>
@@ -103,14 +103,13 @@
             </div>
           </div>
             <% }); %>
-
         </section>
         <section id="friends" class="tabcontent">
           <% Array.from(Array(5).keys()).forEach(i => { %>
             <div class="mb-4">
               <div class="px-5 py-3 bg-gray-200 rounded-lg w-full flex space-x-3.5 flex-nowrap items-center">
                 <div class="flex space-x-3.5 w-full flex-nowrap items-center">
-                  <div class=" bg-blue-500 text-white p-2.5 rounded-full">
+                  <div class="avatar">
                     <P>JP</P>
                   </div>
                   <div class="flex flex-wrap justify-between">

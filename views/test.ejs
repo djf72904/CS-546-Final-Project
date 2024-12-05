@@ -1,0 +1,560 @@
+<html lang="en">
+<head>
+    <title>Test</title>
+    <link rel='stylesheet' href='/css/tailwind.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+    <link rel='stylesheet' href='/css/kblayout.css' />
+    <link rel='stylesheet' href='/css/test.css' />
+</head>
+<body>
+<%- include('./partials/_header.ejs'); %>
+
+<section class="py-4 overflow-hidden max-h-screen">
+    <div class="flex justify-center items-center space-x-4 bg-gray-200 rounded-full px-2 py-2 w-fit mx-auto">
+        <button class="" id="punctuation" onclick="togglePunctuation()">
+            Punctuation
+        </button>
+        <button class="" id="capital" onclick="toggleCapital()">
+            Capital
+        </button>
+        <button class="" id="numbers" onclick="toggleNumbers()">
+            Numbers
+        </button>
+        <p>•</p>
+        <button class="setting__active" id="word-length-btn" onclick="selectSetting('wordLength')">
+            Word Length
+        </button>
+        <button class="" id="time-btn" onclick="selectSetting('time')">
+            Time
+        </button>
+        <p>•</p>
+        <div class="flex items-center justify-center space-x-2" id="word-length-options">
+            <button id="word-ln-10" onclick="setWordLength(10)">10</button>
+            <button id="word-ln-25" class="setting__active" onclick="setWordLength(25)">25</button>
+            <button id="word-ln-50" onclick="setWordLength(50)">50</button>
+            <button id="word-ln-100" onclick="setWordLength(100)">100</button>
+        </div>
+        <div class="flex items-center justify-center space-x-2" id="time-options">
+            <button onclick="setTime(30)" id="time-30">30s</button>
+            <button onclick="setTime(60)" id="time-60">1m</button>
+            <button onclick="setTime(120)" id="time-120">2m</button>
+        </div>
+    </div>
+    <h1 class="text-center font-bold text-6xl mt-4" id="wordProg">0/25</h1>
+    <h1 class="text-center font-bold text-6xl mt-4" id="timer">60</h1>
+    <div class="mx-auto text-center max-w-4xl mt-2 h-[300px]" id="seq_container">
+        <p class="text-3xl font-bold" id="testSequence"></p>
+    </div>
+    <script src="/js/kb-layout.js"></script>
+    <script src="/js/layout-mapping.js"></script>
+</section>
+<script>
+    const wordList = [
+        "the",
+        "be",
+        "of",
+        "and",
+        "a",
+        "to",
+        "in",
+        "he",
+        "have",
+        "it",
+        "that",
+        "for",
+        "they",
+        "with",
+        "as",
+        "not",
+        "on",
+        "she",
+        "at",
+        "by",
+        "this",
+        "we",
+        "you",
+        "do",
+        "but",
+        "from",
+        "or",
+        "which",
+        "one",
+        "would",
+        "all",
+        "will",
+        "there",
+        "say",
+        "who",
+        "make",
+        "when",
+        "can",
+        "more",
+        "if",
+        "no",
+        "man",
+        "out",
+        "other",
+        "so",
+        "what",
+        "time",
+        "up",
+        "go",
+        "about",
+        "than",
+        "into",
+        "could",
+        "state",
+        "only",
+        "new",
+        "year",
+        "some",
+        "take",
+        "come",
+        "these",
+        "know",
+        "see",
+        "use",
+        "get",
+        "like",
+        "then",
+        "first",
+        "any",
+        "work",
+        "now",
+        "may",
+        "such",
+        "give",
+        "over",
+        "think",
+        "most",
+        "even",
+        "find",
+        "day",
+        "also",
+        "after",
+        "way",
+        "many",
+        "must",
+        "look",
+        "before",
+        "great",
+        "back",
+        "through",
+        "long",
+        "where",
+        "much",
+        "should",
+        "well",
+        "people",
+        "down",
+        "own",
+        "just",
+        "because",
+        "good",
+        "each",
+        "those",
+        "feel",
+        "seem",
+        "how",
+        "high",
+        "too",
+        "place",
+        "little",
+        "world",
+        "very",
+        "still",
+        "nation",
+        "hand",
+        "old",
+        "life",
+        "tell",
+        "write",
+        "become",
+        "here",
+        "show",
+        "house",
+        "both",
+        "between",
+        "need",
+        "mean",
+        "call",
+        "develop",
+        "under",
+        "last",
+        "right",
+        "move",
+        "thing",
+        "general",
+        "school",
+        "never",
+        "same",
+        "another",
+        "begin",
+        "while",
+        "number",
+        "part",
+        "turn",
+        "real",
+        "leave",
+        "might",
+        "want",
+        "point",
+        "form",
+        "off",
+        "child",
+        "few",
+        "small",
+        "since",
+        "against",
+        "ask",
+        "late",
+        "home",
+        "interest",
+        "large",
+        "person",
+        "end",
+        "open",
+        "public",
+        "follow",
+        "during",
+        "present",
+        "without",
+        "again",
+        "hold",
+        "govern",
+        "around",
+        "possible",
+        "head",
+        "consider",
+        "word",
+        "program",
+        "problem",
+        "however",
+        "lead",
+        "system",
+        "set",
+        "order",
+        "eye",
+        "plan",
+        "run",
+        "keep",
+        "face",
+        "fact",
+        "group",
+        "play",
+        "stand",
+        "increase",
+        "early",
+        "course",
+        "change",
+        "help",
+        "line"
+     ];
+
+    let wordProgress = 0;
+
+    let wordLength = 25;
+
+    let currentSetting = 'wordLength';
+
+    let time = 30;
+
+    let hasPunctuation = false;
+    let hasCapital = false;
+    let hasNumbers = false;
+
+    //* once the test is over, this will be the sequence to insert into the DB
+    let currentSequence = '';
+
+    function togglePunctuation() {
+        hasPunctuation = !hasPunctuation;
+        if(hasPunctuation) {
+            const sequence = generateRandomWords(wordLength);
+            convertParagraphToCharacters(sequence);
+
+            document.getElementById('punctuation').classList.add('setting__active');
+        } else {
+            document.getElementById('punctuation').classList.remove('setting__active');
+        }
+    }
+
+    function toggleCapital() {
+        hasCapital = !hasCapital;
+        if(hasCapital) {
+            const sequence = generateRandomWords(wordLength);
+            convertParagraphToCharacters(sequence);
+            document.getElementById('capital').classList.add('setting__active');
+        } else {
+            document.getElementById('capital').classList.remove('setting__active');
+        }
+    }
+
+    function toggleNumbers() {
+        hasNumbers = !hasNumbers;
+        if(hasNumbers) {
+            const sequence = generateRandomWords(wordLength);
+            convertParagraphToCharacters(sequence);
+            document.getElementById('numbers').classList.add('setting__active');
+        } else {
+            document.getElementById('numbers').classList.remove('setting__active');
+        }
+    }
+
+
+    window.addEventListener('keydown', function(e) {
+        if(e.which == 32 && e.target == document.body) {
+            e.preventDefault();
+        }
+    });
+
+    function selectSetting(setting) {
+        currentSetting = setting;
+        document.querySelectorAll('.setting__active').forEach(btn => btn.classList.remove('setting__active'));
+        if (setting === 'time') {
+            wordLength = 1000;
+            setTime(30);
+            document.getElementById('timer').style.display = 'block';
+            document.getElementById('wordProg').style.display = 'none';
+            document.getElementById('time-options').style.display = 'block';
+            document.getElementById('word-length-options').style.display = 'none';
+            document.getElementById('word-length-btn').classList.remove('setting__active');
+            document.getElementById('time-btn').classList.add('setting__active');
+        } else if (setting === 'wordLength') {
+            document.getElementById('timer').style.display = 'none';
+            document.getElementById('wordProg').style.display = 'block';
+            document.getElementById('word-length-options').style.display = 'block';
+            document.getElementById('time-options').style.display = 'none';
+            document.getElementById('word-length-btn').classList.add('setting__active');
+            document.getElementById('time-btn').classList.remove('setting__active');
+        }
+    }
+
+
+    function convertParagraphToCharacters(sequence) {
+        const paragraph = document.getElementById('seq_container');
+        paragraph.innerHTML = ''; // Clear existing content
+
+        Array.from(sequence).forEach(char => {
+            const span = document.createElement('span');
+            span.classList.add('text-3xl', 'leading-loose', 'tracking-loose', 'character', 'text-gray-400');
+            span.textContent = char;
+            paragraph.appendChild(span);
+        });
+    }
+
+    function generateRandomWords(wordCount) {
+        const randomWords = [];
+        for (let i = 0; i < wordCount; i++) {
+            const randomIndex = Math.floor(Math.random() * wordList.length);
+            randomWords.push(wordList[randomIndex]);
+        }
+        if(hasPunctuation) {
+            for(let i = 0; i < randomWords.length; i++) {
+                const char = randomWords[i];
+                if(Math.random() < 0.2) {
+                    const punctuation = ['.', ',', ';', '?'];
+                    //insert punctuation at random index
+                    const randomIndex = Math.floor(Math.random() * punctuation.length);
+                    randomWords[i] = char + punctuation[randomIndex];
+
+                }
+
+            }
+        }
+        if(hasCapital) {
+            //make sure it only applies to first letter of word
+            for(let i = 0; i < randomWords.length; i++) {
+                const char = randomWords[i];
+                if(Math.random() < 0.3) {
+                    randomWords[i] = char[0].toUpperCase() + char.slice(1);
+                }
+            }
+        }
+        if(hasNumbers) {
+            // make sure it only applies to first letter of word
+            for(let i = 0; i < randomWords.length; i++) {
+                const char = randomWords[i];
+                if(Math.random() < 0.1) {
+                    randomWords[i] = char + Math.floor(Math.random() * 10);
+                }
+            }
+        }
+        currentSequence = randomWords.join(' ');
+        return randomWords.join(' ');
+    }
+
+    function setWordLength(length) {
+        wordLength = length;
+        if(wordLength === 10) {
+            document.getElementById('word-ln-10').classList.add('setting__active');
+            document.getElementById('word-ln-10').classList.add('setting__active');
+            document.getElementById('word-ln-25').classList.remove('setting__active');
+            document.getElementById('word-ln-50').classList.remove('setting__active');
+            document.getElementById('word-ln-100').classList.remove('setting__active');
+        }
+        if(wordLength === 25) {
+            document.getElementById('word-ln-10').classList.remove('setting__active');
+            document.getElementById('word-ln-25').classList.add('setting__active');
+            document.getElementById('word-ln-50').classList.remove('setting__active');
+            document.getElementById('word-ln-100').classList.remove('setting__active');
+        }
+        if(wordLength === 50) {
+            document.getElementById('word-ln-10').classList.remove('setting__active');
+            document.getElementById('word-ln-25').classList.remove('setting__active');
+            document.getElementById('word-ln-50').classList.add('setting__active');
+            document.getElementById('word-ln-100').classList.remove('setting__active');
+        }
+        if(wordLength === 100) {
+            document.getElementById('word-ln-10').classList.remove('setting__active');
+            document.getElementById('word-ln-25').classList.remove('setting__active');
+            document.getElementById('word-ln-50').classList.remove('setting__active');
+            document.getElementById('word-ln-100').classList.add('setting__active');
+        }
+
+        document.getElementById('wordProg').textContent = `0/${wordLength}`;
+        const sequence = generateRandomWords(length);
+        convertParagraphToCharacters(sequence);
+    }
+
+    function startTimer(duration) {
+        document.getElementById('wordProg').classList.add('hidden')
+        let timer = duration;
+        const timerElement = document.getElementById('timer');
+
+        timerElement.textContent = `${timer}`;
+
+        const timerInterval = setInterval(() => {
+            timer--;
+            timerElement.textContent = `${timer}`;
+
+            if (timer <= 0) {
+                clearInterval(timerInterval);
+            }
+        }, 1000);
+    }
+
+    function setTime(duration) {
+        const sequence = generateRandomWords(1000);
+        convertParagraphToCharacters(sequence);
+        time = duration;
+        document.getElementById('timer').textContent = `${time}`;
+
+        if(time === 30) {
+            document.getElementById('time-30').classList.add('setting__active');
+            document.getElementById('time-60').classList.remove('setting__active');
+            document.getElementById('time-120').classList.remove('setting__active');
+        }
+        if(time === 60) {
+            document.getElementById('time-30').classList.remove('setting__active');
+            document.getElementById('time-60').classList.add('setting__active');
+            document.getElementById('time-120').classList.remove('setting__active');
+        }
+        if(time === 120) {
+            document.getElementById('time-30').classList.remove('setting__active');
+            document.getElementById('time-60').classList.remove('setting__active');
+            document.getElementById('time-120').classList.add('setting__active');
+        }
+    }
+
+    document.addEventListener('keydown', handleTyping);
+
+    document.addEventListener('DOMContentLoaded', () => {
+        setWordLength(25);
+        document.getElementById('timer').style.display = 'none';
+        document.getElementById('time-options').style.display = 'none';
+    });
+
+    let currentIndex = 0;
+
+
+    function mapKeyboard(keyboard, keyPress) {
+
+        const lowerKey = keyPress.toLowerCase();
+
+        let position = null;
+
+        for (let row = 1; row <= 5; row++) {
+            const currentRow = layouts.qwerty.keys[`row${row}`];
+
+
+            const index = currentRow.findIndex(key => key.includes(lowerKey));
+            position = { row: row, index: index };
+
+            if (index !== -1) {
+                break;
+            }
+        }
+
+        try{
+            return (layouts[`${keyboard}`].keys[`row${position.row}`][position.index]);
+        }
+        catch(error) {
+            return keyPress;
+        }
+
+
+    }
+
+    function handleTyping(event) {
+
+        const sequence = document.querySelectorAll('#seq_container .character');
+        if (currentIndex >= sequence.length) {
+            return;
+        }
+
+        const currentChar = sequence[currentIndex];
+        const expectedChar = currentChar.textContent;
+
+
+        if(currentSetting === 'time' && event.key === currentChar.textContent && currentIndex === 0) {
+            startTimer(time);
+        }
+
+        const spanLength = document.querySelectorAll('#seq_container .character').length;
+
+        const currentLayout = document.getElementById('layouts').value;
+
+        let kbdkey =  event.key
+        const mapping = mapKeyboard(currentLayout, kbdkey);
+        console.log(mapping);
+        kbdkey = mapping[0];
+
+
+        if(kbdkey.includes('shift')) {
+            kbdkey = kbdkey.split('shift ')[1];
+        }
+
+        if (kbdkey.trim() === expectedChar.trim()) {
+            currentChar.style.color = 'black';
+            currentChar.classList.remove('active');
+            currentChar.classList.add('correct');
+
+            if(currentIndex === spanLength-1){
+                wordProgress++;
+            }
+
+            if(event.which === 32) {
+                wordProgress++;
+                document.getElementById('wordProg').textContent = `${wordProgress}/${wordLength}`;
+            }
+
+            if (currentIndex < sequence.length) {
+                sequence[currentIndex].classList.add('active');
+            }
+
+            currentIndex++;
+
+        } else {
+            currentChar.style.color = 'red';
+            currentChar.classList.add('error');
+        }
+
+
+
+
+
+
+    }
+</script>
+</body>
+</html>

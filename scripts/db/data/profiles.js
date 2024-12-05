@@ -16,3 +16,7 @@ export const editDisplayName = async (user_id, display_name) => {}
 
 //TODO: Add a function to delete a profile entry and its respective user entry
 export const deleteProfileAndUser = async (user_id) => {}
+
+export const updateProfileStats = async (user_id, stats) => {
+
+}

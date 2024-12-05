@@ -43,6 +43,7 @@ export const authSendHandler = (req, res, next) => {
             req.user = user;  // Attach the user to the request
         } catch (err) {
             res.locals.isAuthenticated = false;
+
         }
     } else {
         res.locals.isAuthenticated = false; // Not authenticated
