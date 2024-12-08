@@ -11,12 +11,13 @@ router.get('/', async function(req, res, next) {
 
     //get friends here
     //get recent tests here
+    //get posts by user here
 
     res.render('profile', {
         profile: profileData,
         friends: [],
-        recentTests: []
-
+        recentTests: [],
+        posts: [],
     });
 });
 

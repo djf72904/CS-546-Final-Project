@@ -89,6 +89,7 @@
       <section class="flex justify-start space-x-4">
         <button class="tablinks" onClick="handleTabs(event, 'recent-tests')">Recent Tests</button>
         <button class="tablinks" onClick="handleTabs(event, 'friends')">Friends</button>
+        <button class="tablinks" onClick="handleTabs(event, 'posts')">Posts</button>
       </section>
       <div class="mt-4">
         <section id="recent-tests" class="tabcontent ">
@@ -124,6 +125,65 @@
               </div>
             </div>
           <% }); %>
+        </section>
+        <section id="posts" class="tabcontent">
+          <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-2">
+            <% Array.from(Array(6).keys()).forEach(i => { %>
+              <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
+                <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
+                  <div class="w-auto p-2">
+                    <div class="flex space-x-4 justify-start items-center">
+                      <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
+                        <div class="avatar">
+                          <P>JP</P>
+                        </div>
+                        <div class="flex flex-wrap justify-end">
+                          <div class="w-auto">
+                            <p>Jack Patterson</p>
+                          </div>
+                        </div>
+                      </div>
+                      <p class="text-nowrap">10m ago</p>
+                    </div>
+
+                    <p class="mt-2 max-w-lg">Et exercitation duis dolore deserunt deserunt esse culpa excepteur nulla ea nulla ex aliqua.</p>
+                    <div class="flex space-x-2 items-center mt-2">
+                      <div class="bg-gray-300 px-2 py-1 rounded-full">
+                        <p id="post-wpm-badge" class="text-sm">WPM: 150</p>
+                      </div>
+                      <div class="bg-gray-300 px-2 py-1 rounded-full">
+                        <p id="post-accuracy-badge" class="text-sm">Accuracy: 100%</p>
+                      </div>
+                      <div class="bg-gray-300 px-2 py-1 rounded-full">
+                        <p class="text-sm">BPM: 150</p>
+                      </div>
+                    </div>
+                    <div class="flex flex-col space-y-2 mt-4">
+                      <p>Comments</p>
+                      <% Array.from(Array(2).keys()).forEach(i => { %>
+                        <div class="mt-2">
+                          <div class="flex space-x-2 items-center">
+                            <div class="avatar">
+                              <P>JP</P>
+                            </div>
+                            <div class="flex-wrap justify-between">
+                              <div class="w-auto">
+                                <p>Jack Patterson</p>
+                              </div>
+                              <p class="text-xs">10m ago</p>
+                            </div>
+                          </div>
+                          <p class="mt-2 max-w-lg">Et exercitation duis dolore deserunt deserunt esse culpa excepteur nulla ea nulla ex aliqua.</p>
+                        </div>
+                        <hr/>
+                      <% }); %>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </div>
+
         </section>
       </div>
 

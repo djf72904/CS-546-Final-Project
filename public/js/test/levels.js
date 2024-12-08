@@ -1,4 +1,4 @@
-export const levels = [
+const levels = [
     {
         "level": 1,
         lowerBound: "50",

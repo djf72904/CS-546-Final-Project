@@ -96,7 +96,10 @@
             </div>
         </div>
     </div>
+        <canvas id="confetti-canvas" width="100%" height="100%"></canvas>
     </div>
+    <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
+    <script src="/js/test/levels.js"></script>
     <script src="/js/test/kb-layout.js"></script>
     <script src="/js/test/layout-mapping.js"></script>
     <script src="/js/test/test-vars.js"></script>
@@ -105,8 +108,15 @@
     <script src="/js/test/dialog.js"></script>
     <script src="/js/test/generation.js"></script>
     <script src="/js/test/type-handler.js"></script>
+
+
 </section>
 <script>
+
+
+
+
+
     window.addEventListener('keydown', function(e) {
         if(e.which == 32 && e.target == document.body) {
             e.preventDefault();
@@ -116,6 +126,7 @@
     document.addEventListener('keydown', handleTyping);
 
     document.addEventListener('DOMContentLoaded', () => {
+
         setWordLength(25);
         document.getElementById('timer').style.display = 'none';
         document.getElementById('time-options').style.display = 'none';

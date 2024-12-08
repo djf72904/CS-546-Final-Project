@@ -36,9 +36,17 @@ function hideDialog() {
 
 function endTest(testType, time, words, missedWords) {
     showDialog();
+    const wpm = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60
     timeEl.textContent = time + ' seconds';
     wordsEl.textContent = words + 1 + ' words';
-    missedWordsEl.textContent = (missedWords / words).toFixed(2) * 100 + '%';
-    speedEl.textContent = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60 + ' WPM';
+    missedWordsEl.textContent = `${100 - ((missedWords.length / words).toFixed(2) * 100)}% • ${missedWords.length} missed`;
+    speedEl.textContent =
+        `${wpm.toFixed(0)} WPM • Level ${levels.findIndex(level => wpm >= level.lowerBound && wpm < level.upperBound) + 1}`;
     testTypeEl.textContent = testType;
+    if(missedWords.length === 0 ){
+        const canvas = document.getElementById('confetti-canvas')
+        const jsConfetti = new JSConfetti();
+        jsConfetti.addConfetti({
+                                   confettiNumber: 100,
+        });}
 }

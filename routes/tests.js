@@ -1,17 +1,12 @@
 import express from "express";
-import {getProfile} from "../scripts/db/data/profiles.js";
-import {plainWords} from "../constants.js";
 let router = express.Router();
 
 router.get('/', async function(req, res, next) {
+    res.render('test');
+});
 
-
-    //TODO: Get global leaderboard
-
-
-    res.render('test', {
-
-    });
+router.post('/test', async function(req, res, next) {
+    //TODO: Add test to DB
 });
 
 export default router;

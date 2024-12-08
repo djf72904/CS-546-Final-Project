@@ -43,7 +43,6 @@ function handleTyping(event) {
         if(currentIndex === spanLength-1){
             endTime = Date.now();
             const timeTaken = endTime - startTime;
-            console.log("Time taken:", startTime, endTime, timeTaken);
             wpm = Math.round(wordProgress / (timeTaken / 1000));
             currentIndex = wordLength;
             endTest('Word Length', (timeTaken / 1000).toFixed(2), wordProgress, missedWords);
@@ -52,7 +51,6 @@ function handleTyping(event) {
         if(event.which === 32 && currentIndex !== spanLength-1) {
             wordProgress++;
             wpm = Math.round(wordProgress / (time / 60));
-            console.log(wordProgress / time, wpm);
             document.getElementById('wordProg').textContent = `${wordProgress}/${wordLength}`;
         }
 
