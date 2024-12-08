@@ -10,7 +10,8 @@
 <%- include('./partials/_header.ejs'); %>
 
 <section class="py-4 overflow-hidden max-h-screen">
-    <div class="flex justify-center items-center space-x-4 bg-gray-200 rounded-full px-2 py-2 w-fit mx-auto">
+    <p id="space-reminder" class="mx-auto text-center text-red-500">Reminder: To complete the test, press space after the last word.</p>
+    <div class="flex justify-center mt-2 items-center space-x-4 bg-gray-200 rounded-full px-2 py-2 w-fit mx-auto" id="testControls">
         <button class="" id="punctuation" onclick="togglePunctuation()">
             Punctuation
         </button>
@@ -45,416 +46,72 @@
     <div class="mx-auto text-center max-w-4xl mt-2 h-[300px]" id="seq_container">
         <p class="text-3xl font-bold" id="testSequence"></p>
     </div>
-    <script src="/js/kb-layout.js"></script>
-    <script src="/js/layout-mapping.js"></script>
+    <div class="relative z-10 hidden" aria-labelledby="modal-title" id="favDialog" role="dialog" aria-modal="true">
+    <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+
+    <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+        <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+            <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                    <div class="sm:flex sm:items-start">
+                        <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                            <h3 class="text-base font-semibold text-gray-900" id="modal-title">Test Complete</h3>
+                            <div class="mt-2">
+                                <div class="flex flex-col space-y-2 w-full">
+                                    <p class="flex items-center space-x-2 justify-between w-full">
+                                        <span>Test Type:</span>
+                                        <span id="testTypeRes" class="bg-gray-200 p-2 rounded-full"></span>
+                                    </p>
+                                    <div class="flex items-center space-x-2 justify-between w-full">
+                                        <span>Complexity:</span>
+                                        <div id="complexityRes" class="flex space-x-2"></div>
+                                    </div>
+                                    <hr/>
+                                    <p class="flex items-center space-x-2 justify-between w-full">
+                                        <span>Speed:</span>
+                                        <span id="speedRes" class="bg-gray-200 p-2 rounded-full"></span>
+                                    </p>
+                                    <p class="flex items-center space-x-2 justify-between w-full">
+                                        <span>Time:</span>
+                                        <span id="timeRes" class="bg-gray-200 p-2 rounded-full"></span>
+                                    </p>
+                                    <p class="flex items-center space-x-2 justify-between w-full">
+                                        <span>Words:</span>
+                                        <span id="wordsRes" class="bg-gray-200 p-2 rounded-full"></span>
+                                    </p>
+                                    <p class="flex items-center space-x-2 justify-between w-full">
+                                        <span>Missed Words:</span>
+                                        <span id="missedWordsRes" class="bg-gray-200 p-2 rounded-full"></span>
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-4">
+                    <button type="button" onclick="hideDialog()" class="primary__btn">Done</button>
+                    <button type="button" onclick="hideDialog()">Cancel</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <script src="/js/test/kb-layout.js"></script>
+    <script src="/js/test/layout-mapping.js"></script>
+    <script src="/js/test/test-vars.js"></script>
+    <script src="/js/test/settings.js"></script>
+    <script src="/js/test/timer.js"></script>
+    <script src="/js/test/dialog.js"></script>
+    <script src="/js/test/generation.js"></script>
+    <script src="/js/test/type-handler.js"></script>
 </section>
 <script>
-    const wordList = [
-        "the",
-        "be",
-        "of",
-        "and",
-        "a",
-        "to",
-        "in",
-        "he",
-        "have",
-        "it",
-        "that",
-        "for",
-        "they",
-        "with",
-        "as",
-        "not",
-        "on",
-        "she",
-        "at",
-        "by",
-        "this",
-        "we",
-        "you",
-        "do",
-        "but",
-        "from",
-        "or",
-        "which",
-        "one",
-        "would",
-        "all",
-        "will",
-        "there",
-        "say",
-        "who",
-        "make",
-        "when",
-        "can",
-        "more",
-        "if",
-        "no",
-        "man",
-        "out",
-        "other",
-        "so",
-        "what",
-        "time",
-        "up",
-        "go",
-        "about",
-        "than",
-        "into",
-        "could",
-        "state",
-        "only",
-        "new",
-        "year",
-        "some",
-        "take",
-        "come",
-        "these",
-        "know",
-        "see",
-        "use",
-        "get",
-        "like",
-        "then",
-        "first",
-        "any",
-        "work",
-        "now",
-        "may",
-        "such",
-        "give",
-        "over",
-        "think",
-        "most",
-        "even",
-        "find",
-        "day",
-        "also",
-        "after",
-        "way",
-        "many",
-        "must",
-        "look",
-        "before",
-        "great",
-        "back",
-        "through",
-        "long",
-        "where",
-        "much",
-        "should",
-        "well",
-        "people",
-        "down",
-        "own",
-        "just",
-        "because",
-        "good",
-        "each",
-        "those",
-        "feel",
-        "seem",
-        "how",
-        "high",
-        "too",
-        "place",
-        "little",
-        "world",
-        "very",
-        "still",
-        "nation",
-        "hand",
-        "old",
-        "life",
-        "tell",
-        "write",
-        "become",
-        "here",
-        "show",
-        "house",
-        "both",
-        "between",
-        "need",
-        "mean",
-        "call",
-        "develop",
-        "under",
-        "last",
-        "right",
-        "move",
-        "thing",
-        "general",
-        "school",
-        "never",
-        "same",
-        "another",
-        "begin",
-        "while",
-        "number",
-        "part",
-        "turn",
-        "real",
-        "leave",
-        "might",
-        "want",
-        "point",
-        "form",
-        "off",
-        "child",
-        "few",
-        "small",
-        "since",
-        "against",
-        "ask",
-        "late",
-        "home",
-        "interest",
-        "large",
-        "person",
-        "end",
-        "open",
-        "public",
-        "follow",
-        "during",
-        "present",
-        "without",
-        "again",
-        "hold",
-        "govern",
-        "around",
-        "possible",
-        "head",
-        "consider",
-        "word",
-        "program",
-        "problem",
-        "however",
-        "lead",
-        "system",
-        "set",
-        "order",
-        "eye",
-        "plan",
-        "run",
-        "keep",
-        "face",
-        "fact",
-        "group",
-        "play",
-        "stand",
-        "increase",
-        "early",
-        "course",
-        "change",
-        "help",
-        "line"
-     ];
-
-    let wordProgress = 0;
-
-    let wordLength = 25;
-
-    let currentSetting = 'wordLength';
-
-    let time = 30;
-
-    let hasPunctuation = false;
-    let hasCapital = false;
-    let hasNumbers = false;
-
-    //* once the test is over, this will be the sequence to insert into the DB
-    let currentSequence = '';
-
-    function togglePunctuation() {
-        hasPunctuation = !hasPunctuation;
-        if(hasPunctuation) {
-            const sequence = generateRandomWords(wordLength);
-            convertParagraphToCharacters(sequence);
-
-            document.getElementById('punctuation').classList.add('setting__active');
-        } else {
-            document.getElementById('punctuation').classList.remove('setting__active');
-        }
-    }
-
-    function toggleCapital() {
-        hasCapital = !hasCapital;
-        if(hasCapital) {
-            const sequence = generateRandomWords(wordLength);
-            convertParagraphToCharacters(sequence);
-            document.getElementById('capital').classList.add('setting__active');
-        } else {
-            document.getElementById('capital').classList.remove('setting__active');
-        }
-    }
-
-    function toggleNumbers() {
-        hasNumbers = !hasNumbers;
-        if(hasNumbers) {
-            const sequence = generateRandomWords(wordLength);
-            convertParagraphToCharacters(sequence);
-            document.getElementById('numbers').classList.add('setting__active');
-        } else {
-            document.getElementById('numbers').classList.remove('setting__active');
-        }
-    }
-
-
     window.addEventListener('keydown', function(e) {
         if(e.which == 32 && e.target == document.body) {
             e.preventDefault();
         }
     });
-
-    function selectSetting(setting) {
-        currentSetting = setting;
-        document.querySelectorAll('.setting__active').forEach(btn => btn.classList.remove('setting__active'));
-        if (setting === 'time') {
-            wordLength = 1000;
-            setTime(30);
-            document.getElementById('timer').style.display = 'block';
-            document.getElementById('wordProg').style.display = 'none';
-            document.getElementById('time-options').style.display = 'block';
-            document.getElementById('word-length-options').style.display = 'none';
-            document.getElementById('word-length-btn').classList.remove('setting__active');
-            document.getElementById('time-btn').classList.add('setting__active');
-        } else if (setting === 'wordLength') {
-            document.getElementById('timer').style.display = 'none';
-            document.getElementById('wordProg').style.display = 'block';
-            document.getElementById('word-length-options').style.display = 'block';
-            document.getElementById('time-options').style.display = 'none';
-            document.getElementById('word-length-btn').classList.add('setting__active');
-            document.getElementById('time-btn').classList.remove('setting__active');
-        }
-    }
-
-
-    function convertParagraphToCharacters(sequence) {
-        const paragraph = document.getElementById('seq_container');
-        paragraph.innerHTML = ''; // Clear existing content
-
-        Array.from(sequence).forEach(char => {
-            const span = document.createElement('span');
-            span.classList.add('text-3xl', 'leading-loose', 'tracking-loose', 'character', 'text-gray-400');
-            span.textContent = char;
-            paragraph.appendChild(span);
-        });
-    }
-
-    function generateRandomWords(wordCount) {
-        const randomWords = [];
-        for (let i = 0; i < wordCount; i++) {
-            const randomIndex = Math.floor(Math.random() * wordList.length);
-            randomWords.push(wordList[randomIndex]);
-        }
-        if(hasPunctuation) {
-            for(let i = 0; i < randomWords.length; i++) {
-                const char = randomWords[i];
-                if(Math.random() < 0.2) {
-                    const punctuation = ['.', ',', ';', '?'];
-                    //insert punctuation at random index
-                    const randomIndex = Math.floor(Math.random() * punctuation.length);
-                    randomWords[i] = char + punctuation[randomIndex];
-
-                }
-
-            }
-        }
-        if(hasCapital) {
-            //make sure it only applies to first letter of word
-            for(let i = 0; i < randomWords.length; i++) {
-                const char = randomWords[i];
-                if(Math.random() < 0.3) {
-                    randomWords[i] = char[0].toUpperCase() + char.slice(1);
-                }
-            }
-        }
-        if(hasNumbers) {
-            // make sure it only applies to first letter of word
-            for(let i = 0; i < randomWords.length; i++) {
-                const char = randomWords[i];
-                if(Math.random() < 0.1) {
-                    randomWords[i] = char + Math.floor(Math.random() * 10);
-                }
-            }
-        }
-        currentSequence = randomWords.join(' ');
-        return randomWords.join(' ');
-    }
-
-    function setWordLength(length) {
-        wordLength = length;
-        if(wordLength === 10) {
-            document.getElementById('word-ln-10').classList.add('setting__active');
-            document.getElementById('word-ln-10').classList.add('setting__active');
-            document.getElementById('word-ln-25').classList.remove('setting__active');
-            document.getElementById('word-ln-50').classList.remove('setting__active');
-            document.getElementById('word-ln-100').classList.remove('setting__active');
-        }
-        if(wordLength === 25) {
-            document.getElementById('word-ln-10').classList.remove('setting__active');
-            document.getElementById('word-ln-25').classList.add('setting__active');
-            document.getElementById('word-ln-50').classList.remove('setting__active');
-            document.getElementById('word-ln-100').classList.remove('setting__active');
-        }
-        if(wordLength === 50) {
-            document.getElementById('word-ln-10').classList.remove('setting__active');
-            document.getElementById('word-ln-25').classList.remove('setting__active');
-            document.getElementById('word-ln-50').classList.add('setting__active');
-            document.getElementById('word-ln-100').classList.remove('setting__active');
-        }
-        if(wordLength === 100) {
-            document.getElementById('word-ln-10').classList.remove('setting__active');
-            document.getElementById('word-ln-25').classList.remove('setting__active');
-            document.getElementById('word-ln-50').classList.remove('setting__active');
-            document.getElementById('word-ln-100').classList.add('setting__active');
-        }
-
-        document.getElementById('wordProg').textContent = `0/${wordLength}`;
-        const sequence = generateRandomWords(length);
-        convertParagraphToCharacters(sequence);
-    }
-
-    function startTimer(duration) {
-        document.getElementById('wordProg').classList.add('hidden')
-        let timer = duration;
-        const timerElement = document.getElementById('timer');
-
-        timerElement.textContent = `${timer}`;
-
-        const timerInterval = setInterval(() => {
-            timer--;
-            timerElement.textContent = `${timer}`;
-
-            if (timer <= 0) {
-                clearInterval(timerInterval);
-            }
-        }, 1000);
-    }
-
-    function setTime(duration) {
-        const sequence = generateRandomWords(1000);
-        convertParagraphToCharacters(sequence);
-        time = duration;
-        document.getElementById('timer').textContent = `${time}`;
-
-        if(time === 30) {
-            document.getElementById('time-30').classList.add('setting__active');
-            document.getElementById('time-60').classList.remove('setting__active');
-            document.getElementById('time-120').classList.remove('setting__active');
-        }
-        if(time === 60) {
-            document.getElementById('time-30').classList.remove('setting__active');
-            document.getElementById('time-60').classList.add('setting__active');
-            document.getElementById('time-120').classList.remove('setting__active');
-        }
-        if(time === 120) {
-            document.getElementById('time-30').classList.remove('setting__active');
-            document.getElementById('time-60').classList.remove('setting__active');
-            document.getElementById('time-120').classList.add('setting__active');
-        }
-    }
 
     document.addEventListener('keydown', handleTyping);
 
@@ -466,95 +123,6 @@
 
     let currentIndex = 0;
 
-
-    function mapKeyboard(keyboard, keyPress) {
-
-        const lowerKey = keyPress.toLowerCase();
-
-        let position = null;
-
-        for (let row = 1; row <= 5; row++) {
-            const currentRow = layouts.qwerty.keys[`row${row}`];
-
-
-            const index = currentRow.findIndex(key => key.includes(lowerKey));
-            position = { row: row, index: index };
-
-            if (index !== -1) {
-                break;
-            }
-        }
-
-        try{
-            return (layouts[`${keyboard}`].keys[`row${position.row}`][position.index]);
-        }
-        catch(error) {
-            return keyPress;
-        }
-
-
-    }
-
-    function handleTyping(event) {
-
-        const sequence = document.querySelectorAll('#seq_container .character');
-        if (currentIndex >= sequence.length) {
-            return;
-        }
-
-        const currentChar = sequence[currentIndex];
-        const expectedChar = currentChar.textContent;
-
-
-        if(currentSetting === 'time' && event.key === currentChar.textContent && currentIndex === 0) {
-            startTimer(time);
-        }
-
-        const spanLength = document.querySelectorAll('#seq_container .character').length;
-
-        const currentLayout = document.getElementById('layouts').value;
-
-        let kbdkey =  event.key
-        const mapping = mapKeyboard(currentLayout, kbdkey);
-        console.log(mapping);
-        kbdkey = mapping[0];
-
-
-        if(kbdkey.includes('shift')) {
-            kbdkey = kbdkey.split('shift ')[1];
-        }
-
-        if (kbdkey.trim() === expectedChar.trim()) {
-            currentChar.style.color = 'black';
-            currentChar.classList.remove('active');
-            currentChar.classList.add('correct');
-
-            if(currentIndex === spanLength-1){
-                wordProgress++;
-            }
-
-            if(event.which === 32) {
-                wordProgress++;
-                document.getElementById('wordProg').textContent = `${wordProgress}/${wordLength}`;
-            }
-
-            if (currentIndex < sequence.length) {
-                sequence[currentIndex].classList.add('active');
-            }
-
-            currentIndex++;
-
-        } else {
-            currentChar.style.color = 'red';
-            currentChar.classList.add('error');
-        }
-
-
-
-
-
-
-    }
 </script>
 </body>
 </html>

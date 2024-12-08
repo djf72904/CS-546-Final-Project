@@ -19,6 +19,6 @@ body {
     @apply text-white bg-red-500 hover:bg-red-600 px-4 py-2 rounded-md;
   }
   .avatar {
-    @apply bg-blue-500 text-white p-2.5 rounded-full;
+    @apply bg-blue-500 text-white p-2.5 size-10 rounded-full;
   }
 }

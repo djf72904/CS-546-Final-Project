@@ -19,6 +19,7 @@ router.post('/', async (req, res) => {
 
   const user = await User.findOne({ email });
 
+
   if (!user) {
     return res.status(401).json({ message: 'User not found', success: false });
   }
@@ -37,6 +38,8 @@ router.post('/', async (req, res) => {
   });
 
   const profile = await getProfile(user._id);
+
+  res.locals.user = profile;
 
   return res.status(200).json({token, success: true, profile});
 });
