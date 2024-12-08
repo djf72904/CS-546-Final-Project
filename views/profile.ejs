@@ -9,7 +9,10 @@
     <section class="mx-auto w-full">
       <div class="flex justify-between items-center mb-4">
         <h1 class="text-3xl font-bold"><%= profile.display_name %></h1>
-        <button id="logout" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Logout</button>
+        <div class="flex space-x-2 items-center">
+          <a href="/profile/songs" class="info__btn">My Songs</a>
+          <button id="logout" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Logout</button>
+        </div>
       </div>
       <section class="py-4 overflow-hidden">
         <div class="mx-auto">
@@ -97,8 +100,7 @@
                 <div class="w-auto p-2">
                   <p>Test 1</p>
                 </div>
-                <button class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
-
+                <button class="info__btn">More Info</button>
               </div>
             </div>
           </div>
@@ -118,7 +120,7 @@
                     </div>
                   </div>
                 </div>
-                <button class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Remove</button>
+                <button class="danger__btn">Remove</button>
               </div>
             </div>
           <% }); %>

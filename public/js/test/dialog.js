@@ -38,7 +38,7 @@ function endTest(testType, time, words, missedWords) {
     showDialog();
     timeEl.textContent = time + ' seconds';
     wordsEl.textContent = words + 1 + ' words';
-    missedWordsEl.textContent = missedWords.length.toString() + ' words';
+    missedWordsEl.textContent = (missedWords / words).toFixed(2) * 100 + '%';
     speedEl.textContent = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60 + ' WPM';
     testTypeEl.textContent = testType;
 }

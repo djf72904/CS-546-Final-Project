@@ -9,6 +9,7 @@ import registerRouter from './routes/register.js';
 import leaderboardRouter from './routes/leaderboard.js';
 import testsRouter from './routes/tests.js';
 import feedRouter from './routes/feed.js';
+import settings from './routes/songs.js';
 import './scripts/handlers/authHandlers.js';
 import isUserLoggedIn, {protectedRoutes, routerInfo} from "./middleware.js";
 import connectToDatabase from "./config/mongoConnection.js";
@@ -39,13 +40,15 @@ handleRoutes(app, [
     ['/leaderboard', leaderboardRouter],
     ['/feed', feedRouter],
     ['/test', testsRouter],
+    ['/profile/songs', settings],
+    // api route
+    ['/api/user', userRouter],
     ['/logout', (req, res) => {
         res.clearCookie("token");
         res.redirect('/');
     }],
 ]);
 
-app.use('/api/user', userRouter);
 
 
 

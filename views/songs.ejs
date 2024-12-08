@@ -1,0 +1,49 @@
+<html lang="en">
+  <head>
+    <title>My Songs</title>
+    <link rel='stylesheet' href='/css/tailwind.css' />
+    <link rel='stylesheet' href='/css/style.css' />
+  </head>
+  <body>
+    <%- include('./partials/_header.ejs'); %>
+    <section class="mx-auto w-full">
+      <div class="flex justify-start items-center space-x-4">
+        <a href="/profile" class="back__btn">
+          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="size-6">
+            <path stroke-linecap="round" stroke-linejoin="round" d="M6.75 15.75 3 12m0 0 3.75-3.75M3 12h18" />
+          </svg>
+        </a>
+        <h1 class="text-3xl font-bold">My Songs</h1>
+      </div>
+      <section class="py-4 overflow-hidden">
+        <div class="mx-auto">
+          <section id="recent-tests" class="tabcontent ">
+            <% Array.from(Array(10).keys()).forEach(i => { %>
+              <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
+
+                <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
+                  <div class="flex flex-wrap justify-between -m-2">
+                    <div class="w-auto p-2">
+                      <p>Level <%= i+1 %></p>
+                    </div>
+                  <div class="w-auto space-x-2 flex flex-wrap justify-between">
+                    <label for="song">
+                      <select id="song" class="w-auto p-2 bg-gray-300 rounded-lg">
+                        <option value="1">Song 1</option>
+                        <option value="2">Song 2</option>
+                      </select>
+                    </label>
+                    <button class="danger__btn">Default</button>
+                  </div>
+
+                  </div>
+                </div>
+              </div>
+            <% }); %>
+          </section>
+      </div>
+
+    </section>
+
+  </body>
+</html>
