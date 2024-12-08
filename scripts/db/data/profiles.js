@@ -5,6 +5,10 @@ import {Profile, User} from "../config/schema.js";
 export const getProfile = async (user_id) => {
     const user = await User.findOne({_id: user_id});
     const profile = await Profile.findOne({_id: user_id});
+
+    if (!user || !profile) {
+        return null;
+    }
     return {
         ...user.toObject(),
         ...profile.toObject()

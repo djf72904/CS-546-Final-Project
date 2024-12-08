@@ -7,7 +7,7 @@ router.get('/', async function(req, res, next) {
 
 
     // getting the user's profile data
-    const profileData = await getProfile(req.user.id);
+    const profileData = await getProfile(req.user);
 
     //get friends here
     //get recent tests here
@@ -16,6 +16,7 @@ router.get('/', async function(req, res, next) {
         profile: profileData,
         friends: [],
         recentTests: []
+
     });
 });
 

@@ -56,7 +56,7 @@ export function authenticateToken(req, res, next) {
 
     jwt.verify(token, 'CS546Secret!!23!!', (err, user) => {
         if (err) return res.sendStatus(403);
-        req.user = user;
+        req.session.user = user;
         next();
     });
 }

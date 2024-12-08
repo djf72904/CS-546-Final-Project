@@ -3,7 +3,6 @@ import express from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import indexRouter from './routes/index.js';
-import usersRouter from './routes/users.js';
 import loginRouter from './routes/login.js';
 import profileRouter from './routes/profile.js';
 import registerRouter from './routes/register.js';
@@ -11,9 +10,10 @@ import leaderboardRouter from './routes/leaderboard.js';
 import testsRouter from './routes/tests.js';
 import feedRouter from './routes/feed.js';
 import './scripts/handlers/authHandlers.js';
-import isUserLoggedIn, {routerInfo} from "./middleware.js";
+import isUserLoggedIn, {protectedRoutes, routerInfo} from "./middleware.js";
 import connectToDatabase from "./config/mongoConnection.js";
 import {handleMiddleware, handleRoutes} from "./scripts/handlers/expressHandlers.js";
+import userRouter from "./routes/api/user.js";
 
 
 let app = express();
@@ -28,14 +28,11 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-handleMiddleware(app, routerInfo, isUserLoggedIn, (req, res, next) => {
-    next();
-});
+handleMiddleware(app, routerInfo, isUserLoggedIn, protectedRoutes);
 
 
 handleRoutes(app, [
     ['/', indexRouter],
-    ['/users', usersRouter],
     ['/login', loginRouter],
     ['/register', registerRouter],
     ['/profile', profileRouter],
@@ -47,6 +44,9 @@ handleRoutes(app, [
         res.redirect('/');
     }],
 ]);
+
+app.use('/api/user', userRouter);
+
 
 
 

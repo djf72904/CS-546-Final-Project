@@ -7,7 +7,7 @@ let router = express.Router();
 
 /* GET users listing. */
 router.get('/', function(req, res, next) {
-  res.render('login');
+  res.render('login', { title: 'Login', user: null });
 });
 
 router.post('/', async (req, res) => {
@@ -39,7 +39,6 @@ router.post('/', async (req, res) => {
 
   const profile = await getProfile(user._id);
 
-  res.locals.user = profile;
 
   return res.status(200).json({token, success: true, profile});
 });
