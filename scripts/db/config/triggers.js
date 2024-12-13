@@ -44,10 +44,12 @@ export const updateOverallProfileStats = async (user_id) => {
         for(let j=0; j<missedWordsArr.length; j++){
             
             if(Object.keys(totalMissedWords).includes(missedWordsArr[j])){
-                totalMissedWords.missedWordsArr[i]++
+                let word = missedWordsArr[j]
+                totalMissedWords.word += 1
             }
             else{
-                totalMissedWords.missedWordsArr[j] = 1
+                let word = missedWordsArr[j]
+                totalMissedWords.word = 1
             }
         }
 
@@ -73,15 +75,15 @@ export const updateOverallProfileStats = async (user_id) => {
         top5MissedWords.push(missedWordsPairs[i])
     }
 
-    newStats = {
-        best_wpm: bestWpm,
+    let newStats = {
+        best_wpm: maxWpm,
         avg_wpm: avgWpm,
         max_level: maxLevel,
         avg_accuracy: avgAccur,
         common_missed_words: top5MissedWords
     }
 
-    updateProfileStats(user_id, newStats);
+    await updateProfileStats(user_id, newStats);
 
 }
 

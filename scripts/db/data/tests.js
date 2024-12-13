@@ -5,7 +5,13 @@ import { Test } from "../config/schema.js"
 export const createTest = async (profile_id, stats) => {
 
     stats.user_id = profile_id;
-    return Test.insertOne(stats);
+    const newTest = new Test(stats)
+
+    await newTest.save()
+
+    console.log(newTest)
+
+    return newTest
 }
 
 
@@ -23,11 +29,11 @@ export const getAllTests = async () => {
 
 export const getAllTestsByUser = async (profile_id) => {
 
-    let testArr = await allTests.find(
+    let testArr = await Test.find(
         {
             user_id: {$eq: profile_id}
         }
-    ).toArray()
+    )
 
-    return testArr
+    return Array.from(testArr)
 }

@@ -134,18 +134,13 @@ export const TestSchema = new Schema({
         required: true,
         default: 0
     },
-    song_id: {
-        type: String,
-        ref: 'Song',
-        required: true
-    },
     options: {
         type: Object,
         required: true,
         default: {}
     },
     missed_words: {
-        type: [Number],
+        type: [String],
         required: true,
         default: []
     },
