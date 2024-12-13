@@ -36,12 +36,13 @@ function hideDialog() {
 
 function endTest(testType, time, words, missedWords) {
     showDialog();
-    const wpm = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60
+    const locWPM = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60
+    wpm = locWPM;
     timeEl.textContent = time + ' seconds';
     wordsEl.textContent = words + 1 + ' words';
     missedWordsEl.textContent = `${100 - ((missedWords.length / words).toFixed(2) * 100)}% • ${missedWords.length} missed`;
     speedEl.textContent =
-        `${wpm.toFixed(0)} WPM • Level ${levels.findIndex(level => wpm >= level.lowerBound && wpm < level.upperBound) + 1}`;
+        `${locWPM.toFixed(0)} WPM • Level ${levels.findIndex(level => locWPM >= level.lowerBound && locWPM < level.upperBound) + 1}`;
     testTypeEl.textContent = testType;
     if(missedWords.length === 0 ){
         const canvas = document.getElementById('confetti-canvas')
@@ -50,3 +51,26 @@ function endTest(testType, time, words, missedWords) {
                                    confettiNumber: 100,
         });}
 }
+
+async function createTest(words, time, missedWords){
+
+
+    await fetch('/test', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+                                 time,
+                                 wpm: ((words.length + 1 - missedWords.length )/ time).toFixed(2) * 60,
+                                 options: {
+                                     hasPunctuation,
+                                     hasCapital,
+                                     hasNumbers,
+                                 },
+                                 missedWords,
+                                 currentSetting,
+                                 currentSequence,
+                             })
+    })
+    }
