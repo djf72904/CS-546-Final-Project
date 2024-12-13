@@ -158,6 +158,11 @@ export const TestSchema = new Schema({
         type: String,
         required: true,
     },
+    time: {
+        type: Number,
+        required: false,
+        default: 0
+    }
 });
 
 export const SongSchema = new Schema({
