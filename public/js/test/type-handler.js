@@ -1,7 +1,24 @@
 
+/**
+ * Handles user typing events, updating the UI based on correct or incorrect input,
+ * and managing typing speed metrics such as words per minute (WPM).
+ *
+ * @param {KeyboardEvent} event - The keyboard event triggered by the user input.
+ * @return {void} This function does not return a value.
+ */
 function handleTyping(event) {
 
+    if(event.key === 'Escape'){
+        window.location.href = '/test';
+    }
+
+    const modifierKeys = ['Control', 'Alt', 'Meta', 'CapsLock', 'Fn', 'NumLock', 'ScrollLock', 'Symbol', 'SymbolLock'];
+    if(modifierKeys.includes(event.key)) {
+        return
+    }
+
     document.getElementById('space-reminder').classList.add('hidden');
+    document.getElementById('testControls').classList.add('pointer-events-none');
 
     if(startTime === null) {
         startTime = Date.now();
@@ -27,16 +44,23 @@ function handleTyping(event) {
     const currentLayout = document.getElementById('layouts').value;
 
     let kbdkey =  event.key
+    //check if key is not modifier
+
     const mapping = mapKeyboard(currentLayout, kbdkey);
-    kbdkey = mapping[0];
+    if(mapping){
+        if(event.shiftKey) {
+            kbdkey = mapping[1];
+        }
+        else{
+            kbdkey = mapping[0];
+        }
 
-
-    if(kbdkey.includes('shift')) {
-        kbdkey = kbdkey.split('shift ')[1];
     }
+
 
     if (kbdkey.trim() === expectedChar.trim()) {
         currentChar.style.color = 'black';
+        currentChar.classList.remove('opacity-50');
         currentChar.classList.remove('active');
         currentChar.classList.add('correct');
 
@@ -61,13 +85,23 @@ function handleTyping(event) {
         currentIndex++;
 
     } else {
-        currentChar.style.color = 'red';
-        missedWords.push(currentChar.textContent);
-        currentChar.classList.add('error');
+        if(!event.shiftKey){
+            currentChar.style.color = 'red';
+            missedWords.push(currentChar.textContent);
+            currentChar.classList.add('error');
+        }
+
     }
 }
 
 
+/**
+ * Maps a key press to a corresponding key on the specified keyboard layout.
+ *
+ * @param {string} keyboard - The name of the keyboard layout to map the key press to (e.g., 'qwerty').
+ * @param {string} keyPress - The key that was pressed.
+ * @return {string} The corresponding key from the specified keyboard layout, or the original key press if no match is found.
+ */
 function mapKeyboard(keyboard, keyPress) {
 
     const lowerKey = keyPress.toLowerCase();

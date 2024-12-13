@@ -215,7 +215,7 @@ let hasNumbers = false;
 
 let wpm = 0;
 
-const missedWords = []
+let missedWords = []
 
 //* once the test is over, this will be the sequence to insert into the DB
 let currentSequence = '';

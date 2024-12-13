@@ -1,4 +1,11 @@
 
+/**
+ * Starts a countdown timer for a specified duration. Updates the timer display on the page every second.
+ * When the timer reaches zero, a dialog is shown.
+ *
+ * @param {number} duration - The countdown time in seconds for which the timer will run.
+ * @return {void} This function does not return a value.
+ */
 function startTimer(duration) {
     document.getElementById('wordProg').classList.add('hidden')
     let timer = duration;
@@ -11,12 +18,18 @@ function startTimer(duration) {
         timerElement.textContent = `${timer}`;
 
         if (timer <= 0) {
-            showDialog();
+            showDialog(`${100 - ((missedWords.length / wordProgress).toFixed(2) * 100)}% • ${missedWords.length} missed`);
             clearInterval(timerInterval);
         }
     }, 1000);
 }
 
+/**
+ * Sets the timer duration and updates the UI to reflect the selected time setting.
+ *
+ * @param {number} duration - The duration to set as the timer value. Expected values are 30, 60, or 120.
+ * @return {void} This function does not return a value.
+ */
 function setTime(duration) {
     const sequence = generateRandomWords(1000);
     convertParagraphToCharacters(sequence);

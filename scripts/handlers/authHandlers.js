@@ -6,7 +6,7 @@ import jwt from 'jsonwebtoken';
  * @param password
  * @returns {Promise<*>}
  */
-export const hashPassword = async (password) => {
+export const hashPassword = (password) => {
     return bcrypt.hashSync(password, 10);
 }
 
