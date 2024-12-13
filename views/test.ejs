@@ -43,7 +43,7 @@
     </div>
     <h1 class="text-center font-bold text-6xl mt-4" id="wordProg">0/25</h1>
     <h1 class="text-center font-bold text-6xl mt-4" id="timer">60</h1>
-    <div class="mx-auto text-center max-w-4xl mt-2 h-[300px]" id="seq_container">
+    <div class="mx-auto text-center max-w-4xl mt-2 h-[300px] overflow-scroll" id="seq_container">
         <p class="text-3xl font-bold" id="testSequence"></p>
     </div>
     <div class="relative z-10 hidden" aria-labelledby="modal-title" id="favDialog" role="dialog" aria-modal="true">
@@ -90,8 +90,8 @@
                     </div>
                 </div>
                 <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-4">
-                    <button type="button" onclick="hideDialog()" class="primary__btn">Done</button>
-                    <button type="button" onclick="hideDialog()">Cancel</button>
+                    <button type="button" onClick="()=>{hideDialog(); window.location.href=`/profile`}" class="primary__btn">Share</button>
+                    <button type="button" onClick="()=>hideDialog(); window.location.href=`/profile`">Done</button>
                 </div>
             </div>
         </div>
@@ -101,15 +101,37 @@
     <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <script src="/js/test/levels.js"></script>
     <script src="/js/test/kb-layout.js"></script>
-    <script src="/js/test/layout-mapping.js"></script>
     <script src="/js/test/test-vars.js"></script>
     <script src="/js/test/settings.js"></script>
     <script src="/js/test/timer.js"></script>
     <script src="/js/test/dialog.js"></script>
     <script src="/js/test/generation.js"></script>
     <script src="/js/test/type-handler.js"></script>
+    <script>
+        function createTest(){
+            fetch('/test', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                                         wordProgress,
+                                         time,
+                                         options: {
+                                             hasPunctuation,
+                                             hasCapital,
+                                             hasNumbers,
+                                             currentSetting
+                                         },
+                                         wpm,
+                                         missedWords,
+                                         currentSequence,
+                                     })
+            })
+        }
 
 
+    </script>
 </section>
 <script>
 
