@@ -6,7 +6,13 @@
  * @param {KeyboardEvent} event - The keyboard event triggered by the user input.
  * @return {void} This function does not return a value.
  */
+
+let isWrong = false;
+let currentMissedWord = ""
+
+
 function handleTyping(event) {
+
 
     if(event.key === 'Escape'){
         window.location.href = '/test';
@@ -38,7 +44,6 @@ function handleTyping(event) {
         startTimer(time);
     }
 
-
     const spanLength = document.querySelectorAll('#seq_container .character').length;
 
     const currentLayout = document.getElementById('layouts').value;
@@ -54,9 +59,7 @@ function handleTyping(event) {
         else{
             kbdkey = mapping[0];
         }
-
     }
-
 
     if (kbdkey.trim() === expectedChar.trim()) {
         currentChar.style.color = 'black';
@@ -69,25 +72,27 @@ function handleTyping(event) {
             const timeTaken = endTime - startTime;
             wpm = Math.round(wordProgress / (timeTaken / 1000));
             currentIndex = wordLength;
-            endTest('Word Length', (timeTaken / 1000).toFixed(2), wordProgress, missedWords);
+            elapsedTime = (timeTaken / 1000).toFixed(2);
+            endTest('Word Length', (timeTaken / 1000).toFixed(2), wordProgress, missedWords.filter(word=>word.length > 0));
         }
 
         if(event.which === 32 && currentIndex !== spanLength-1) {
             wordProgress++;
-            wpm = Math.round(wordProgress / (time / 60));
+            missedWords.push(currentMissedWord);
+            currentMissedWord = "";
+            console.log(missedWords)
             document.getElementById('wordProg').textContent = `${wordProgress}/${wordLength}`;
         }
 
         if (currentIndex < sequence.length) {
             sequence[currentIndex].classList.add('active');
         }
-
         currentIndex++;
 
     } else {
         if(!event.shiftKey){
             currentChar.style.color = 'red';
-            missedWords.push(currentChar.textContent);
+            currentMissedWord = currentSequence.split(" ")[wordProgress];
             currentChar.classList.add('error');
         }
 

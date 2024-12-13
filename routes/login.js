@@ -13,12 +13,19 @@ router.get('/', function(req, res, next) {
 router.post('/', async (req, res) => {
   const { email, password } = req.body;
 
+  if(!email.trim()){
+    return res.status(400).send({message: "Email not supplied"})
+  }
+
+  if(!password.trim()){
+    return res.status(400).send({message: "Password not supplied"})
+  }
+
   if(!email || !password){
     return res.status(400).json({ message: 'Please enter email and password' });
   }
 
   const user = await User.findOne({ email });
-
 
   if (!user) {
     return res.status(401).json({ message: 'User not found', success: false });
@@ -38,7 +45,6 @@ router.post('/', async (req, res) => {
   });
 
   const profile = await getProfile(user._id);
-
 
   return res.status(200).json({token, success: true, profile});
 });

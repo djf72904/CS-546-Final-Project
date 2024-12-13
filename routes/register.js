@@ -18,10 +18,10 @@ router.post('/', async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
   } catch {
-    return res.status(400).json({ message: 'User already exists' });
+    return res.status(400).json({ message: 'Error creeating user' });
   }
 
-  const encryptedPassword = await hashPassword(password);
+  const encryptedPassword = hashPassword(password);
 
   const newUser = new User({ password: encryptedPassword, email });
   await newUser.save();
@@ -39,7 +39,7 @@ router.post('/', async (req, res) => {
   // if this function fails, rollback the user creation and return the error
   await createProfileFromUser(newUser._id, display_name);
 
-  return res.status(201).json(newUser);
+  return res.status(201).json({success: true});
 });
 
 export default router;

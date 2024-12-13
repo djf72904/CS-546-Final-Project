@@ -52,6 +52,7 @@ function hideDialog() {
  * @return {void} This function does not return a value; it updates the interface with the results of the test.
  */
 function endTest(testType, time, words, missedWords) {
+
     showDialog(`${100 - ((missedWords.length / words).toFixed(2) * 100)}% • ${missedWords.length} missed`);
     const locWPM = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60
     wpm = locWPM;
@@ -75,8 +76,8 @@ async function createTest(words, time, missedWords){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-                                 time,
-                                 wpm: ((currentSetting === 'time' ? currentSequence.substring(0, currentIndex).trim().split(" ").length : currentSequence.length + 1 - missedWords.length )/ time).toFixed(2) * 60,
+                                 time: currentSetting === 'time' ? 0 : time,
+                                 wpm: wpm,
                                  options: {
                                      hasPunctuation,
                                      hasCapital,

@@ -33,6 +33,10 @@
       const email = formData.get('email');
       const password = formData.get('password');
 
+      if(!email || !password){
+        alert('Please enter valid email address or password');
+      }
+
       const response = await fetch('/login', {
         method: 'POST',
         body: JSON.stringify({
@@ -46,13 +50,12 @@
 
       const result = await response.json();
 
-
       if (result.success) {
-        // Redirect to the index page after successful login
         window.location.href = '/';
-        // localStorage.setItem('user', JSON.stringify(result.user));
       } else {
-        alert(result.message); // Show error message if login failed
+        if(email && password) {
+          alert(result.message);
+        }
       }
     });
   </script>
