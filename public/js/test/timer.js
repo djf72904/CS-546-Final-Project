@@ -18,7 +18,16 @@ function startTimer(duration) {
         timerElement.textContent = `${timer}`;
 
         if (timer <= 0) {
-            showDialog(`${100 - ((missedWords.length / wordProgress).toFixed(2) * 100)}% • ${missedWords.length} missed`);
+
+            let onlyMissed = []
+            for(let i=0; i<missedWords.length; i++) {
+                if(missedWords[i] !== ""){
+                    onlyMissed.push(missedWords[i]);
+                }
+            }
+
+            showDialog(`${100 - ((onlyMissed.length / wordProgress).toFixed(2) * 100)}% • ${onlyMissed.length} missed`);
+            endTest("Timed", (duration).toFixed(2), wordProgress, missedWords.filter(word=>word.length > 0))
             clearInterval(timerInterval);
         }
     }, 1000);

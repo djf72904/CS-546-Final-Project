@@ -8,11 +8,9 @@ export const createTest = async (profile_id, stats) => {
 
     stats.user_id = profile_id;
     stats._id = uuidv4().toString();
-    stats.wpm = Math.round(stats.wpm);
-    if(stats.type !== "time"){
-        stats.time = 0
-    }
     const newTest = await new Test(stats)
+
+    console.log(stats)
 
     await newTest.save()
 

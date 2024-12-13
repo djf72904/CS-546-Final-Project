@@ -76,7 +76,7 @@ async function createTest(words, time, missedWords){
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-                                 time: currentSetting === 'time' ? 0 : time,
+                                 time: time,
                                  wpm: wpm,
                                  options: {
                                      hasPunctuation,
