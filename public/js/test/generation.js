@@ -1,16 +1,31 @@
 
+/**
+ * Converts a string sequence into individual character elements wrapped in span tags
+ * and appends them to the paragraph element with an id of 'seq_container'.
+ *
+ * @param {string} sequence - The string sequence to be converted into character elements.
+ * @return {void} Does not return a value.
+ */
 function convertParagraphToCharacters(sequence) {
     const paragraph = document.getElementById('seq_container');
     paragraph.innerHTML = ''; // Clear existing content
 
     Array.from(sequence).forEach(char => {
         const span = document.createElement('span');
-        span.classList.add('text-3xl', 'leading-loose', 'tracking-loose', 'character', 'text-gray-400');
+        span.classList.add('text-3xl', 'leading-loose', 'tracking-loose', 'character', 'opacity-50');
         span.textContent = char;
         paragraph.appendChild(span);
     });
 }
 
+/**
+ * Generates a sequence of random words with options to add punctuation, capitalize, and append numbers.
+ * The function uses an external list, `wordList`, as the source for random words.
+ * Additional effects, like punctuation, capitalization, and numbers, are conditionally applied.
+ *
+ * @param {number} wordCount - The number of random words to generate.
+ * @return {string} A string representing the generated sequence of random words.
+ */
 function generateRandomWords(wordCount) {
     const randomWords = [];
     for (let i = 0; i < wordCount; i++) {
@@ -52,6 +67,13 @@ function generateRandomWords(wordCount) {
     return randomWords.join(' ');
 }
 
+/**
+ * Sets the word length and updates the UI by highlighting the corresponding length option and resetting the word progress.
+ * It also generates a sequence of random words of the specified length and converts it into characters.
+ *
+ * @param {number} length - The length of words to be set, which can be 10, 25, 50, or 100.
+ * @return {void} Does not return a value.
+ */
 function setWordLength(length) {
     wordLength = length;
     if(wordLength === 10) {
