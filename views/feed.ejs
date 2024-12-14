@@ -13,40 +13,44 @@
 </section>
 <div class="mt-4">
     <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <% Array.from(Array(9).keys()).forEach(i => { %>
+        <% posts.forEach(post => { %>
             <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
                 <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
                         <div class="w-auto p-2">
                             <div class="flex space-x-4 justify-start items-center">
                                 <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
                                     <div class="avatar">
-                                        <P>JP</P>
+                                        <P><%- post.profile.display_name[0] %></P>
                                     </div>
                                     <div class="flex flex-wrap justify-end">
                                         <div class="w-auto">
-                                            <p>Jack Patterson</p>
+                                            <p><%- post.profile.display_name %></p>
                                         </div>
                                     </div>
                                 </div>
-                                <p class="text-nowrap">10m ago</p>
+                                <div class="flex items-center space-x-2 w-full justify-end">
+
+                                    <p class="text-nowrap"><%- post.timeAgo %></p>
+
+                                </div>
                             </div>
 
-                            <p class="mt-2 max-w-lg">Et exercitation duis dolore deserunt deserunt esse culpa excepteur nulla ea nulla ex aliqua.</p>
+                            <p class="mt-2 max-w-lg"><%- post.content %></p>
                             <div class="flex space-x-2 items-center mt-2">
                                 <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                    <p id="post-wpm-badge" class="text-sm">WPM: 150</p>
+                                    <p id="post-wpm-badge" class="text-sm">WPM: <%- post.test.wpm %></p>
                                 </div>
                                 <div class="bg-gray-300 px-2 py-1 rounded-full">
                                     <p id="post-accuracy-badge" class="text-sm">Accuracy: 100%</p>
                                 </div>
-                                <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                    <p class="text-sm">BPM: 150</p>
-                                </div>
+                            </div>
+                            <div class="bg-gray-300 px-2 py-1 rounded-full w-fit my-2">
+                                <p class="text-sm text-nowrap">Song:</p>
                             </div>
                             <div class="flex space-x-2 mt-4 justify-between items-center">
-                                <button onclick="showDialog()" class=" info__btn">More Info</button>
+                                <button onclick="showDialog(<%= JSON.stringify(post) %>)" class=" info__btn">More Info</button>
                                 <div class="text-right">
-                                    <p>1 Comment</p>
+                                    <p><%- post.comments.length %> Comment</p>
                                 </div>
                             </div>
                         </div>
@@ -68,55 +72,37 @@
                                     <div class="flex space-x-4 justify-start items-center">
                                         <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
                                             <div class="avatar">
-                                                <P>JP</P>
+                                                <P id="avatar-i"></P>
                                             </div>
                                             <div class="flex flex-wrap justify-end">
                                                 <div class="w-auto">
-                                                    <p>Jack Patterson</p>
+                                                    <p id="avatar-name">Jack Patterson</p>
                                                 </div>
                                             </div>
                                         </div>
-                                        <p class="text-nowrap">10m ago</p>
+                                        <p class="text-nowrap" id="post-time-ago">10m ago</p>
                                     </div>
 
-                                    <p class="mt-2 max-w-lg">Et exercitation duis dolore deserunt deserunt esse culpa excepteur nulla ea nulla ex aliqua.</p>
+                                    <p class="mt-2 max-w-lg"></p>
                                     <div class="flex space-x-2 items-center mt-2">
                                         <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                            <p id="post-wpm-badge" class="text-sm">WPM: 150</p>
+                                            <p id="post-d-wpm-badge" class="text-sm"></p>
                                         </div>
                                         <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                            <p id="post-accuracy-badge" class="text-sm">Accuracy: 100%</p>
-                                        </div>
-                                        <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                            <p class="text-sm">BPM: 150</p>
+                                            <p id="post-d-accuracy-badge" class="text-sm"></p>
                                         </div>
                                     </div>
                                     <div class="flex flex-col space-y-2 mt-4">
                                         Comments
-                                        <% Array.from(Array(2).keys()).forEach(i => { %>
-                                        <div class="mt-2">
-                                            <div class="flex space-x-2 items-center">
-                                                <div class="avatar">
-                                                    <P>JP</P>
-                                                </div>
-                                                <div class="flex-wrap justify-between">
-                                                    <div class="w-auto">
-                                                        <p>Jack Patterson</p>
-                                                    </div>
-                                                    <p class="text-xs">10m ago</p>
-                                                </div>
-                                            </div>
-                                            <p class="mt-2 max-w-lg">Et exercitation duis dolore deserunt deserunt esse culpa excepteur nulla ea nulla ex aliqua.</p>
+                                        <div class="mt-2" id="comm-lst">
                                         </div>
                                         <hr/>
-                                        <% }); %>
-                                            <form action="/api/post" method="POST" class="flex space-x-2 items-center mt-2 w-full">
+                                            <form action="/feed" method="POST" class="flex space-x-2 items-center mt-2 w-full">
                                                 <label for="comment-inp" class="flex-grow">
                                                     <input id="comment-inp" type="text" class="w-full p-2 bg-gray-300 rounded-lg" placeholder="Add a comment...">
                                                 </label>
                                                 <button type="submit" class="primary__btn">Comment</button>
                                             </form>
-
                                     </div>
                                 </div>
                             </div>
@@ -132,5 +118,6 @@
 
 </div>
 <script src="/js/posts/dialog.js"></script>
+<script src="/js/time-ago.js"></script>
 </body>
 </html>
