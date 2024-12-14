@@ -28,10 +28,10 @@ router.post('/', async (req, res) => {
   const user = await User.findOne({ email });
 
   if (!user) {
-    return res.status(401).json({ message: 'User not found', success: false });
+    return res.status(401).json({ message: 'Invalid email or password', success: false });
   }
   if (!await comparePassword(password, user.password)) {
-    return res.status(401).json({ message: 'Incorrect password', success: false });
+    return res.status(401).json({ message: 'Invalid email or password', success: false });
   }
 
 

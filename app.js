@@ -14,7 +14,8 @@ import './scripts/handlers/authHandlers.js';
 import isUserLoggedIn, {protectedRoutes, routerInfo} from "./middleware.js";
 import connectToDatabase from "./config/mongoConnection.js";
 import {handleMiddleware, handleRoutes} from "./scripts/handlers/expressHandlers.js";
-import userRouter from "./routes/api/user.js";
+import userApiRouter from "./routes/api/user.js";
+import friendApiRouter from "./routes/api/friend.js";
 
 
 let app = express();
@@ -42,16 +43,13 @@ handleRoutes(app, [
     ['/test', testsRouter],
     ['/profile/songs', settings],
     // api route
-    ['/api/user', userRouter],
+    ['/api/user', userApiRouter],
+    ['/api/friend', friendApiRouter],
     ['/logout', (req, res) => {
         res.clearCookie("token");
         res.redirect('/');
     }],
 ]);
-
-
-
-
 
 await connectToDatabase();
 

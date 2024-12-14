@@ -5,7 +5,8 @@
   "type": "module",
   "scripts": {
     "start": "node ./bin/www",
-    "tw-watch": "npx tailwindcss -i ./public/css/style.css -o ./public/css/tailwind.css --watch"
+    "tw-watch": "npx tailwindcss -i ./public/css/style.css -o ./public/css/tailwind.css --watch",
+    "seed": "node ./seed.js"
   },
   "dependencies": {
     "bcrypt": "^5.1.1",

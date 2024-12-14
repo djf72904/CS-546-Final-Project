@@ -1,12 +1,17 @@
 // This file is responsible for handling all the data validation for the posts database functions
 import { validate as uuidValidate } from 'uuid';
-import {Test, User} from "../config/schema.js";
+import {Test, User} from "../db/config/schema.js";
 
 export const createPostValidator = async (data) => {
     if(!(data.user_id) || !(data.timestamp) || !(data.test_id) || !(data.content))
         throw "createPost Error: Must provide all fields"
     //check user_id
-    getAllPostsByUserValidator(data.user_id)
+    if(! (typeof data.user_id === 'string')) throw "createPost Error: user_id must be of type String"
+    if(!uuidValidate(data.user_id)) throw "createPost Error: user_id must be valid uuid"
+
+    const user = await User.findOne({_id: data.user_id});
+    if(!user) throw "createPost Error: No User found with given user_id"
+
 
     //check test_id
     if(! (typeof data.test_id === 'string')) throw "createPost Error: test_id must be of type String"

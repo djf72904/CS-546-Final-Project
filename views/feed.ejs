@@ -48,7 +48,7 @@
                                 <p class="text-sm text-nowrap">Song:</p>
                             </div>
                             <div class="flex space-x-2 mt-4 justify-between items-center">
-                                <button onclick="showDialog(<%= JSON.stringify(post) %>)" class=" info__btn">More Info</button>
+                                <button onclick="showDialog('<%= JSON.stringify(post) %>')" class=" info__btn">More Info</button>
                                 <div class="text-right">
                                     <p><%- post.comments.length %> Comment</p>
                                 </div>
