@@ -498,6 +498,7 @@ const Keyboard = (() => {
             currentLayout = layouts[selectedLayout];
             console.log(currentLayout);
             properties = Object.assign({}, currentLayout);
+            layout = selectedLayout;
 
             elements.keysContainer.innerHTML = "";
             elements.keysContainer.appendChild(createKeys());

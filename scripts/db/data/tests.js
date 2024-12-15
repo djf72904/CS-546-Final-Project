@@ -7,10 +7,11 @@ import {createTestValidator, getAllTestsByUserValidator, getTestsValidator} from
 
 export const createTest = async (profile_id, stats) => {
 
-    await createTestValidator(stats);
-
     stats.user_id = profile_id;
     stats._id = uuidv4().toString();
+
+    await createTestValidator(stats);
+
     const newTest = await new Test(stats)
 
     await newTest.save()

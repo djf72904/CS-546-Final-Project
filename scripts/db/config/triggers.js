@@ -9,7 +9,6 @@ export const createProfileFromUser = async (user_id, display_name) => {
     await entry.save();
 }
 
-//TODO: When a test is completed, update the stats for the user
 export const updateOverallProfileStats = async (user_id) => {
     /*
         - get all tests by user
@@ -54,7 +53,10 @@ export const updateOverallProfileStats = async (user_id) => {
         }
 
         totalWpm += testArr[i].wpm;
-        totalAccur += ((1 - (missedWordsCount/testArr[i].content.split(" ").length))*100) 
+
+        if(testArr[i].content.length !== 0){
+            totalAccur += ((1 - (missedWordsCount/testArr[i].content.split(" ").length))*100)
+        }
 
         maxLevel = Math.max(maxLevel, testArr[i].level_reached);
         maxWpm = Math.max(maxWpm, testArr[i].wpm)
@@ -95,7 +97,8 @@ export const updateOverallProfileStats = async (user_id) => {
         common_missed_words: top5MissedWords
     }
 
-    await updateProfileStats(user_id, newStats);
+    //TODO: Uncomment this when completed pls!
+    //await updateProfileStats(user_id, newStats);
 
 }
 
