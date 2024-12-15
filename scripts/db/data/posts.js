@@ -5,12 +5,25 @@ import {getTest} from "./tests.js";
 import {getAllCommentsForPost} from "./comments.js";
 import {getProfile} from "./profiles.js";
 import {timeAgo} from "../../time-ago.js";
-import {getSong} from "./songs.js";
+import { v4 as uuidv4 } from 'uuid';
 
 export const createPost = async (data) => {
-    await Validators.posts.createPostValidator(data)
+    console.log(data)
+    await Validators.posts.createPostValidator({
+                                                   user_id: data.user_id,
+                                                   test_id: data.test_id,
+                                                   content: data.content,
+                                               })
+
     data.content.trim();
-    const newPost = new Post({data});
+
+
+    const newPost = await new Post({
+        _id: uuidv4().toString(),
+        user_id: data.user_id,
+        test_id: data.test_id,
+        content: data.content,
+                                   });
     await newPost.save();
     return newPost;
 }

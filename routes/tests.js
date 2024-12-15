@@ -55,20 +55,17 @@ router.post('/', async function(req, res, next) {
         testInfo.time = 0
     }
 
+    let test;
+
     try{
-        await createTest(req.user, testInfo);
+        test = await createTest(req.user, testInfo);
     }
     catch(e){
         return res.status(400).send("Error creating test");
     }
 
-    try{
-        await updateOverallProfileStats(req.user, testInfo);
-    }catch(e){
-        return res.status(400).send("Error updating profile stats");
-    }
 
-    return res.render("/profile");
+    return res.status(200).send(test);
 
 });
 

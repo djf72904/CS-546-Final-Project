@@ -1,5 +1,5 @@
 import express from "express";
-import {getProfile} from "../scripts/db/data/profiles.js";
+import {createPost, getAllPosts} from "../scripts/db/data/posts.js";
 let router = express.Router();
 
 
@@ -7,12 +7,27 @@ router.get('/', async function(req, res, next) {
 
     //TODO: Get posts from all friends
 
+    const posts = await getAllPosts(req.user)
+
     res.render('feed', {
-        posts: [],
+        posts: posts,
     });
 });
 
 router.post('/', async function(req, res, next) {
-    //TODO: Add post to database
+    try{
+        await createPost({
+            user_id: req.user,
+            test_id: req.body.test_id,
+            content: req.body.content,
+        });
+    }
+    catch(e){
+        console.log(e)
+        throw new Error(e)
+    }
+
+    return res.status(200)
+
 });
 export default router;

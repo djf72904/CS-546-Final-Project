@@ -1,6 +1,8 @@
 
 function togglePunctuation() {
     hasPunctuation = !hasPunctuation;
+    //reset test
+    resetTest()
     if(hasPunctuation) {
         const sequence = generateRandomWords(wordLength);
         convertParagraphToCharacters(sequence);
@@ -13,6 +15,7 @@ function togglePunctuation() {
 
 function toggleCapital() {
     hasCapital = !hasCapital;
+    resetTest()
     if(hasCapital) {
         const sequence = generateRandomWords(wordLength);
         convertParagraphToCharacters(sequence);
@@ -20,10 +23,12 @@ function toggleCapital() {
     } else {
         document.getElementById('capital').classList.remove('setting__active');
     }
+    document.getElementById('capital').blur()
 }
 
 function toggleNumbers() {
     hasNumbers = !hasNumbers;
+    resetTest()
     if(hasNumbers) {
         const sequence = generateRandomWords(wordLength);
         convertParagraphToCharacters(sequence);
@@ -31,6 +36,12 @@ function toggleNumbers() {
     } else {
         document.getElementById('numbers').classList.remove('setting__active');
     }
+}
+
+function resetTest(){
+    wordProgress = 0;
+    wpm = 0;
+    missedWords = [];
 }
 
 

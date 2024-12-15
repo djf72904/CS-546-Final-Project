@@ -1,3 +1,9 @@
+/**
+ * Asynchronously fetches user data from the '/api/user' endpoint and updates the UI based on the user's authentication status.
+ * Displays the unauthorized header if the user is not authenticated. If the user is authenticated, displays the user's information in the header.
+ * Runs on every page load.
+ * @return {Promise<void>} A promise that resolves when the UI is updated based on the fetched user data.
+ */
 async function getUserData() {
     const userData = await fetch('/api/user')
         .then(response => response.json())

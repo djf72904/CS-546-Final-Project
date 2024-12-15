@@ -8,7 +8,7 @@
 <%- include('./partials/_header.ejs'); %>
 <section class="mx-auto w-full">
     <div class="flex justify-between items-center mb-4">
-        <h1 class="text-3xl font-bold">Global Leaderboard</h1>
+        <h1 class="text-3xl font-bold">Leaderboard</h1>
     </div>
 </section>
 <section class="py-4 overflow-hidden">
@@ -19,7 +19,7 @@
                     <div class="flex flex-wrap justify-between -m-2">
                         <div class="w-auto p-2">
                             <p class="mb-4 text-sm text-neutral-500 font-medium">Best WPM</p>
-                            <h3 class="font-heading text-3xl font-semibold">0</h3>
+                            <h3 class="font-heading text-3xl font-semibold"><%- max_wpm %></h3>
                         </div>
                         <div class="w-auto p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 opacity-50">
@@ -35,7 +35,7 @@
                     <div class="flex flex-wrap justify-between -m-2">
                         <div class="w-auto p-2">
                             <p class="mb-4 text-sm text-neutral-500 font-medium">Average WPM</p>
-                            <h3 class="font-heading text-3xl font-semibold">0</h3>
+                            <h3 class="font-heading text-3xl font-semibold"><%- parseInt(avg_wpm).toFixed(0) %></h3>
                         </div>
                         <div class="w-auto p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 opacity-50">
@@ -50,7 +50,7 @@
                     <div class="flex flex-wrap justify-between -m-2">
                         <div class="w-auto p-2">
                             <p class="mb-4 text-sm text-neutral-500 font-medium">Max Level</p>
-                            <h3 class="font-heading text-3xl font-semibold">0</h3>
+                            <h3 class="font-heading text-3xl font-semibold"><%- max_level %></h3>
                         </div>
                         <div class="w-auto p-2">
                             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 opacity-50">
@@ -65,7 +65,7 @@
                     <div class="flex flex-wrap justify-between -m-2">
                         <div class="w-auto p-2">
                             <p class="mb-4 text-sm text-neutral-500 font-medium">Average Accuracy</p>
-                            <h3 class="font-heading text-3xl font-semibold">0</h3>
+                            <h3 class="font-heading text-3xl font-semibold"><%- avg_accuracy %>%</h3>
                         </div>
                         <div class="w-auto p-2">
 
@@ -83,17 +83,53 @@
         </div>
     </div>
 </section>
+<section class="flex justify-start space-x-4">
+    <button class="tablinks" onClick="handleTabs(event, 'global')">Global</button>
+    <button class="tablinks" onClick="handleTabs(event, 'friends')">Friends</button>
+</section>
 <p>Best Tests</p>
 <div class="mt-4">
-    <section>
-        <% Array.from(Array(10).keys()).forEach(i => { %>
+    <section id="global" class="tabcontent">
+        <% leaderboard.forEach(test => { %>
             <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
                 <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
                     <div class="flex flex-wrap justify-between -m-2">
-                        <div class="w-auto p-2">
-                            <p>Test 1</p>
+                        <div class="p-2 flex space-x-4 flex-nowrap items-center">
+                            <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
+                                <div class="avatar">
+                                    <P><%- test.profile.display_name[0] %></P>
+                                </div>
+                                <div class="flex flex-wrap justify-end">
+                                    <div class="w-auto">
+                                        <p> <%- test.profile.display_name %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-300 px-2 py-1 rounded-full h-fit">
+                                <p class="text-sm text-nowrap">WPM: <%- test.wpm %></p>
+                            </div>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit">
+                                <p class="text-sm">Accuracy: <%- ((1- (test.missed_words.length / test.content.split(" ").length).toFixed(2)) * 100) %>%</p>
+                            </div>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm">Level: <%- test.level %></p>
+                            </div>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm"><%- test.content.split(" ").length %> Words</p>
+                            </div>
+                            <% if(test.time){ %>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm">Time: <%- test.time %>s</p>
+                            </div>
+                            <% } %>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm">Song:</p>
+                            </div>
+                            <div>
+
+                            </div>
                         </div>
-                        <button class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>
@@ -101,7 +137,140 @@
         <% }); %>
 
     </section>
+    <section id="friends" class="tabcontent">
+        <% friends.forEach(test => { %>
+            <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
+                <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
+                    <div class="flex flex-wrap justify-between -m-2">
+                        <div class="p-2 flex space-x-4 flex-nowrap items-center">
+                            <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
+                                <div class="avatar">
+                                    <P><%- test.profile.display_name[0] %></P>
+                                </div>
+                                <div class="flex flex-wrap justify-end">
+                                    <div class="w-auto">
+                                        <p> <%- test.profile.display_name %></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="bg-gray-300 px-2 py-1 rounded-full h-fit">
+                                <p class="text-sm text-nowrap">WPM: <%- test.wpm %></p>
+                            </div>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit">
+                                <p class="text-sm">Accuracy: <%- ((1- (test.missed_words.length / test.content.split(" ").length).toFixed(2)) * 100) %>%</p>
+                            </div>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm">Level: <%- test.level %></p>
+                            </div>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm"><%- test.content.split(" ").length %> Words</p>
+                            </div>
+                            <% if(test.time){ %>
+                                <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                    <p class="text-sm">Time: <%- test.time %>s</p>
+                                </div>
+                            <% } %>
+                            <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
+                                <p class="text-sm">Song:</p>
+                            </div>
+                            <div>
 
+                            </div>
+                        </div>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+
+    </section>
+    <div class="relative z-10 hidden" aria-labelledby="modal-title" id="favDialog" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
+
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-end justify-center p-4 text-center sm:items-center sm:p-0">
+
+                <div class="relative transform overflow-hidden rounded-lg bg-white text-left shadow-xl transition-all sm:my-8 sm:w-full sm:max-w-lg">
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                <div class="w-auto p-2">
+                                    <div class="flex space-x-4 justify-start items-center">
+                                        <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
+                                            <div class="avatar">
+                                                <P id="avtr-i"></P>
+                                            </div>
+                                            <div class="flex flex-wrap justify-end">
+                                                <div class="w-auto">
+                                                    <p id="username"></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <p id="time-taken" class="text-nowrap"></p>
+                                    </div>
+
+                                    <p class="mt-4">Content: </p>
+                                    <p class="mt-2 max-w-lg font-semibold" id="content-sec"></p>
+
+                                    <p class="mt-4">Details: </p>
+                                    <div class="flex flex-col space-y-2 mt-2">
+                                        <div class="py-1 rounded-full h-fit">
+                                            <p class="text-sm text-nowrap" id="wpm-badge"></p>
+                                        </div>
+                                        <hr/>
+                                        <div class="text-nowrap py-1 rounded-full h-fit">
+                                            <p class="text-sm" id="acc-badge"></p>
+                                        </div>
+                                        <hr/>
+                                        <div class="text-nowrap py-1 rounded-full h-fit" >
+                                            <p class="text-sm" id="lvl-badge"></p>
+                                        </div><hr/>
+
+                                        <div id="time-badge-cont" class="text-nowrap py-1 rounded-full h-fit" >
+                                            <p class="text-sm" id="time-badge"></p>
+                                        </div>
+                                        <hr/>
+                                        <div class="text-nowrap py-1 rounded-full h-fit" >
+                                            <p class="text-sm" id="song-badge"></p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-4">
+                        <button type="button" onclick="hideDialog()" class="info__btn">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+    <script src="/js/leaderboard/dialog.js"></script>
+<script>
+    function handleTabs(evt, name) {
+        let i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tabcontent");
+        for (i = 0; i < tabcontent.length; i++) {
+            tabcontent[i].style.display = "none";
+        }
+
+        tablinks = document.getElementsByClassName("tablinks");
+        for (i = 0; i < tablinks.length; i++) {
+            tablinks[i].classList.remove("bg-gray-200", "text-gray-900", "font-medium", "rounded-full", "py-2", "px-4", "text-sm");
+        }
+
+        document.getElementById(name).style.display = "block";
+
+        evt.currentTarget.classList.add("bg-gray-200", "text-gray-900", "font-medium", "rounded-full", "py-2", "px-4", "text-sm");
+    }
+    document.addEventListener("DOMContentLoaded", () => {
+        const defaultTab = document.getElementsByClassName("tablinks")[0];
+        if (defaultTab) {
+            defaultTab.click();
+        }
+    });
+</script>
 </body>
 </html>
