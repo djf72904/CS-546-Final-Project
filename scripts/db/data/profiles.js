@@ -15,7 +15,6 @@ export const getProfile = async (user_id) => {
     }
 }
 
-//TODO: Add a function to edit the display name of a user
 export const editDisplayName = async (user_id, display_name) => {
     const user = await User.findOneAndUpdate( 
         { _id: user_id }, 

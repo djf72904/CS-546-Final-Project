@@ -223,6 +223,8 @@ let currentSequence = '';
 
 let elapsedTime = 0;
 
+let layout = "qwerty"
+
 
 const dialog = document.getElementById("favDialog");
 

@@ -86,6 +86,7 @@ async function createTest(words, time, missedWords){
                                  missed_words: missedWords,
                                  type: currentSetting,
                                  content: currentSetting === 'time' ? currentSequence.substring(0, currentIndex) : currentSequence,
+                                 layout: layout
                              })
     })
 

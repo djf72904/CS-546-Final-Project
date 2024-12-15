@@ -156,12 +156,17 @@ export const TestSchema = new Schema({
     },
     content: {
         type: String,
-        required: true,
+        required: false,
     },
     time: {
         type: Number,
         required: false,
         default: 0
+    },
+    layout:{
+        type: String,
+        required: true,
+        default: "qwerty"
     }
 });
 

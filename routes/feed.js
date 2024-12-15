@@ -5,8 +5,6 @@ let router = express.Router();
 
 router.get('/', async function(req, res, next) {
 
-    //TODO: Get posts from all friends
-
     const posts = await getAllPosts(req.user)
 
     res.render('feed', {
@@ -20,6 +18,7 @@ router.post('/', async function(req, res, next) {
             user_id: req.user,
             test_id: req.body.test_id,
             content: req.body.content,
+            timestamp: req.body.timestamp
         });
     }
     catch(e){
