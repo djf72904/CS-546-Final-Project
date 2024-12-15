@@ -19,6 +19,9 @@ export const createCommentValidator = async (data) => {
         throw 'createComment Error: user_id must be a non-empty string that does not consist of only spaces';
     if (!uuidValidate(user_id))
         throw 'createComment Error: user_id must be a valid UUID';
+    const user = await User.findOne({_id: data.user_id});
+    if(!user) 
+        throw "createComment Error: No User found with given user_id"
 
     // CHECK: post_id is valid
     if(! (typeof data.post_id === 'string') || data.user_id.trim().length === 0) 
@@ -39,7 +42,7 @@ export const createCommentValidator = async (data) => {
     return data;
 }
 
-export const getCommentsValidator = (comment_id) => {
+export const getCommentsValidator = async (comment_id) => {
     // CHECK: comment_id is valid
     if (!comment_id) 
         throw 'getComments Error: comment_id is required';
@@ -48,10 +51,14 @@ export const getCommentsValidator = (comment_id) => {
     if (!uuidValidate(comment_id))
         throw 'getComments Error: comment_id must be a valid UUID';
 
+    const comment = await Comment.findOne({_id: comment_id});
+    if(!comment) 
+        throw "getComment Error: No comment found with given comment_id"
+
     return comment_id;
 }
 
-export const getAllCommentsForPostValidator = (post_id) => {
+export const getAllCommentsForPostValidator = async (post_id) => {
     // CHECK: post_id is valid
     if (!post_id)
         throw 'getAllCommentsForPost Error: post_id is required';
@@ -59,6 +66,9 @@ export const getAllCommentsForPostValidator = (post_id) => {
         throw 'getAllCommentsForPost Error: post_id must be a string';
     if (!uuidValidate(post_id))
         throw 'getAllCommentsForPost Error: post_id must be a valid UUID';
+
+    const post = await Post.findOne({_id: post_id});
+    if(!post) throw "getAllCommentsForPost Error: No post found with given post_id"
 
     return post_id;
 }
