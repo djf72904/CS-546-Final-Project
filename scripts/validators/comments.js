@@ -1,7 +1,7 @@
 //This file is responsible for handling all the database interactions for comments
 
 import { validate as uuidValidate } from 'uuid';
-import { Post } from '../../db/config/schema.js';
+import { Post } from '../db/config/schema.js';
 
 export const createCommentValidator = async (data) => {
     // CHECK: fields match schema

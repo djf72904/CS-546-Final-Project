@@ -1,3 +1,10 @@
 // This file is responsible for handling all the database interactions for songs
-export const getAllSongs = async () => {}
-export const getSong = async (id) => {}
+import { songs } from "../../../songs.js"
+
+export const getAllSongs = async () => {
+    return songs;
+}
+export const getSong = async (name) => {
+    const allSongs = await getAllSongs();
+    return allSongs.find({ name: name });
+}

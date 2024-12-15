@@ -220,7 +220,10 @@ let missedWords = []
 //* once the test is over, this will be the sequence to insert into the DB
 let currentSequence = '';
 
-let elapsedTime = 0
+
+let elapsedTime = 0;
+
+let layout = "qwerty"
 
 
 const dialog = document.getElementById("favDialog");

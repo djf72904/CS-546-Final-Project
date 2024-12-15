@@ -24,7 +24,9 @@ function handleTyping(event) {
     }
 
     document.getElementById('space-reminder').classList.add('hidden');
+    document.getElementById('zoom-reminder').classList.add('hidden');
     document.getElementById('testControls').classList.add('pointer-events-none');
+    document.getElementById('testControls').classList.add('hidden');
 
     if(startTime === null) {
         startTime = Date.now();

@@ -2,7 +2,7 @@ import {createComment, getAllCommentsForPost, getComments} from "./data/comments
 import {createFriends, deleteFriends} from "./data/friends.js";
 import {createPost, getAllPosts, getAllPostsByUser, getPost} from "./data/posts.js";
 import {deleteProfileAndUser, editDisplayName} from "./data/profiles.js";
-import {createTest, getAllTests, getAllTestsByUser, getTests} from "./data/tests.js";
+import {createTest, getAllTests, getAllTestsByUser, getTest} from "./data/tests.js";
 import {getAllSongs, getSong} from "./data/songs.js";
 
 const Database = {
@@ -32,7 +32,7 @@ const Database = {
     },
     tests: {
         getAllTests,
-        getTests,
+        getTests: getTest,
         getAllTestsByUser,
         createTest,
     },

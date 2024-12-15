@@ -3,8 +3,9 @@ import { validate as uuidValidate } from 'uuid';
 import {Test, User} from "../db/config/schema.js";
 
 export const createTestValidator = async (data) => {
-    if (!data.user_id || !data.wpm || !data.options || !data.missed_words || !data.level_reached || !data.type || !data.content) { 
-        throw "createTest Error: Must provide all fields"; 
+
+    if (!data.user_id || !data.wpm || !data.options || !data.missed_words || !data.type || !data.layout) {
+        throw "createTest Error: Must provide all fields";
     }
 
     //check wpm
@@ -29,12 +30,15 @@ export const createTestValidator = async (data) => {
     if (typeof data.type !== 'string') throw "createTest Error: type must be of type String"; 
     
     // check content 
-    if (typeof data.content !== 'string') throw "createTest Error: content must be of type String"; 
-    let content = data.content.trim(); 
-    if (content.length === 0) throw "createTest Error: content cannot be an empty string or string with just spaces"; 
+    if (typeof data.content !== 'string') throw "createTest Error: content must be of type String";
     
     // check time 
     if (data.time && typeof data.time !== 'number') throw "createTest Error: time must be of type Number";
+
+    //check layout
+    if(typeof data.layout !== "string" || data.layout.trim().length === 0) {
+       throw "createTest Error: layout not supplied"
+    }
 }
 
 export const getTestsValidator = async (id) => {

@@ -86,28 +86,29 @@ async function createTest(words, time, missedWords){
                                  missed_words: missedWords,
                                  type: currentSetting,
                                  content: currentSetting === 'time' ? currentSequence.substring(0, currentIndex) : currentSequence,
+                                 layout: layout
                              })
     })
 
-    const data = await response.json();
-    const test_id = data._id;
-
-    console.log("Test", test_id)
-
-    return test_id
-
+    const data = await response.json()
+    return (data?._id)
 }
 
-async function createPost(user_id, test_id){
+async function createPost(test_id, content="test"){
+
+    const testinp = document.getElementById('test-inp').value;
+
     await fetch('/feed', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-                                 user_id,
             timestamp: new Date().getTime(),
-            test_id: test_id
+            test_id: await test_id,
+            content: testinp,
         })
+    }).catch(e=>{
+        console.log(e)
     })
 }

@@ -6,10 +6,10 @@ import Validators from "../../validators/client.js";
 export const createComment = async (post_id, data) => {
     // Should I do a try catch for erros?
     // VALIDATE:
-    Validators.comments.createCommentValidator(data);
+    await Validators.comments.createCommentValidator(data);
 
     // CREATE COMMENT: Asynchronously creates a comment for a specified post
-    const newComment = new Comment({ post_id, ...data });
+    const newComment = await new Comment({ post_id, ...data });
     await newComment.save();
     return newComment.toObject();
 }
@@ -35,7 +35,7 @@ export const getAllCommentsForPost = async (post_id) => {
 export const updateComment = async (comment_id, newContent) => {
     // VALIDATE
     // CHECK: comment_id is valid
-    Validators.comments.createCommentValidator(data);
+    await Validators.comments.createCommentValidator(data);
 
     // CHECK: newContent is valid
     if (!newContent || newContent !== string || newContent.trim().length() === 0)
@@ -43,7 +43,7 @@ export const updateComment = async (comment_id, newContent) => {
 
     const updatedComment = await Comment.findByIdAndUpdate(
         comment_id,
-        { content: newContent, timestamp: Date.now() }, 
+        { content: newContent, timestamp: Date.now() },
         { new: true } // Return the updated document
     );
 
