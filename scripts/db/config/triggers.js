@@ -2,7 +2,7 @@
 
 import {Profile} from "./schema.js";
 import { getAllTestsByUser } from "../data/tests.js";
-import { updateProfileStats } from "../data/profiles.js";
+import {updateProfileStats} from "../data/profiles.js";
 
 export const createProfileFromUser = async (user_id, display_name) => {
     const entry = await new Profile({ _id: user_id, display_name }, { _id: false});
@@ -45,34 +45,46 @@ export const updateOverallProfileStats = async (user_id) => {
             
             if(Object.keys(totalMissedWords).includes(missedWordsArr[j])){
                 let word = missedWordsArr[j]
-                totalMissedWords.word += 1
+                totalMissedWords[word] += 1
             }
             else{
                 let word = missedWordsArr[j]
-                totalMissedWords.word = 1
+                totalMissedWords[word] = 1
             }
         }
 
         totalWpm += testArr[i].wpm;
         totalAccur += ((1 - (missedWordsCount/testArr[i].content.split(" ").length))*100) 
 
-        maxLevel = Math.max(maxLevel, testArr[i].max_level);
+        maxLevel = Math.max(maxLevel, testArr[i].level_reached);
         maxWpm = Math.max(maxWpm, testArr[i].wpm)
 
     }
 
     let avgWpm = totalWpm/testAmt;
     let avgAccur = totalAccur/testAmt;
-    
-    let missedWordsPairs = Object.entries(totalMissedWords);
-
-    missedWordsPairs.sort((a, b) => {
-        b[1] - a[1]
-    })
 
     let top5MissedWords = []
-    for(let i=0; i<missedWordsPairs.length; i++){
-        top5MissedWords.push(missedWordsPairs[i])
+    for(let i=0; i<5; i++){
+        let max = 0;
+        let maxWord = ""
+        let missedWordsKeys = Object.keys(totalMissedWords)
+
+        for(let k=0; k<missedWordsKeys.length; k++){
+            if(!top5MissedWords.includes(missedWordsKeys[k])){
+                let oldMax = max;
+                max = Math.max(max, totalMissedWords[missedWordsKeys[k]]);
+
+                if(max !== oldMax){
+                    maxWord = missedWordsKeys[k]
+                }
+            }
+        }
+        if(max === 0){
+            break;
+        }else{
+            top5MissedWords.push(maxWord)
+        }
     }
 
     let newStats = {

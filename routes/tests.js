@@ -12,6 +12,27 @@ router.get('/', async function(req, res, next) {
 router.post('/', async function(req, res, next) {
 
 
+    //Input validation
+
+    if(!req.body.wpm || typeof req.body.wpm !== "number"){
+        return res.status(400).send({message: "Error: Wpm not supplied"})
+    }
+    if(!req.body.options || !Array.isArray(req.body.options)){
+        return res.status(400).send({message: "Error: Options not supplied"})
+    }
+    if(!req.body.missed_words || !Array.isArray(req.body.missed_words)){
+        return res.status(400).send({message: "Error: missedWords not supplied"})
+    }
+    if(!req.body.type.trim() || typeof req.body.type !== "string" || req.body.type.trim().length === 0){
+        return res.status(400).send({message: "Error: type not supplied"})
+    }
+    if(!req.body.content.trim() || typeof req.body.content !== "string" || req.body.content.trim().length === 0){
+        return res.status(400).send({message: "Error: content not supplied"})
+    }
+    if(!req.body.time || typeof req.body.time !== "number"){
+        return res.status(400).send({message: "Error: time not supplied"})
+    }
+
     let missedWords = []
     for(let i=0; i<req.body.missed_words.length; i++) {
         if(req.body.missed_words[i] !== ""){
@@ -41,7 +62,12 @@ router.post('/', async function(req, res, next) {
         return res.status(400).send("Error creating test");
     }
 
-    await updateOverallProfileStats(req.user, testInfo);
+    try{
+        await updateOverallProfileStats(req.user, testInfo);
+    }catch(e){
+        return res.status(400).send("Error updating profile stats");
+    }
+
     return res.render("/profile");
 
 });
