@@ -24,25 +24,26 @@ router.post('/', authHandlers,  async (req, res) => {
 
   try {
     if (!password) 
-      throw 'Error: Password must be input.';
+      throw new Error("Error: Password must be input.");
     if (typeof password !== 'string') 
-      throw 'Error: Input password must be a string.';
+      throw new Error('Error: Input password must be a string.');
     if (/\s/.test(password)) 
-      throw 'Error: Input password cannot contain spaces.';
+      throw new Error('Error: Input password cannot contain spaces.');
     if (password.length < 8) 
-      throw 'Error: Input password must be at least 8 characters long.';
-    if (!/[A-Z]/.test(password)) 
-      throw 'Error: Input password must contain at least one uppercase letter.';
+      throw new Error ('Error: Input password must be at least 8 characters long.');
     if (!/\d/.test(password)) 
-      throw 'Error: Input password must contain at least one number.';
-    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) 
-      throw 'Error: Input password must contain at least one special character.';
-    const encryptedPassword = hashPassword(password);
+      throw new Error('Error: Input password must contain at least one number.');
+    // Not with our seed right now
+    // if (!/[A-Z]/.test(password)) 
+    //   throw 'Error: Input password must contain at least one uppercase letter.';
+    // if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) 
+    //   throw 'Error: Input password must contain at least one special character.';
   } 
-  catch{
-    return "error"
+  catch(error){
+    return error.message;
   }
   
+  const encryptedPassword = hashPassword(password);
 
   const newUser = new User({ password: encryptedPassword, email });
   await newUser.save();
