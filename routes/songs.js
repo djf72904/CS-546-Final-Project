@@ -76,6 +76,7 @@ router.post('/', async function(req, res, next) {
 
 
     const input = req.body.data
+
     await Profile.updateOne({_id: req.user}, {favorite_songs: arrayToObject(updateLevelData(input, Object.entries(songsLst)))})
 })
 

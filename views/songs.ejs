@@ -29,7 +29,7 @@
                     <div class="flex space-x-2">
                       <a target="_blank" href="<%- song[1].find(l => l.default)?.link %>" class=primary__btn>Listen</a>
                       <label for="song">
-                        <select id="song-dd" class="w-auto p-2 bg-gray-300 rounded-lg">
+                        <select id="song-dd-<%-i%>" class="w-auto p-2 bg-gray-300 rounded-lg">
                           <% song[1].forEach((s, i) => { %>
                             <option <%= (song[1].find(l => l.default)?.link === s.link ? "selected" : "") %> value="<%- s.level + "_" + i %>"><%- s.name %></option>
                           <% }); %>
@@ -46,18 +46,21 @@
     </section>
     </section>
     <script>
-      document.getElementById("song-dd").addEventListener("change", function () {
-        console.log(this.value)
-        fetch("/settings/songs", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-                                 data: this.value
-                               }),
+      for(let i = 0; i < 10; i++){
+        document.getElementById(`song-dd-${i}`).addEventListener("change", function () {
+          console.log(this.value)
+          fetch("/settings/songs", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+                                   data: this.value
+                                 }),
+          })
         })
-      })
+      }
+
     </script>
 
   </body>
