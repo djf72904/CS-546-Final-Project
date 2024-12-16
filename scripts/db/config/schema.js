@@ -144,6 +144,11 @@ export const TestSchema = new Schema({
         type: Number,
         default: Date.now()
     },
+    level_reached: {
+        type: Number,
+        required: true,
+        default: 1
+    },
     wpm: {
         type: Number,
         required: true,
@@ -163,11 +168,6 @@ export const TestSchema = new Schema({
         type: [String],
         required: true,
         default: []
-    },
-    level_reached: {
-        type: Number,
-        required: true,
-        default: 1
     },
     type: {
         type: String,
@@ -235,7 +235,7 @@ export const FriendsSchema = new Schema({
 
 export const User = mongoose.model('users', UsersSchema);
 export const Friends = mongoose.model('Friends', FriendsSchema);
-export const Song = mongoose.model('Song', SongSchema);
+//export const Song = mongoose.model('Song', SongSchema);
 export const Post = mongoose.model('Post', PostsSchema);
 export const Comment = mongoose.model('Comment', CommentsSchema);
 export const Test = mongoose.model('Test', TestSchema);
