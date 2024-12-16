@@ -1,24 +1,34 @@
 export const songs = [
     {
         level: 1,
-        bpm: 40,
-        name: "",
-        artist: "",
-        link: ""
+        name: "Random",
+        bpm: 40
     },
     {
         level: 1,
         bpm: 40,
-        name: "",
-        artist: "",
-        link: ""
+        name: "Winterlude",
+        artist: "Bob Dylan",
+        link: "https://www.youtube.com/watch?v=BM-1X4SjkU4"
     },
     {
         level: 1,
         bpm: 40,
-        name: "",
-        artist: "",
-        link: ""
+        name: "Xcogitate",
+        artist: "Prince",
+        link: "https://www.youtube.com/watch?v=5jisdQc41Zw"
+    },
+    {
+        level: 1,
+        bpm: 40,
+        name: "One Love",
+        artist: "Massive Attack",
+        link: "https://www.youtube.com/watch?v=qvkyXiOeq9o"
+    },
+    {
+        level: 2,
+        name: "Random",
+        bpm: 50
     },
     {
         level: 2,
@@ -43,6 +53,11 @@ export const songs = [
     },
     {
         level: 3,
+        name: "Random",
+        bpm: 60
+    },
+    {
+        level: 3,
         bpm: 60,
         name: "Exhausted",
         artist: "Foo Fighters",
@@ -61,6 +76,11 @@ export const songs = [
         name: "The Unforgiven",
         artist: "Metallica",
         link: "https://www.youtube.com/watch?v=domjqjQ_WRI"
+    },
+    {
+        level: 4,
+        name: "Random",
+        bpm: 70
     },
     {
         level: 4,
@@ -85,6 +105,11 @@ export const songs = [
     },
     {
         level: 5,
+        name: "Random",
+        bpm: 80
+    },
+    {
+        level: 5,
         bpm: 80,
         name: "Come Out and Play",
         artist: "The Offspring",
@@ -103,6 +128,11 @@ export const songs = [
         name: "Santeria",
         artist: "Sublime",
         link: "https://www.youtube.com/watch?v=upoEYQ7dcEk"
+    },
+    {
+        level: 6,
+        name: "Random",
+        bpm: 90
     },
     {
         level: 6,
@@ -127,6 +157,11 @@ export const songs = [
     },
     {
         level: 7,
+        name: "Random",
+        bpm: 100
+    },
+    {
+        level: 7,
         bpm: 100,
         name: "Man in the Mirror",
         artist: "Michael Jackson",
@@ -145,6 +180,11 @@ export const songs = [
         name: "Bobo On The Corner",
         artist: "Beastie Boys",
         link: "https://www.youtube.com/watch?v=e3CX8MUhuZY"
+    },
+    {
+        level: 8,
+        name: "Random",
+        bpm: 110
     },
     {
         level: 8,
@@ -169,6 +209,11 @@ export const songs = [
     },
     {
         level: 9,
+        name: "Random",
+        bpm: 120
+    },
+    {
+        level: 9,
         bpm: 120,
         name: "Its My Life",
         artist: "Bon Jovi",
@@ -187,6 +232,11 @@ export const songs = [
         name: "Big Me",
         artist: "Foo Fighters",
         link: "https://www.youtube.com/watch?v=pLdJQFTnZfA"
+    },
+    {
+        level: 10,
+        name: "Random",
+        bpm: 130
     },
     {
         level: 10,
@@ -210,4 +260,3 @@ export const songs = [
         link: "https://www.youtube.com/watch?v=cI0QizfB7qo"
     }
 ]
-
