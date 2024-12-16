@@ -72,33 +72,62 @@ async function seedDatabase() {
         */
 
         // Seed Tests
-        const tests = users.map((user) => {
+        const tests1 = users.map((user) => {
             const levelReached = Math.floor(Math.random() * 10) + 1;
             return {
                 _id: uuidv4(),
                 user_id: user._id,
                 timestamp: Date.now(),
-                level_reached: levelReached, 
+                level_reached: levelReached,
                 wpm: randomWpm(levelReached),
-                song: randomSongForLevel(levelReached), 
-                options: { difficulty: 'medium' },
+                song: randomSongForLevel(levelReached),
+                options: {
+                    hasPunctuation: Math.random() > 0.5,
+                    hasCapital: Math.random() > 0.5,
+                    hasNumbers: Math.random() > 0.5,
+                },
                 missed_words: ['Lorem'],
-                type: 'test',
-                content: 'Lorem ipsum test content.',
+                type: "wordLength",
+                content: "Lorem ipsum test content.",
                 accuracy: Math.floor(Math.random() * 101),
                 time: Math.floor(Math.random() * 120) + 30,
-                layout: 'qwerty',
+                layout: "qwerty"
             };
         });
-        await Test.insertMany(tests);
-        console.log('Tests seeded');
+        await Test.insertMany(tests1);
+        console.log('wordLength tests seeded');
+
+        const tests2 = users.map((user) => {
+            const levelReached = Math.floor(Math.random() * 10) + 1;
+            return {
+                _id: uuidv4(),
+                user_id: user._id,
+                timestamp: Date.now(),
+                level_reached: levelReached,
+                wpm: randomWpm(levelReached),
+                song: randomSongForLevel(levelReached),
+                options: {
+                    hasPunctuation: Math.random() > 0.5,
+                    hasCapital: Math.random() > 0.5,
+                    hasNumbers: Math.random() > 0.5,
+                },
+                missed_words: ['Lorem'],
+                type: "time",
+                content: "Lorem ipsum test content.",
+                accuracy: Math.floor(Math.random() * 101),
+                time: [30, 60, 120][Math.floor(Math.random() * 3)],
+                layout: "qwerty"
+            };
+        });
+        await Test.insertMany(tests2);
+        console.log('time tests seeded');
 
         // Seed Posts
         const posts = users.map((user) => ({
             _id: uuidv4(),
             user_id: user._id,
             timestamp: Date.now(),
-            test_id: tests[Math.floor(Math.random() * tests.length)]._id,
+            test_id: tests1[Math.floor(Math.random() * tests1.length)]._id,
             content: 'This is a sample post content.',
         }));
         await Post.insertMany(posts);
