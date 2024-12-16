@@ -22,7 +22,27 @@ router.post('/', authHandlers,  async (req, res) => {
     return res.status(400).json({ message: 'Error creeating user' });
   }
 
-  const encryptedPassword = hashPassword(password);
+  try {
+    if (!password) 
+      throw 'Error: Password must be input.';
+    if (typeof password !== 'string') 
+      throw 'Error: Input password must be a string.';
+    if (/\s/.test(password)) 
+      throw 'Error: Input password cannot contain spaces.';
+    if (password.length < 8) 
+      throw 'Error: Input password must be at least 8 characters long.';
+    if (!/[A-Z]/.test(password)) 
+      throw 'Error: Input password must contain at least one uppercase letter.';
+    if (!/\d/.test(password)) 
+      throw 'Error: Input password must contain at least one number.';
+    if (!/[!@#$%^&*(),.?":{}|<>]/.test(password)) 
+      throw 'Error: Input password must contain at least one special character.';
+    const encryptedPassword = hashPassword(password);
+  } 
+  catch{
+    return "error"
+  }
+  
 
   const newUser = new User({ password: encryptedPassword, email });
   await newUser.save();
