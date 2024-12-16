@@ -8,7 +8,6 @@ import {timeAgo} from "../../time-ago.js";
 import { v4 as uuidv4 } from 'uuid';
 
 export const createPost = async (data) => {
-    console.log(data)
     await Validators.posts.createPostValidator({
                                                    user_id: data.user_id,
                                                    test_id: data.test_id,

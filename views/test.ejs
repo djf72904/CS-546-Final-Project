@@ -111,7 +111,7 @@
                     <label for="test-inp" class="flex-grow">
                         <input id="test-inp" type="text" class="w-full p-2 bg-gray-300 rounded-lg" placeholder="Add a message...">
                     </label>
-                    <button type="button" onClick="()=>hideDialog(); createPost(createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords, {name:'<%- (songNames) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], link: '<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], artist: '<%- artists %>'.split(',')[levels.findIndex(level => level.level === currLevel)]} )); window.location.href='/test' " class="primary__btn">Post</button>
+                    <button type="button" onClick="()=>hideDialog(); createPost(createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords, {name:'<%- (songNames) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], link: '<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], artist: '<%- artists %>'.split(',')[levels.findIndex(level => level.level === currLevel)]} )); window.location.href='/profile' " class="primary__btn">Post</button>
                 </div>
             </div>
         </div>

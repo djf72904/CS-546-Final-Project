@@ -97,7 +97,6 @@ export const updateOverallProfileStats = async (user_id) => {
         common_missed_words: top5MissedWords
     }
 
-    console.log(newStats)
 
     await updateProfileStats(user_id, newStats);
 
