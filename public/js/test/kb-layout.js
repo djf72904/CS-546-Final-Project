@@ -479,8 +479,8 @@ const Keyboard = (() => {
 
 
         dropdown.innerHTML = `
-        <select name="layouts" id="layouts" class="bg-gray-200 rounded-full p-2 pr-4 text-gray-700 focus:outline-none focus:ring-indigo-500">
             
+        <select name="layouts" id="layouts" class="bg-gray-200 rounded-full p-2 pr-4 text-gray-700 focus:outline-none focus:ring-indigo-500">
           
         </select>
                 `

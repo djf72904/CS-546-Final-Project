@@ -18,6 +18,24 @@ function convertParagraphToCharacters(sequence) {
     });
 }
 
+function hasConsecutiveLetters(word) {
+    if (!word || typeof word !== 'string') {
+        throw new Error('Input must be a valid string');
+    }
+
+    word = word.toLowerCase();
+    // Iterate through the string to find consecutive repeating letters
+    for (let i = 0; i < word.length - 1; i++) {
+        if (word[i] === word[i + 1]) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+
+
 /**
  * Generates a sequence of random words with options to add punctuation, capitalize, and append numbers.
  * The function uses an external list, `wordList`, as the source for random words.
@@ -27,10 +45,36 @@ function convertParagraphToCharacters(sequence) {
  * @return {string} A string representing the generated sequence of random words.
  */
 function generateRandomWords(wordCount) {
+
+    const url = new URL(window.location.href);
+    const params = new URLSearchParams(url.search);
+
+    const setting = params.get('t')
+
+
+    let wl = wordList;
+
+
+
+
+    if(setting === '1'){
+       wl = wordList.filter(w => w.length < 5)
+    }
+    if(setting === '2'){
+        wl = wordList.filter(w => w.length < 6)
+        console.log(wl)
+
+    }
+    if(setting === '3'){
+        wl = wordList.filter(w=> {
+            return hasConsecutiveLetters(w);
+        })
+    }
+
     const randomWords = [];
     for (let i = 0; i < wordCount; i++) {
-        const randomIndex = Math.floor(Math.random() * wordList.length);
-        randomWords.push(wordList[randomIndex]);
+        const randomIndex = Math.floor(Math.random() * wl.length);
+        randomWords.push(wl[randomIndex]);
     }
     if(hasPunctuation) {
         for(let i = 0; i < randomWords.length; i++) {
@@ -40,13 +84,10 @@ function generateRandomWords(wordCount) {
                 //insert punctuation at random index
                 const randomIndex = Math.floor(Math.random() * punctuation.length);
                 randomWords[i] = char + punctuation[randomIndex];
-
             }
-
         }
     }
     if(hasCapital) {
-        //make sure it only applies to first letter of word
         for(let i = 0; i < randomWords.length; i++) {
             const char = randomWords[i];
             if(Math.random() < 0.3) {
@@ -63,6 +104,7 @@ function generateRandomWords(wordCount) {
             }
         }
     }
+
     currentSequence = randomWords.join(' ');
     return randomWords.join(' ');
 }
