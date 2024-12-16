@@ -58,6 +58,7 @@ router.post('/', async function(req, res, next) {
     let testInfo = {
         timestamp: new Date().getTime(),
         wpm: Math.round(req.body.wpm),
+        song: req.body.song,
         options: req.body.options,
         missed_words: req.body.missed_words,
         level_reached: req.body.level_reached,
@@ -66,7 +67,6 @@ router.post('/', async function(req, res, next) {
         content: req.body.content,
         time: req.body.time,
         layout: req.body.layout,
-        song: req.body.song
     }
 
     if(testInfo.type !== "time"){

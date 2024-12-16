@@ -149,6 +149,11 @@ export const TestSchema = new Schema({
         required: true,
         default: 0
     },
+    song: {
+        type: Object,
+        required: true,
+        default: 0
+    },
     options: {
         type: Object,
         required: true,
@@ -187,10 +192,6 @@ export const TestSchema = new Schema({
         required: true,
         default: "qwerty"
     },
-    song:{
-        type: Object,
-        required: true,
-    }
 });
 
 export const SongSchema = new Schema({

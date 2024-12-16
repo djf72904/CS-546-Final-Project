@@ -98,12 +98,17 @@
                     </div>
                 </div>
                 <div class="px-4 py-3 sm:flex sm:px-6 gap-4 justify-between w-full items-center">
-                    <a id="song-btn" onClick="window.open('<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], '_blank')" target="_blank">
+                    <a id="song-btn" onClick="onSongButtonClick(currLevel, songs)" target="_blank">
                         <div class="primary__btn cursor-pointer">Listen to Song</div>
                     </a>
-
+                    
                     <div class="">
-                        <button type="button" onClick="()=> hideDialog(); createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords, {name:'<%- (songNames) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], link: '<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], artist: '<%- artists %>'.split(',')[levels.findIndex(level => level.level === currLevel)]}); window.location.href='/test' " id="secondary__btn">Done</button>
+                        <button 
+                            type="button" 
+                            onClick="()=> hideDialog(); onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, '<%- songNames %>', '<%- artists %>', songs, currLevel)" 
+                            id="secondary__btn">
+                            Done
+                        </button>
                     </div>
                 </div>
                 <p class="text-center">or</p>
@@ -163,6 +168,38 @@
     });
 
     let currentIndex = 0;
+
+    let selectedSong; 
+
+    function onSongButtonClick(currLevel, songs) {
+        selectedSong = getRandomSong(currLevel, songs);
+        window.open(selectedSong.link, '_blank');
+    }
+
+    function onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, songNames, artists, songs, currLevel) {
+        const adjustedWords = wordProgress - missedWords.filter(word => word?.length > 0);
+        const speed = (adjustedWords / elapsedTime) * 60;
+
+        const song = selectedSong || getRandomSong(currLevel, songs);
+
+        createTest(
+            speed,
+            time,
+            missedWords,
+            {
+                name: song.name || songNames.split(',')[levels.findIndex(level => level.level === currLevel)],
+                link: song.link || songs.split(',')[levels.findIndex(level => level.level === currLevel)],
+                artist: song.artist || artists.split(',')[levels.findIndex(level => level.level === currLevel)]
+            }
+        );
+        window.location.href = '/test';
+    }
+
+    function getRandomSong(currLevel, songs) {
+        const filteredSongs = songs.filter(song => song.level === currLevel);
+        const randomIndex = Math.floor(Math.random() * Math.min(filteredSongs.length, 3));
+        return filteredSongs[randomIndex];
+    }
 
 </script>
 </body>

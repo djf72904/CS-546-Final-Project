@@ -69,7 +69,9 @@ async function seedDatabase() {
             level_reached: Math.floor(Math.random() * 10) + 1,
             type: 'test',
             content: 'Lorem ipsum test content.',
+            accuracy: Math.floor(Math.random() * 101),
             time: Math.floor(Math.random() * 120) + 30,
+            layout: 'qwerty',
         }));
         await Test.insertMany(tests);
         console.log('Tests seeded');
