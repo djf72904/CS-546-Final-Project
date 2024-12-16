@@ -50,9 +50,11 @@ export const getAllPosts = async (user_id) => {
         const tests = await getTest(r.test_id)
         const comments = await getAllCommentsForPost(r._id)
 
+
+
         const comm = comments.map(async c=>{
             return {
-                ...c.toObject(),
+                ...c,
                 profile: await getProfile(c.user_id),
                 timeAgo: timeAgo(c.timestamp),
             }

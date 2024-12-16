@@ -1,4 +1,7 @@
-const dialog = document.getElementById("favDialog");
+    const dialog = document.getElementById("favDialog");
+
+let currPost;
+
 
 function createCommentElement(comment) {
     // Create the main container div
@@ -74,16 +77,49 @@ if (commentSection) {
  * @return {void} This function does not return a value.
  */
 function showDialog(post) {
+    post= JSON.parse(post)
+    currPost = post
+
     console.log(post)
+
     dialog.classList.remove("hidden");
     const commentEl = document.getElementById("comm-lst");
     document.getElementById("post-d-wpm-badge").textContent = "WPM: " + post.test.wpm
-    document.getElementById("post-d-accuracy-badge").textContent = "Accuracy: " + ((post.test.missed_words.length / post.test.content.split(" ").length).toFixed(2) * 100) + "%"
+
+    let accuracy;
+    if(post.test.content.length === 0){
+        accuracy = 0
+    }
+    else{
+        accuracy = ((1 - post.test.missed_words.length / post.test.content.split(" ").length).toFixed(2) * 100)
+    }
+
+    document.getElementById("post-d-accuracy-badge").textContent = "Accuracy: " + accuracy + "%"
     document.getElementById("post-time-ago").textContent = timeAgo(post.timestamp)
+
+    document.getElementById("avatar-name").textContent = post.profile.display_name
+    document.getElementById("avatar-i").textContent = post.profile.display_name[0]
 
     post.comments.map(comment => {
         commentEl.insertAdjacentElement("beforeend", createCommentElement(comment))
     })
+}
+
+async function makeComment(){
+
+    const commentInfo = document.getElementById("comment-inp").value;
+    if(commentInfo){
+        const response = await fetch("/api/comment", {
+            method: "POST",
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                    post_id: currPost._id,
+                    content: commentInfo
+            })
+        })
+    }
 }
 
 /**
