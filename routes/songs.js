@@ -17,9 +17,6 @@ function groupByLevel(songs) {
 
 function markDefaultSongs(groupedSongs, levelIndexPairs) {
     const updatedSongs = { ...groupedSongs };
-
-
-
     levelIndexPairs.forEach(([level, index]) => {
         if (updatedSongs[level] && updatedSongs[level][index]) {
             updatedSongs[level][index] = {
