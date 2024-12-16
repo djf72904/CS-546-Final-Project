@@ -13,7 +13,7 @@ export const createPost = async (data) => {
                                                    user_id: data.user_id,
                                                    test_id: data.test_id,
                                                    content: data.content,
-                                                    timestamp: data.timestamp,
+                                                   timestamp: Date.now()
                                                })
 
     data.content.trim();

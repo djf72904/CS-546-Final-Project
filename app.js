@@ -41,7 +41,8 @@ handleRoutes(app, [
     ['/leaderboard', leaderboardRouter],
     ['/feed', feedRouter],
     ['/test', testsRouter],
-    ['/profile/songs', settings],
+    ['/settings/songs', settings],
+    ['/settings', settings],
     // api route
     ['/api/user', userApiRouter],
     ['/api/friend', friendApiRouter],

@@ -91,7 +91,10 @@
                     </div>
                 </div>
                 <div class="px-4 py-3 sm:flex sm:px-6 gap-4 justify-between w-full items-center">
-                    <div class="primary__btn">Listen to Song</div>
+                    <a id="song-btn" onClick="window.open('<%- (songs) %>'.split(',')[levels.findIndex(level => wpm >= level.lowerBound && wpm < level.upperBound)], '_blank')" target="_blank">
+                        <div class="primary__btn cursor-pointer">Listen to Song</div>
+                    </a>
+
                     <div class="">
                         <button type="button" onClick="()=> hideDialog(); createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords); window.location.href='/profile'" id="secondary__btn">Done</button>
                     </div>
@@ -104,7 +107,6 @@
                     </label>
                     <button type="button" onClick="()=> hideDialog(); createPost(createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords)); window.location.href='/profile' " class="primary__btn">Post</button>
                 </div>
-
             </div>
         </div>
     </div>
@@ -119,6 +121,7 @@
     <script src="/js/test/generation.js"></script>
     <script src="/js/test/type-handler.js"></script>
     <script src="/js/test/dialog.js"></script>
+    <script src="/js/songs.js"></script>
 </section>
 <script>
 
