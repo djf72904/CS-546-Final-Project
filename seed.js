@@ -135,7 +135,7 @@ async function seedDatabase() {
 
 function randomWpm(level_reached) {
     const thisLevel = levels.find(l => l.level === level_reached);
-    return Math.floor(Math.random() * (thisLevel.upperBound - thisLevel.lowerBound + 1)) + thisLevel.lowerBound;
+    return Math.floor(Math.random() * (Number(thisLevel.upperBound) - Number(thisLevel.lowerBound) + 1)) + Number(thisLevel.lowerBound);
 }
 
 function randomSongForLevel(level_reached) {
