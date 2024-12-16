@@ -7,16 +7,23 @@ import {createTestValidator, getAllTestsByUserValidator, getTestsValidator} from
 
 export const createTest = async (profile_id, stats) => {
 
-    stats.user_id = profile_id;
-    stats._id = uuidv4().toString();
+    // await createTestValidator(stats);
 
-    await createTestValidator(stats);
 
-    const newTest = await new Test(stats)
+    try{
+        stats.user_id = profile_id;
+        stats._id = uuidv4().toString();
+        const newTest = await new Test(stats)
+        await newTest.save()
 
-    await newTest.save()
+        return newTest
+    }
+    catch(e){
+        console.log(e)
+        throw new Error('Error creating test')
+    }
 
-    return newTest
+
 }
 
 

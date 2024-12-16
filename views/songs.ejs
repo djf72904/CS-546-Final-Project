@@ -17,22 +17,25 @@
       </div>
       <section class="py-4 overflow-hidden">
         <div class="mx-auto">
-          <section id="recent-tests" class="tabcontent ">
-            <% Array.from(Array(10).keys()).forEach(i => { %>
+          <section id="recent-tests" class="tabcontent">
+            <% Object.entries(songs).forEach((song, i) => { %>
               <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
 
                 <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
                   <div class="flex flex-wrap justify-between -m-2">
                     <div class="w-auto p-2">
-                      <p>Level <%= i+1 %> • <%= 50 + (i*10) %> to <%= 50 + (i*10) + 10 %> WPM</p>
+                      <p>Level <%- song[1].find(s=>s.default).level %> • <%- song[1].find(s=>s.default).bpm %> - <%- song[1].find(s=>s.default).bpm +9 %>  WPM</p>
                     </div>
-                    <label for="song">
-                      <select id="song" class="w-auto p-2 bg-gray-300 rounded-lg">
-                        <option value="1">Song 1</option>
-                        <option value="2">Song 2</option>
-                        <option value="3">Song 3</option>
-                      </select>
-                    </label>
+                    <div class="flex space-x-2">
+                      <a target="_blank" href="<%- song[1].find(l => l.default)?.link %>" class=primary__btn>Listen</a>
+                      <label for="song">
+                        <select id="song-dd" class="w-auto p-2 bg-gray-300 rounded-lg">
+                          <% song[1].forEach((s, i) => { %>
+                            <option <%= (song[1].find(l => l.default)?.link === s.link ? "selected" : "") %> value="<%- s.level + "_" + i %>"><%- s.name %></option>
+                          <% }); %>
+                        </select>
+                      </label>
+                    </div>
 
                   </div>
                 </div>
@@ -40,8 +43,22 @@
             <% }); %>
           </section>
       </div>
-
     </section>
+    </section>
+    <script>
+      document.getElementById("song-dd").addEventListener("change", function () {
+        console.log(this.value)
+        fetch("/settings/songs", {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+                                 data: this.value
+                               }),
+        })
+      })
+    </script>
 
   </body>
 </html>

@@ -57,6 +57,22 @@ export const ProfilesSchema = new Schema({
         required: true,
         default: []
     },
+    favorite_songs: {
+        type: Object,
+        required: true,
+        default: [{
+            0:  0,
+            1:  0,
+            2:  0,
+            3:  0,
+            4:  0,
+            5:  0,
+            6:  0,
+            7:  0,
+            8:  0,
+            9:  0,
+            10: 0}]
+    }
 })
 
 
@@ -175,17 +191,17 @@ export const SongSchema = new Schema({
         type: String,
         default: uuidv4().toString(),
     },
-    name: {
+    user_id: {
         type: String,
         required: true,
         maxlength: 1000
     },
-    artist: {
+    level: {
         type: String,
         required: true,
         maxlength: 1000
     },
-    bpm: {
+    song: {
         type: Number,
         required: true,
         default: 0

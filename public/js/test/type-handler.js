@@ -18,7 +18,7 @@ function handleTyping(event) {
         window.location.href = '/test';
     }
 
-    const modifierKeys = ['Control', 'Alt', 'Meta', 'CapsLock', 'Fn', 'NumLock', 'ScrollLock', 'Symbol', 'SymbolLock'];
+    const modifierKeys = ['Control', 'Alt', 'Meta', 'CapsLock', 'Fn', 'NumLock', 'ScrollLock', 'Symbol', 'SymbolLock', '=', '-'];
     if(modifierKeys.includes(event.key)) {
         return
     }

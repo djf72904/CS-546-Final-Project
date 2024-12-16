@@ -2,11 +2,52 @@ import express from "express";
 import {createTest} from "../scripts/db/data/tests.js"
 import { updateOverallProfileStats } from "../scripts/db/config/triggers.js";
 import {levels} from "../constants.js";
-
+import {Profile} from "../scripts/db/config/schema.js";
+import {songs} from "../songs.js";
 let router = express.Router();
 
+
+function groupByLevel(songs) {
+    return songs.reduce((acc, song) => {
+        if (!acc[song.level]) {
+            acc[song.level] = [];
+        }
+        acc[song.level].push(song);
+        return acc;
+    }, {});
+}
+
+function markDefaultSongs(groupedSongs, levelIndexPairs) {
+    const updatedSongs = { ...groupedSongs };
+
+    levelIndexPairs.forEach(([level, index]) => {
+        if (updatedSongs[level] && updatedSongs[level][index]) {
+            updatedSongs[level][index] = {
+                ...updatedSongs[level][index],
+                default: true
+            };
+        }
+    });
+    for (const level in updatedSongs) {
+        updatedSongs[level] = updatedSongs[level].map((song) => {
+            if (!song.default) {
+                song.default = false;
+            }
+            return song;
+        });
+    }
+
+    return updatedSongs;
+}
+
 router.get('/', async function(req, res, next) {
-    return res.render('test');
+
+    const songsLst = (await Profile.findById(req.user)).favorite_songs
+    const groups = groupByLevel(songs)
+
+
+
+    return res.render('test', {songs: (Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.link)});
 });
 
 router.post('/', async function(req, res, next) {
