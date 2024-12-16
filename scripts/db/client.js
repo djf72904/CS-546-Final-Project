@@ -1,7 +1,7 @@
-import {createComment, getAllCommentsForPost, getComments} from "./data/comments.js";
-import {createFriends, deleteFriends} from "./data/friends.js";
+import {createComment, getAllCommentsForPost, getComments, updateComment} from "./data/comments.js";
+import {createFriends, deleteFriends, getFriends} from "./data/friends.js";
 import {createPost, getAllPosts, getAllPostsByUser, getPost} from "./data/posts.js";
-import {deleteProfileAndUser, editDisplayName} from "./data/profiles.js";
+import {getProfile, deleteProfileAndUser, editDisplayName, updateProfileStats, getUserByDisplayName} from "./data/profiles.js";
 import {createTest, getAllTests, getAllTestsByUser, getTest} from "./data/tests.js";
 import {getAllSongs, getSong} from "./data/songs.js";
 
@@ -10,21 +10,27 @@ const Database = {
         getComments,
         getAllCommentsForPost,
         createComment,
+        updateComment
 
     },
     friends: {
         createFriends,
         deleteFriends,
+        getFriends
     },
     posts: {
         getPost,
         getAllPosts,
         getAllPostsByUser,
-        createPost
+        createPost,
+
     },
     profiles: {
         editDisplayName,
         deleteProfileAndUser,
+        getProfile, 
+        updateProfileStats,
+        getUserByDisplayName
     },
     songs: {
         getAllSongs,

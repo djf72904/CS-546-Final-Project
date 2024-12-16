@@ -5,7 +5,7 @@ import {
 } from "./comments.js";
 import {createFriendsValidator, deleteFriendsValidator} from "./friends.js";
 import {createPostValidator, getAllPostsByUserValidator, getPostsValidator} from "./posts.js";
-import {deleteProfileAndUserValidator, editDisplayNameValidator} from "./profiles.js";
+import {deleteProfileAndUserValidator, editDisplayNameValidator, updateProfileStatsValidator} from "./profiles.js";
 import {getSongValidator} from "./songs.js";
 import {createTestValidator, getAllTestsByUserValidator, getTestsValidator} from "./tests.js";
 
@@ -26,7 +26,8 @@ const Validators = {
     },
     profiles: {
         editDisplayNameValidator,
-        deleteProfileAndUserValidator
+        deleteProfileAndUserValidator,
+        updateProfileStatsValidator
     },
     songs: {
         getSongValidator
