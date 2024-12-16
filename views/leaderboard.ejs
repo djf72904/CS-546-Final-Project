@@ -109,13 +109,13 @@
                                 <p class="text-sm text-nowrap">WPM: <%- test.wpm %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit">
-                                <p class="text-sm">Accuracy: <%- ((1- (test.missed_words.length / test.content.split(" ").length).toFixed(2)) * 100) %>%</p>
+                                <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                                 <p class="text-sm">Level: <%- test.level %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm"><%- test.content.split(" ").length %> Words</p>
+                                <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
                             </div>
                             <% if(test.time){ %>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
@@ -129,7 +129,7 @@
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>
@@ -157,13 +157,13 @@
                                 <p class="text-sm text-nowrap">WPM: <%- test.wpm %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit">
-                                <p class="text-sm">Accuracy: <%- ((1- (test.missed_words.length / test.content.split(" ").length).toFixed(2)) * 100) %>%</p>
+                                <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                                 <p class="text-sm">Level: <%- test.level %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm"><%- test.content.split(" ").length %> Words</p>
+                                <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
                             </div>
                             <% if(test.time){ %>
                                 <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
@@ -177,7 +177,7 @@
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>

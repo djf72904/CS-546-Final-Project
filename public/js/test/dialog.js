@@ -52,12 +52,22 @@ function hideDialog() {
  * @return {void} This function does not return a value; it updates the interface with the results of the test.
  */
 function endTest(testType, time, words, missedWords) {
+    timerGoing = false;
+    let locWPM
+    if(wordProgress <= 0 || missedWords.length > wordProgress){
+        accur = 0
+        wpm = 0
+        locWPM = 0
+    }
+    else{
+        accur = 100 - ((missedWords.length / wordProgress).toFixed(2) * 100)
+        wpm = ((words - missedWords.length )/ time).toFixed(2) * 60
+        locWPM = wpm
+    }
 
-    showDialog(`${100 - ((missedWords.length / words).toFixed(2) * 100)}% • ${missedWords.length} missed`);
-    const locWPM = ((words + 1 - missedWords.length )/ time).toFixed(2) * 60
-    wpm = locWPM;
+    showDialog(`${accur}% • ${missedWords.length} missed`);
     timeEl.textContent = time + ' seconds';
-    wordsEl.textContent = words + 1 + ' words';
+    wordsEl.textContent = words + ' words';
     if(wpm < 50){
         currLevel = 1
     }
@@ -91,6 +101,8 @@ async function createTest(words, time, missedWords, songInfo){
                                  },
                                  missed_words: missedWords,
                                  type: currentSetting,
+                                 accuracy: accur,
+                                 level_reached: currLevel,
                                  content: currentSetting === 'time' ? currentSequence.substring(0, currentIndex) : currentSequence,
                                  layout: layout,
                                  song: songInfo

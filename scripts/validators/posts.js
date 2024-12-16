@@ -3,7 +3,7 @@ import { validate as uuidValidate } from 'uuid';
 import {Test, User} from "../db/config/schema.js";
 
 export const createPostValidator = async (data) => {
-    if(!(data.user_id) || !(data.timestamp) || !(data.test_id) || !(data.content))
+    if(!(data.user_id) || !(data.timestamp) || !(data.test_id))
         throw "createPost Error: Must provide all fields"
     //check user_id
     if(! (typeof data.user_id === 'string')) throw "createPost Error: user_id must be of type String"
@@ -20,11 +20,6 @@ export const createPostValidator = async (data) => {
 
     //check content
     if(!(typeof data.content === 'string')) throw "createPost Error: content must be of type string"
-    let content = data.content.trim();
-    if (content.length === 0)
-      throw `createPost Error: content cannot be an empty string or string with just spaces`;
-    if (!isNaN(content))
-      throw `createPost Error: ${content} is not a valid value for content as it only contains digits`;
 
   
 }

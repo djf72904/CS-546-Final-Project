@@ -41,7 +41,7 @@
                                     <p id="post-wpm-badge" class="text-sm">WPM: <%- post.test.wpm %></p>
                                 </div>
                                 <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                    <p id="post-accuracy-badge" class="text-sm">Accuracy: <%-  ((1 - post.test.missed_words.length / post.test.content.split(" ").length).toFixed(2) * 100) %>%</p>
+                                    <p id="post-accuracy-badge" class="text-sm">Accuracy: <%-  post.test.accuracy %>%</p>
                                 </div>
                             </div>
                             <div class="bg-gray-300 px-2 py-1 rounded-full w-fit my-2">

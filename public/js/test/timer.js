@@ -7,6 +7,7 @@
  * @return {void} This function does not return a value.
  */
 function startTimer(duration) {
+    timerGoing = true;
     document.getElementById('wordProg').classList.add('hidden')
     let timer = duration;
     const timerElement = document.getElementById('timer');
@@ -19,14 +20,10 @@ function startTimer(duration) {
 
         if (timer <= 0) {
 
-            let onlyMissed = []
-            for(let i=0; i<missedWords.length; i++) {
-                if(missedWords[i] !== ""){
-                    onlyMissed.push(missedWords[i]);
-                }
+            if (lastChar === " "){
+                wordProgress--;
             }
 
-            showDialog(`${100 - ((onlyMissed.length / wordProgress).toFixed(2) * 100)}% • ${onlyMissed.length} missed`);
             endTest("Timed", (duration).toFixed(2), wordProgress, missedWords.filter(word=>word.length > 0))
             clearInterval(timerInterval);
         }

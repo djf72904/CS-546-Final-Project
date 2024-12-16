@@ -134,13 +134,13 @@
                   <p class="text-sm text-nowrap">WPM: <%- test.wpm %></p>
                 </div>
                 <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit">
-                  <p class="text-sm">Accuracy: <%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100) %>%</p>
+                  <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                 </div>
                 <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                  <p class="text-sm">Level: <%- test.level%></p>
+                  <p class="text-sm">Level: <%- test.level === 0 ? 1 : test.level %></p>
                 </div>
                 <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                  <p class="text-sm"><%- test.content.split(" ").length %> Words</p>
+                  <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
                 </div>
                 <% if(test.time){ %>
                   <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
@@ -219,11 +219,11 @@
                         <p id="post-wpm-badge" class="text-sm">WPM: <%- post.test.wpm %></p>
                       </div>
                       <div class="bg-gray-300 px-2 py-1 rounded-full">
-                        <p id="post-accuracy-badge" class="text-sm">Accuracy: <%- ((1- post.test.missed_words.length / post.test.content.split(" ").length).toFixed(2) * 100)%>%</p>
+                        <p id="post-accuracy-badge" class="text-sm">Accuracy: <%- post.test.accuracy %>%</p>
                       </div>
                     </div>
                     <div class="bg-gray-300 px-2 py-1 rounded-full w-fit my-2">
-                      <p class="text-sm text-nowrap">Song:</p>
+                      <p class="text-sm text-nowrap">Song: <i><%- post.test.song.name%></i> by <i><%- post.test.song.artist%></i> </p>
                     </div>
                     <div class="flex space-x-2 mt-4 justify-between items-center">
                       <div class="text-left">

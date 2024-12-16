@@ -201,7 +201,7 @@ const wordList = [
     "line"
 ];
 
-let wordProgress = 0;
+let wordProgress = 1;
 
 let wordLength = 25;
 
@@ -214,12 +214,15 @@ let hasCapital = false;
 let hasNumbers = false;
 
 let wpm = 0;
+let accur = 0;
 
 let missedWords = []
 
 //* once the test is over, this will be the sequence to insert into the DB
 let currentSequence = '';
+let lastChar = ""
 
+let timerGoing = false;
 
 let elapsedTime = 0;
 

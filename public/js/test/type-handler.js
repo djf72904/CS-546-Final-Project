@@ -41,8 +41,7 @@ function handleTyping(event) {
     const currentChar = sequence[currentIndex];
     const expectedChar = currentChar.textContent;
 
-
-    if(currentSetting === 'time' && event.key === currentChar.textContent && currentIndex === 0) {
+    if(currentSetting === 'time' && event.key && currentIndex === 0 && !timerGoing) {
         startTimer(time);
     }
 
@@ -63,6 +62,8 @@ function handleTyping(event) {
         }
     }
 
+    lastChar = kbdkey
+
     if (kbdkey.trim() === expectedChar.trim()) {
         currentChar.style.color = 'black';
         currentChar.classList.remove('opacity-50');
@@ -80,9 +81,7 @@ function handleTyping(event) {
 
         if(event.which === 32 && currentIndex !== spanLength-1) {
             wordProgress++;
-            missedWords.push(currentMissedWord);
             currentMissedWord = "";
-            console.log(missedWords)
             document.getElementById('wordProg').textContent = `${wordProgress}/${wordLength}`;
         }
 
@@ -94,7 +93,11 @@ function handleTyping(event) {
     } else {
         if(!event.shiftKey){
             currentChar.style.color = 'red';
-            currentMissedWord = currentSequence.split(" ")[wordProgress];
+            if(currentMissedWord === "") {
+                currentMissedWord = currentSequence.split(" ")[wordProgress-1];
+                missedWords.push(currentMissedWord);
+                console.log(missedWords);
+            }
             currentChar.classList.add('error');
         }
 

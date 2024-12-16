@@ -97,7 +97,7 @@ export const PostsSchema = new Schema({
     },
     content: {
         type: String,
-        required: true,
+        required: false,
         maxlength: 1000
     },
 });
@@ -172,6 +172,10 @@ export const TestSchema = new Schema({
     content: {
         type: String,
         required: false,
+    },
+    accuracy: {
+        type: Number,
+        required: true
     },
     time: {
         type: Number,

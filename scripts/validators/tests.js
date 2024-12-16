@@ -4,12 +4,12 @@ import {Test, User} from "../db/config/schema.js";
 
 export const createTestValidator = async (data) => {
 
-    if (!data.user_id || !data.wpm || !data.options || !data.missed_words || !data.type || !data.layout || !data.song) {
+    if (!data.user_id || !data.options || !data.missed_words || !data.type || !data.layout || !data.song) {
         throw "createTest Error: Must provide all fields";
     }
 
     //check wpm
-    if (typeof data.wpm !== 'number') 
+    if (typeof data.wpm !== 'number' || data.wpm < 0)
         throw "createTest Error: wpm must be of type Number";
     
     //check options
@@ -42,6 +42,11 @@ export const createTestValidator = async (data) => {
     //check songs
     if(typeof data.song!=="object" || Array.isArray(data.song)){
         throw "createTest Error: song must be of type Object";
+    }
+
+    //check accuracy
+    if(typeof data.accuracy !== "number" || data.accuracy < 0){
+        throw "createTest Error: accuracy must be of type Number";
     }
 }
 

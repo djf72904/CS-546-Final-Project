@@ -53,46 +53,16 @@ router.get('/', async function(req, res, next) {
 
 router.post('/', async function(req, res, next) {
 
-    //Input validation
-    if(!req.body.wpm || typeof req.body.wpm !== "number"){
-        return res.status(400).send({message: "Error: Wpm not supplied"})
-    }
-    if(!req.body.options || typeof req.body.options !== "object" || (typeof req.body.options === "object" && Array.isArray(req.body.options))){
-        return res.status(400).send({message: "Error: Options not supplied"})
-    }
-    if(!req.body.missed_words || !Array.isArray(req.body.missed_words)){
-        return res.status(400).send({message: "Error: missedWords not supplied"})
-    }
-    if(!req.body.type.trim() || typeof req.body.type !== "string" || req.body.type.trim().length === 0){
-        return res.status(400).send({message: "Error: type not supplied"})
-    }
-    if(typeof req.body.content !== "string"){
-        return res.status(400).send({message: "Error: content not supplied"})
-    }
-    if(req.body.time && typeof req.body.time !== "number"){
-        return res.status(400).send({message: "Error: time not supplied"})
-    }
-    if(!req.body.layout.trim() || typeof req.body.layout !== "string" || req.body.layout.trim().length === 0){
-        return res.status(400).send({message: "Error: layout not supplied"})
-    }
-    if(!req.body.song || typeof req.body.song !== "object" || (typeof req.body.song === "object" && Array.isArray(req.body.song))){
-        return res.status(400).send({message: "Error: song not supplied"})
-    }
 
-    let missedWords = []
-    for(let i=0; i<req.body.missed_words.length; i++) {
-        if(req.body.missed_words[i] !== ""){
-            missedWords.push(req.body.missed_words[i]);
-        }
-    }
 
     let testInfo = {
         timestamp: new Date().getTime(),
         wpm: Math.round(req.body.wpm),
         options: req.body.options,
-        missed_words: missedWords,
-        level_reached: levels.findIndex(level => req.body.wpm >= level.lowerBound && req.body.wpm < level.upperBound) + 1,
+        missed_words: req.body.missed_words,
+        level_reached: req.body.level_reached,
         type: req.body.type,
+        accuracy: req.body.accuracy,
         content: req.body.content,
         time: req.body.time,
         layout: req.body.layout,

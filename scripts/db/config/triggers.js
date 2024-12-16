@@ -53,10 +53,7 @@ export const updateOverallProfileStats = async (user_id) => {
         }
 
         totalWpm += testArr[i].wpm;
-
-        if(testArr[i].content.length !== 0){
-            totalAccur += ((1 - (missedWordsCount/testArr[i].content.split(" ").length))*100)
-        }
+        totalAccur += testArr[i].accuracy;
 
         maxLevel = Math.max(maxLevel, testArr[i].level_reached);
         maxWpm = Math.max(maxWpm, testArr[i].wpm)

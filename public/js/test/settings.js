@@ -39,9 +39,10 @@ function toggleNumbers() {
 }
 
 function resetTest(){
-    wordProgress = 0;
+    wordProgress = 1;
     wpm = 0;
     missedWords = [];
+    lastChar = ""
 }
 
 
