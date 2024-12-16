@@ -41,12 +41,12 @@ export const levels = [
     },
     {
         "level": 9,
-        lowerBound: "130",
-        upperBound: "140",
+        lowerBound: "120",
+        upperBound: "130",
     },
     {
         "level": 10,
-        lowerBound: "140",
-        upperBound: "150",
+        lowerBound: "130",
+        upperBound: "140",
     }
 ]
