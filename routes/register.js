@@ -38,7 +38,7 @@ router.post('/', async (req, res) => {
 
   // if this function fails, rollback the user creation and return the error
   await createProfileFromUser(newUser._id, display_name);
-
+  //res.render('login', { title: 'Login', user: null });
   return res.status(201).json({success: true});
 });
 
