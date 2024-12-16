@@ -32,6 +32,11 @@ const songs = [
     },
     {
         level: 2,
+        name: "Random",
+        bpm: 60
+    },
+    {
+        level: 2,
         bpm: 50,
         name: "Open Arms",
         artist: "Journey",

@@ -112,7 +112,7 @@
                                 <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm">Level: <%- test.level %></p>
+                                <p class="text-sm">Level: <%- test.level === 0 ? 1 : test.level %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                                 <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
@@ -160,7 +160,7 @@
                                 <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm">Level: <%- test.level %></p>
+                                <p class="text-sm">Level: <%- test.level === 0 ? 1 : test.level%></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                                 <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>

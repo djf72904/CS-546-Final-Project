@@ -27,10 +27,10 @@
                       <p>Level <%- song[1].find(s=>s.default).level %> • <%- song[1].find(s=>s.default).bpm %> - <%- song[1].find(s=>s.default).bpm +9 %>  WPM</p>
                     </div>
                     <div class="flex space-x-2">
-                      <a target="_blank" href="<%- song[1].find(l => l.default)?.link %>" class=primary__btn>Listen</a>
+                      <a target="_blank" href="<%- song[1].find(l => l.default).link ? song[1].find(l => l.default).link : song[1][Math.floor(Math.random() * 3 + 1)].link %>" class=primary__btn>Listen</a>
                       <label for="song">
                         <select id="song-dd-<%-i%>" class="w-auto p-2 bg-gray-300 rounded-lg">
-                          <% song[1].forEach((s, i) => { %>
+                        <% song[1].forEach((s, i) => { %>
                             <option <%= (song[1].find(l => l.default)?.link === s.link ? "selected" : "") %> value="<%- s.level + "_" + i %>"><%- s.name %></option>
                           <% }); %>
                         </select>
@@ -46,6 +46,7 @@
     </section>
     </section>
     <script>
+
       for(let i = 0; i < 10; i++){
         document.getElementById(`song-dd-${i}`).addEventListener("change", function () {
           console.log(this.value)
