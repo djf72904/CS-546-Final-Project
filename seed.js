@@ -3,6 +3,7 @@ import { User, Profile, Post, Comment, Test, Song, Friends } from './scripts/db/
 import { v4 as uuidv4 } from 'uuid';
 import {hashPassword} from "./scripts/handlers/authHandlers.js";
 import connectToDatabase from "./config/mongoConnection.js";
+import { songs } from "./songs.js";
 
 async function seedDatabase() {
 
@@ -49,9 +50,9 @@ async function seedDatabase() {
         // Seed Songs
         const songs = Array.from({ length: 5 }).map(() => ({
             _id: uuidv4(),
-            name: `Song_${Math.random().toString(36).substring(2, 8)}`,
-            artist: `Artist_${Math.random().toString(36).substring(2, 8)}`,
-            bpm: Math.floor(Math.random() * 200) + 60,
+            user_id: users[Math.floor(Math.random() * users.length)]._id,
+            level: Math.floor(Math.random() * 10) + 1,
+            song: Math.floor(Math.random() * 30) + 1,
         }));
         await Song.insertMany(songs);
         console.log('Songs seeded');
