@@ -169,7 +169,7 @@ function randomWpm(level_reached) {
 
 function randomSongForLevel(level_reached) {
     const filteredSongs = songs.filter(song => song.level === level_reached);
-    const randomIndex = Math.floor(Math.random() * 2);
+    const randomIndex = Math.floor(Math.random() * 3 + 1);
     const randomSong = filteredSongs[randomIndex];
     return {
         name: randomSong.name,
