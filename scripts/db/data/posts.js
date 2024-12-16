@@ -13,7 +13,7 @@ export const createPost = async (data) => {
                                                    user_id: data.user_id,
                                                    test_id: data.test_id,
                                                    content: data.content,
-                                                    timestamp: data.timestamp,
+                                                   timestamp: Date.now()
                                                })
 
     data.content.trim();
@@ -50,9 +50,11 @@ export const getAllPosts = async (user_id) => {
         const tests = await getTest(r.test_id)
         const comments = await getAllCommentsForPost(r._id)
 
+
+
         const comm = comments.map(async c=>{
             return {
-                ...c.toObject(),
+                ...c,
                 profile: await getProfile(c.user_id),
                 timeAgo: timeAgo(c.timestamp),
             }

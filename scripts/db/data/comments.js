@@ -2,21 +2,27 @@
 
 import {Comment} from '../../db/config/schema.js';
 import Validators from "../../validators/client.js";
+import { v4 as uuidv4 } from 'uuid';
 
 export const createComment = async (post_id, data) => {
     // Should I do a try catch for erros?
+
+    data._id = uuidv4().toString()
+    data.post_id = post_id;
+
     // VALIDATE:
     await Validators.comments.createCommentValidator(data);
 
+
     // CREATE COMMENT: Asynchronously creates a comment for a specified post
-    const newComment = await new Comment({ post_id, ...data });
+    const newComment = await new Comment(data);
     await newComment.save();
     return newComment.toObject();
 }
 
 export const getComments = async (comment_id) => {
     // VALIDATE:
-    Validators.comments.getCommentsValidator(comment_id);
+    await Validators.comments.getCommentsValidator(comment_id);
 
     // GET COMMENT: Asynchronously retrieves comments associated with a specific comment ID.
     const comment = await Comment.find({ _id: comment_id });
@@ -25,7 +31,7 @@ export const getComments = async (comment_id) => {
 
 export const getAllCommentsForPost = async (post_id) => {
     // VALIDATE:
-    Validators.comments.getAllCommentsForPostValidator(post_id);
+    await Validators.comments.getAllCommentsForPostValidator(post_id);
 
     // ALL COMMENTS: Retrieves all comments associated with a given post.
     const allComments = await Comment.find({post_id: post_id}).sort({ timestamp: -1 });

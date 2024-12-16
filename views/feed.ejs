@@ -41,14 +41,14 @@
                                     <p id="post-wpm-badge" class="text-sm">WPM: <%- post.test.wpm %></p>
                                 </div>
                                 <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                    <p id="post-accuracy-badge" class="text-sm">Accuracy: 100%</p>
+                                    <p id="post-accuracy-badge" class="text-sm">Accuracy: <%-  ((1 - post.test.missed_words.length / post.test.content.split(" ").length).toFixed(2) * 100) %>%</p>
                                 </div>
                             </div>
                             <div class="bg-gray-300 px-2 py-1 rounded-full w-fit my-2">
                                 <p class="text-sm text-nowrap">Song:</p>
                             </div>
                             <div class="flex space-x-2 mt-4 justify-between items-center">
-                                <button onclick="showDialog('<%= JSON.stringify(post) %>')" class=" info__btn">More Info</button>
+                                <button onClick="showDialog('<%= JSON.stringify(post) %>')" class=" info__btn">More Info</button>
                                 <div class="text-right">
                                     <p><%- post.comments.length %> Comment</p>
                                 </div>
@@ -97,11 +97,11 @@
                                         <div class="mt-2" id="comm-lst">
                                         </div>
                                         <hr/>
-                                            <form action="/feed" method="POST" class="flex space-x-2 items-center mt-2 w-full">
+                                            <form class="flex space-x-2 items-center mt-2 w-full">
                                                 <label for="comment-inp" class="flex-grow">
                                                     <input id="comment-inp" type="text" class="w-full p-2 bg-gray-300 rounded-lg" placeholder="Add a comment...">
                                                 </label>
-                                                <button type="submit" class="primary__btn">Comment</button>
+                                                <button onClick="makeComment()" class="primary__btn">Comment</button>
                                             </form>
                                     </div>
                                 </div>
@@ -109,7 +109,7 @@
                         </div>
                     </div>
                     <div class="px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6 gap-4">
-                        <button type="button" onclick="hideDialog()" class="info__btn">Close</button>
+                        <button type="button" onClick="hideDialog()" class="info__btn">Close</button>
                     </div>
                 </div>
             </div>

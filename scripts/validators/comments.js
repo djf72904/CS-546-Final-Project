@@ -1,10 +1,11 @@
 //This file is responsible for handling all the database interactions for comments
 
 import { validate as uuidValidate } from 'uuid';
-import { Post } from '../db/config/schema.js';
+import {Post, User} from '../db/config/schema.js';
 
 export const createCommentValidator = async (data) => {
     // CHECK: fields match schema
+
     if(!(data._id) || !(data.user_id) ||  !(data.timestamp) || !(data.post_id) || !(data.content))
         throw "createComment Error: Must provide all fields"
 
@@ -17,7 +18,7 @@ export const createCommentValidator = async (data) => {
     // CHECK: user_id is valid
     if (typeof data.user_id !== 'string' || data.user_id.trim().length === 0) 
         throw 'createComment Error: user_id must be a non-empty string that does not consist of only spaces';
-    if (!uuidValidate(user_id))
+    if (!uuidValidate(data.user_id))
         throw 'createComment Error: user_id must be a valid UUID';
     const user = await User.findOne({_id: data.user_id});
     if(!user) 
@@ -26,7 +27,7 @@ export const createCommentValidator = async (data) => {
     // CHECK: post_id is valid
     if(! (typeof data.post_id === 'string') || data.user_id.trim().length === 0) 
         throw "createComment Error: post_id must be of nonempty type string that does not consist of only spaces";
-    if (!uuidValidate(post_id))
+    if (!uuidValidate(data.post_id))
         throw 'createComment Error: post_id must be a valid UUID';
     const post = await Post.findOne({_id: data.post_id});
     if(!post) 

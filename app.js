@@ -16,6 +16,7 @@ import connectToDatabase from "./config/mongoConnection.js";
 import {handleMiddleware, handleRoutes} from "./scripts/handlers/expressHandlers.js";
 import userApiRouter from "./routes/api/user.js";
 import friendApiRouter from "./routes/api/friend.js";
+import commentApiRouter from "./routes/api/comment.js"
 
 
 let app = express();
@@ -41,10 +42,12 @@ handleRoutes(app, [
     ['/leaderboard', leaderboardRouter],
     ['/feed', feedRouter],
     ['/test', testsRouter],
-    ['/profile/songs', settings],
+    ['/settings/songs', settings],
+    ['/settings', settings],
     // api route
     ['/api/user', userApiRouter],
     ['/api/friend', friendApiRouter],
+    ['/api/comment', commentApiRouter],
     ['/logout', (req, res) => {
         res.clearCookie("token");
         res.redirect('/');

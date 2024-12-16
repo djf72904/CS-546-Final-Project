@@ -12,7 +12,6 @@ export const createPostValidator = async (data) => {
     const user = await User.findOne({_id: data.user_id});
     if(!user) throw "createPost Error: No User found with given user_id"
 
-
     //check test_id
     if(! (typeof data.test_id === 'string')) throw "createPost Error: test_id must be of type String"
     if(!uuidValidate(data.test_id)) throw "createPost Error: test_id must be valid uuid"
