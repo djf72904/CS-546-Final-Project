@@ -5,8 +5,12 @@ import jwt from "jsonwebtoken";
 //Makes sure that only authenticated users can access certain routes
 
 const protectedRoutesPaths = [
-    "test",
-    "feed",
+    "/test",
+    "/feed",
+    "/leaderboard",
+    "/profile",
+    "/settings/songs",
+    
 ];
 
 
