@@ -13,6 +13,12 @@
     <p id="space-reminder" class="mx-auto text-center text-red-500">Reminder: To complete the test, press space after the last word.</p>
     <p id="zoom-reminder" class="mx-auto text-center text-red-500">If the keyboard is over the words, hit Ctrl+(-) to zoom out</p>
     <div class="flex justify-center mt-2 items-center space-x-4 bg-gray-200 rounded-full px-2 py-2 w-fit mx-auto" id="testControls">
+        <select name="layouts" id="layouts" class="bg-gray-200 rounded-full p-2 pr-4 text-gray-700 focus:outline-none focus:ring-indigo-500">
+            <option value="qwerty">Top 100</option>
+            <option value="qwerty">< 4 letters</option>
+            <option value="qwerty">< 5 letters</option>
+            <option value="qwerty">Consecutive Letters</option>
+        </select>
         <button class="" id="punctuation" onclick="togglePunctuation()">
             Punctuation
         </button>
