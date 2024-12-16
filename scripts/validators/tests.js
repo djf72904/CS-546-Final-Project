@@ -4,7 +4,7 @@ import {Test, User} from "../db/config/schema.js";
 
 export const createTestValidator = async (data) => {
 
-    if (!data.user_id || !data.wpm || !data.options || !data.missed_words || !data.type || !data.layout) {
+    if (!data.user_id || !data.wpm || !data.options || !data.missed_words || !data.type || !data.layout || !data.song) {
         throw "createTest Error: Must provide all fields";
     }
 
@@ -38,6 +38,10 @@ export const createTestValidator = async (data) => {
     //check layout
     if(typeof data.layout !== "string" || data.layout.trim().length === 0) {
        throw "createTest Error: layout not supplied"
+    }
+    //check songs
+    if(typeof data.song!=="object" || Array.isArray(data.song)){
+        throw "createTest Error: song must be of type Object";
     }
 }
 

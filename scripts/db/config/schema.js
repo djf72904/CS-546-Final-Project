@@ -60,8 +60,7 @@ export const ProfilesSchema = new Schema({
     favorite_songs: {
         type: Object,
         required: true,
-        default: [{
-            0:  0,
+        default: {
             1:  0,
             2:  0,
             3:  0,
@@ -71,7 +70,7 @@ export const ProfilesSchema = new Schema({
             7:  0,
             8:  0,
             9:  0,
-            10: 0}]
+            10: 0}
     }
 })
 
@@ -183,6 +182,10 @@ export const TestSchema = new Schema({
         type: String,
         required: true,
         default: "qwerty"
+    },
+    song:{
+        type: Object,
+        required: true,
     }
 });
 

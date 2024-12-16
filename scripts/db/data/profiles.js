@@ -51,45 +51,6 @@ export const deleteProfileAndUser = async (user_id) => {
 
 export const updateProfileStats = async (user_id, stats) => {
 
-    const {
-        best_wpm,
-        avg_wpm,
-        max_level,
-        avg_accuracy,
-        common_missed_words
-    } = stats
-
-
-    try{
-        const profile = await getProfile(user_id);
-
-        const tests = await getAllTestsByUser(user_id);
-
-        const avgwpm = (tests.reduce((a,b)=>{
-            return a + b.wpm
-        }, 0) + avg_wpm) / (tests.length + 1)
-
-        const avgaccuracy =( Array.from(tests).reduce((a, b)=>{
-            return a + (b.missed_words.length / b.content.split(" ").length)
-        }, 0) + avg_accuracy) / Array.from(tests).length + 1
-
-
-        return Profile.updateOne({_id: user_id}, {
-            ...(profile.best_wpm < best_wpm && {best_wpm: best_wpm}),
-            ...(profile.max_level < max_level && {max_level: max_level}),
-            avg_wpm: avgwpm,
-            avg_accuracy: avgaccuracy
-        });
-
-    }
-    catch(e){
-        return "Error Updating Profile Stats"
-    }
-
-
-    return true;
-
-
     const profile = await Profile.findOneAndUpdate(
         { _id: user_id },
         { $set: stats },

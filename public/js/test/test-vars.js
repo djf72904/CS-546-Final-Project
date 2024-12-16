@@ -225,6 +225,7 @@ let elapsedTime = 0;
 
 let layout = "qwerty"
 
+let currLevel = 0;
 
 const dialog = document.getElementById("favDialog");
 

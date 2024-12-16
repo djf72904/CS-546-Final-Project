@@ -58,9 +58,15 @@ function endTest(testType, time, words, missedWords) {
     wpm = locWPM;
     timeEl.textContent = time + ' seconds';
     wordsEl.textContent = words + 1 + ' words';
+    if(wpm < 50){
+        currLevel = 1
+    }
+    else {
+        currLevel = levels.findIndex(level => locWPM >= level.lowerBound && locWPM < level.upperBound) + 1
+    }
 
     speedEl.textContent =
-        `${locWPM.toFixed(0)} WPM • Level ${levels.findIndex(level => locWPM >= level.lowerBound && locWPM < level.upperBound) + 1}`;
+        `${locWPM.toFixed(0)} WPM • Level ${currLevel}`;
     testTypeEl.textContent = testType;
     if(missedWords.length === 0 ){
         const jsConfetti = new JSConfetti();
@@ -69,7 +75,7 @@ function endTest(testType, time, words, missedWords) {
         });}
 }
 
-async function createTest(words, time, missedWords){
+async function createTest(words, time, missedWords, songInfo){
     const response = await fetch('/test', {
         method: 'POST',
         headers: {
@@ -86,7 +92,8 @@ async function createTest(words, time, missedWords){
                                  missed_words: missedWords,
                                  type: currentSetting,
                                  content: currentSetting === 'time' ? currentSequence.substring(0, currentIndex) : currentSequence,
-                                 layout: layout
+                                 layout: layout,
+                                 song: songInfo
                              })
     })
 

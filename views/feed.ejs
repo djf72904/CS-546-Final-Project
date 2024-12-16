@@ -45,7 +45,7 @@
                                 </div>
                             </div>
                             <div class="bg-gray-300 px-2 py-1 rounded-full w-fit my-2">
-                                <p class="text-sm text-nowrap">Song:</p>
+                                <p class="text-sm text-nowrap">Song: <i><%- post.test.song.name%></i> by <i><%- post.test.song.artist%></i></p>
                             </div>
                             <div class="flex space-x-2 mt-4 justify-between items-center">
                                 <button onClick="showDialog('<%= JSON.stringify(post) %>')" class=" info__btn">More Info</button>
@@ -90,6 +90,9 @@
                                         </div>
                                         <div class="bg-gray-300 px-2 py-1 rounded-full">
                                             <p id="post-d-accuracy-badge" class="text-sm"></p>
+                                        </div>
+                                        <div class="bg-gray-300 px-2 py-1 rounded-full">
+                                            <p id="post-d-song-badge" class="text-sm">Song: <i id="post-d-song-badge-inner" class="text-sm"></i></p>
                                         </div>
                                     </div>
                                     <div class="flex flex-col space-y-2 mt-4">

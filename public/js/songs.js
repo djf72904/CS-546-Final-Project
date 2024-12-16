@@ -128,7 +128,7 @@ const songs = [
     {
         level: 7,
         bpm: 110,
-        name: "Don't Think Twice, It's All Right",
+        name: "Dont Think Twice, Its All Right",
         artist: "Bob Dylan",
         link: "https://www.youtube.com/watch?v=1iHhWh9FtsQ"
     },
@@ -142,21 +142,21 @@ const songs = [
     {
         level: 7,
         bpm: 110,
-        name: "All She's Got",
+        name: "All Shes Got",
         artist: "Sum 41",
         link: "https://www.youtube.com/watch?v=UxtMzaiqjew"
     },
     {
         level: 8,
         bpm: 120,
-        name: "It's My Life",
+        name: "Its My Life",
         artist: "Bon Jovi",
         link: "https://www.youtube.com/watch?v=bY3vXr7fm8k"
     },
     {
         level: 8,
         bpm: 120,
-        name: "I'm so Afraid",
+        name: "Im so Afraid",
         artist: "Fleetwood Mac",
         link: "https://www.youtube.com/watch?v=ZN3MneMAX9s"
     },

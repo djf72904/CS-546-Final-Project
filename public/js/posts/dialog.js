@@ -80,8 +80,6 @@ function showDialog(post) {
     post= JSON.parse(post)
     currPost = post
 
-    console.log(post)
-
     dialog.classList.remove("hidden");
     const commentEl = document.getElementById("comm-lst");
     document.getElementById("post-d-wpm-badge").textContent = "WPM: " + post.test.wpm
@@ -95,6 +93,9 @@ function showDialog(post) {
     }
 
     document.getElementById("post-d-accuracy-badge").textContent = "Accuracy: " + accuracy + "%"
+
+    document.getElementById("post-d-song-badge-inner").textContent = post.test.song.name
+
     document.getElementById("post-time-ago").textContent = timeAgo(post.timestamp)
 
     document.getElementById("avatar-name").textContent = post.profile.display_name

@@ -91,14 +91,15 @@ export const updateOverallProfileStats = async (user_id) => {
 
     let newStats = {
         best_wpm: maxWpm,
-        avg_wpm: avgWpm,
+        avg_wpm: avgWpm.toFixed(2),
         max_level: maxLevel,
-        avg_accuracy: avgAccur,
+        avg_accuracy: avgAccur.toFixed(2),
         common_missed_words: top5MissedWords
     }
 
-    //TODO: Uncomment this when completed pls!
-    //await updateProfileStats(user_id, newStats);
+    console.log(newStats)
+
+    await updateProfileStats(user_id, newStats);
 
 }
 

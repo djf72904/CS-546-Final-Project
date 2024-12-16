@@ -41,7 +41,7 @@ function showDialog(wpm, accuracy, content, user, timestamp, song, level, time) 
     document.getElementById("avtr-i").innerText = user[0];
     document.getElementById("username").innerText = user;
     document.getElementById("time-taken").innerText = timeAgo((timestamp));
-    document.getElementById("song-badge").innerText = song;
+    document.getElementById("song-badge-inner").innerText = song;
     document.getElementById("lvl-badge").innerText = "Level: " + level + "";
     console.log(timeAgo(timestamp))
     if(time > 0){

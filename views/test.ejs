@@ -98,12 +98,12 @@
                     </div>
                 </div>
                 <div class="px-4 py-3 sm:flex sm:px-6 gap-4 justify-between w-full items-center">
-                    <a id="song-btn" onClick="console.log('<%- (songs) %>'); window.open('<%- (songs) %>'.split(',')[levels.findIndex(level => wpm >= level.lowerBound && wpm < level.upperBound)], '_blank')" target="_blank">
+                    <a id="song-btn" onClick="window.open('<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], '_blank')" target="_blank">
                         <div class="primary__btn cursor-pointer">Listen to Song</div>
                     </a>
 
                     <div class="">
-                        <button type="button" onClick="()=> hideDialog(); createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords); window.location.href='/profile'" id="secondary__btn">Done</button>
+                        <button type="button" onClick="()=> hideDialog(); createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords, {name:'<%- (songNames) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], link: '<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], artist: '<%- artists %>'.split(',')[levels.findIndex(level => level.level === currLevel)]}); window.location.href='/test' " id="secondary__btn">Done</button>
                     </div>
                 </div>
                 <p class="text-center">or</p>
@@ -111,7 +111,7 @@
                     <label for="test-inp" class="flex-grow">
                         <input id="test-inp" type="text" class="w-full p-2 bg-gray-300 rounded-lg" placeholder="Add a message...">
                     </label>
-                    <button type="button" onClick="()=> hideDialog(); createPost(createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords)); window.location.href='/profile' " class="primary__btn">Post</button>
+                    <button type="button" onClick="()=>hideDialog(); createPost(createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords, {name:'<%- (songNames) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], link: '<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], artist: '<%- artists %>'.split(',')[levels.findIndex(level => level.level === currLevel)]} )); window.location.href='/test' " class="primary__btn">Post</button>
                 </div>
             </div>
         </div>

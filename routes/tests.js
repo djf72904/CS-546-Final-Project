@@ -45,16 +45,15 @@ router.get('/', async function(req, res, next) {
     const songsLst = (await Profile.findById(req.user)).favorite_songs
     const groups = groupByLevel(songs)
 
-
-
-    return res.render('test', {songs: (Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.link)});
+    return res.render('test', {songNames: (Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.name),
+                                            songs: (Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.link),
+                                            artists:(Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.artist)
+                                            });
 });
 
 router.post('/', async function(req, res, next) {
 
-
     //Input validation
-
     if(!req.body.wpm || typeof req.body.wpm !== "number"){
         return res.status(400).send({message: "Error: Wpm not supplied"})
     }
@@ -76,16 +75,15 @@ router.post('/', async function(req, res, next) {
     if(!req.body.layout.trim() || typeof req.body.layout !== "string" || req.body.layout.trim().length === 0){
         return res.status(400).send({message: "Error: layout not supplied"})
     }
+    if(!req.body.song || typeof req.body.song !== "object" || (typeof req.body.song === "object" && Array.isArray(req.body.song))){
+        return res.status(400).send({message: "Error: song not supplied"})
+    }
 
     let missedWords = []
     for(let i=0; i<req.body.missed_words.length; i++) {
         if(req.body.missed_words[i] !== ""){
             missedWords.push(req.body.missed_words[i]);
         }
-    }
-
-    if(req.body.content === ""){
-
     }
 
     let testInfo = {
@@ -97,7 +95,8 @@ router.post('/', async function(req, res, next) {
         type: req.body.type,
         content: req.body.content,
         time: req.body.time,
-        layout: req.body.layout
+        layout: req.body.layout,
+        song: req.body.song
     }
 
     if(testInfo.type !== "time"){

@@ -496,7 +496,6 @@ const Keyboard = (() => {
         dropdown.getElementsByTagName("select")[0].addEventListener("change", (e) => {
             const selectedLayout = e.target.value;
             currentLayout = layouts[selectedLayout];
-            console.log(currentLayout);
             properties = Object.assign({}, currentLayout);
             layout = selectedLayout;
 

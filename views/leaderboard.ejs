@@ -123,13 +123,13 @@
                             </div>
                             <% } %>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm">Song:</p>
+                                <p class="text-sm">Song: <i><%- test.song.name %></i> by <i><%- test.song.artist%></i></p>
                             </div>
                             <div>
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>
@@ -171,13 +171,13 @@
                                 </div>
                             <% } %>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm">Song:</p>
+                                <p class="text-sm">Song: <i><%- test.song.name %></i> by <i><%- test.song.artist%></i></p>
                             </div>
                             <div>
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- ((1- test.missed_words.length / test.content.split(" ").length).toFixed(2) * 100)  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>
@@ -230,10 +230,10 @@
                                         <div id="time-badge-cont" class="text-nowrap py-1 rounded-full h-fit" >
                                             <p class="text-sm" id="time-badge"></p>
                                         </div>
-                                        <hr/>
                                         <div class="text-nowrap py-1 rounded-full h-fit" >
-                                            <p class="text-sm" id="song-badge"></p>
+                                            <p class="text-sm" id="song-badge">Song: <i class="text-sm" id="song-badge-inner"></i></p>
                                         </div>
+                                        <hr/>
                                     </div>
                                 </div>
                             </div>

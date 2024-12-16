@@ -27,7 +27,7 @@ router.get('/', async function(req, res, next) {
             ...test.toObject(),
             level: levels.findIndex(level => test.wpm >= level.lowerBound && test.wpm < level.upperBound) + 1,
             profile: await getProfile(test.user_id),
-            song: await getSong(test.song_id)
+            song: test.song
         }
     })
 
@@ -46,7 +46,7 @@ router.get('/', async function(req, res, next) {
             ...test.toObject(),
             level: levels.findIndex(level => test.wpm >= level.lowerBound && test.wpm < level.upperBound) + 1,
             profile: await getProfile(test.user_id),
-            song: await getSong(test.song_id)
+            song: test.song
         }
     })
 
