@@ -1,6 +1,6 @@
 // This file is responsible for handling all the database interactions for profiles
 import Validators from "../../validators/client.js";
-import {Profile, User} from "../config/schema.js";
+import {Friend, Post, Profile, Test, User} from "../config/schema.js";
 import {getAllTestsByUser} from "./tests.js";
 
 export const getProfile = async (user_id) => {
@@ -35,18 +35,19 @@ export const editDisplayName = async (user_id, display_name) => {
 
 //TODO: Add a function to delete a profile entry and its respective user entry
 export const deleteProfileAndUser = async (user_id) => {
-    Validators.profiles.deleteProfileAndUserValidator(user_id)
+    try{
+        await Validators.profiles.deleteProfileAndUserValidator(user_id)
 
-    const user = await User.findOneAndDelete(
-        { _id: user_id },
-    );
-
-    const profile = await Profile.findOneAndDelete({ _id: user_id });
-
-    return {
-        user: user.toObject(),
-        profile: profile.toObject()
+        await Post.findOneAndDelete({ user_id: user_id });
+        await Friend.findOneAndDelete({ $or: [{user_1: user_id}, {user_2: user_id}] });
+        await Test.findOneAndDelete({ user_id: user_id });
+        await User.findOneAndDelete({ _id: user_id });
+        await Profile.findOneAndDelete({ _id: user_id });
     }
+    catch{
+        throw new Error("Error deleting account")
+    }
+
 }
 
 export const updateProfileStats = async (user_id, stats) => {
@@ -61,5 +62,5 @@ export const updateProfileStats = async (user_id, stats) => {
 }
 
 export const getUserByDisplayName = async (username) => {
-    return await Profile.findOne({display_name: username})
+    return Profile.findOne({display_name: username});
 }

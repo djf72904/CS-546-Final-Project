@@ -2,14 +2,15 @@ import express from 'express';
 import {createProfileFromUser} from "../scripts/db/config/triggers.js";
 import {createSecretToken, hashPassword} from "../scripts/handlers/authHandlers.js";
 import {User} from "../scripts/db/config/schema.js";
+import {authHandlers} from "../middleware.js";
 let router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/', authHandlers, function(req, res, next) {
   res.render('register');
 });
 
-router.post('/', async (req, res) => {
+router.post('/', authHandlers,  async (req, res) => {
   const { display_name, email, password } = req.body;
 
   try {

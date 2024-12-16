@@ -13,6 +13,7 @@
         <div class="flex space-x-2 items-center">
           <a href="/settings/songs" class="info__btn">My Songs</a>
           <button id="logout" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Logout</button>
+          <button id="delete-profile" onClick="deleteProfile()" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Delete Profile</button>
         </div>
         <% } %>
       </div>
@@ -24,7 +25,7 @@
                 <div class="flex flex-wrap justify-between -m-2">
                   <div class="w-auto p-2">
                     <p class="mb-4 text-sm text-neutral-500 font-medium">Best WPM</p>
-                    <h3 class="font-heading text-3xl font-semibold"><%= profile.best_wpm %></h3>
+                    <h3 class="font-heading text-3xl font-semibold"><%= profile.best_wpm.toFixed(0) %></h3>
                   </div>
                   <div class="w-auto p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 opacity-50">
@@ -40,7 +41,7 @@
                 <div class="flex flex-wrap justify-between -m-2">
                   <div class="w-auto p-2">
                     <p class="mb-4 text-sm text-neutral-500 font-medium">Average WPM</p>
-                    <h3 class="font-heading text-3xl font-semibold"><%= profile.avg_wpm %></h3>
+                    <h3 class="font-heading text-3xl font-semibold"><%= profile.avg_wpm.toFixed(0) %></h3>
                   </div>
                   <div class="w-auto p-2">
                     <svg xmlns="http://www.w3.org/2000/svg" fill="none"  viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="size-4 opacity-50">
@@ -70,7 +71,7 @@
                 <div class="flex flex-wrap justify-between -m-2">
                   <div class="w-auto p-2">
                     <p class="mb-4 text-sm text-neutral-500 font-medium">Average Accuracy</p>
-                    <h3 class="font-heading text-3xl font-semibold"><%= profile.avg_accuracy %> %</h3>
+                    <h3 class="font-heading text-3xl font-semibold"><%= profile.avg_accuracy.toFixed(0) %> %</h3>
                   </div>
                   <div class="w-auto p-2">
 
@@ -169,7 +170,7 @@
           <div id="friend-lst">
             <% friends.forEach(friend => { %>
               <div class="mb-4" id="friend-entry-<%- friend._id %>">
-                <div id="profile-link" data-username="<%- profile.display_name ===  friend.user_1.display_name ? friend.user_2.display_name : friend.user_1.display_name %>" class="px-5 py-3 cursor-pointer bg-gray-200 rounded-lg w-full flex space-x-3.5 flex-nowrap items-center">
+                <div class="px-5 py-3 bg-gray-200 rounded-lg w-full flex space-x-3.5 flex-nowrap items-center">
                   <div class="flex space-x-3.5 w-full flex-nowrap items-center">
                     <div class="avatar">
                       <P><%- profile.display_name === friend.user_1.display_name ? friend.user_2.display_name[0] : friend.user_1.display_name[0] %></P>
@@ -180,9 +181,15 @@
                       </div>
                     </div>
                   </div>
-                  <% if(self){ %>
-                  <button onClick="removeFriend('<%- friend._id %>')" class="danger__btn">Remove</button>
-                  <% } %>
+                  <div class="flex space-x-2 items-center justify-end">
+                    <% if( !(profile.display_name ===  friend.user_1.display_name || profile.display_name ===  friend.user_2.display_name)){ %>
+                      <button onClick="window.location.href = '/profile/' + '<%- profile.display_name ===  friend.user_1.display_name ? friend.user_2.display_name : friend.user_1.display_name %>'" class="primary__btn">Visit</button>
+                    <% } %>
+                    <% if(self){ %>
+                      <button onClick="removeFriend('<%- friend._id %>')" class="danger__btn">Remove</button>
+                    <% } %>
+                  </div>
+
                 </div>
               </div>
             <% }); %>
@@ -415,10 +422,23 @@
                });
       }
 
-      const link_btn = document.getElementById("profile-link");
-      link_btn.addEventListener("click", () => {
-        window.location.href = "/profile/" + link_btn.getAttribute("data-username");
-      });
+
+
+      function deleteProfile() {
+        if (confirm('Are you sure you want to delete this profile? All your tests and data will be deleted')) {
+
+          $.ajax({
+                   url: '/profile',
+                   method: 'DELETE',
+                   contentType: 'application/json',
+                   error: function (e) {
+                     alert("Error: " + JSON.stringify(e));
+                   }
+                 });
+        }
+
+        window.location.href = '/logout';
+      }
     </script>
 
   </body>

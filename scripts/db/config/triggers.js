@@ -36,7 +36,7 @@ export const updateOverallProfileStats = async (user_id) => {
 
     for(let i=0; i<testAmt; i++){
 
-        let missedWordsArr = testArr[i].missed_words
+        let missedWordsArr = testArr[i].missed_words.filter(word => word !== "" && word !== null);
         let missedWordsCount = missedWordsArr.length;
 
         //Add missed words to object

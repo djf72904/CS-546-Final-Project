@@ -50,3 +50,39 @@ export default async function isUserLoggedIn(req, res, next) {
         next();
     }
 }
+
+export const profileHandler = (req, res, next) => {
+    if(!req.user) {
+        return res.redirect('/login');
+    }
+    next();
+}
+
+export const testHandler = (req, res, next) => {
+    if(!req.user) {
+        return res.redirect('/login');
+    }
+    next();
+}
+
+
+export const authHandlers = (req, res, next) => {
+    if(req.user) {
+        return res.redirect('/profile');
+    }
+    next()
+}
+
+export const leaderboardHandler = (req, res, next) => {
+    if(!req.user) {
+        return res.redirect('/login');
+    }
+    next()
+}
+
+export const postsHandler = (req, res, next) => {
+    if(!req.user) {
+        return res.redirect('/login');
+    }
+    next()
+}

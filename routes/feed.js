@@ -1,9 +1,10 @@
 import express from "express";
 import {createPost, getAllPosts} from "../scripts/db/data/posts.js";
+import {postsHandler} from "../middleware.js";
 let router = express.Router();
 
 
-router.get('/', async function(req, res, next) {
+router.get('/', postsHandler, async function(req, res, next) {
 
     const posts = await getAllPosts(req.user)
 
@@ -12,7 +13,7 @@ router.get('/', async function(req, res, next) {
     });
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/', postsHandler, async function(req, res, next) {
     try{
         await createPost({
             user_id: req.user,

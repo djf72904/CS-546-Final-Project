@@ -1,15 +1,16 @@
 import express from "express";
-import {getProfile, getUserByDisplayName} from "../scripts/db/data/profiles.js";
+import {deleteProfileAndUser, getProfile, getUserByDisplayName} from "../scripts/db/data/profiles.js";
 import {getAllPostsByUser} from "../scripts/db/data/posts.js";
 import {getAllTestsByUser} from "../scripts/db/data/tests.js";
 import {levels} from "../constants.js";
 import {getFriends} from "../scripts/db/data/friends.js";
+import {profileHandler} from "../middleware.js";
 let router = express.Router();
 
 
 
 
-router.get('/', async function(req, res, next) {
+router.get('/', profileHandler, async function(req, res, next) {
 
 
     // getting the user's profile data
@@ -111,7 +112,22 @@ router.get('/:display_name', async function(req, res, next) {
             }
         })
     }
+})
 
+
+
+router.delete('/', async function(req, res, next) {
+    if(!req.user){
+        return res.status(401).send("Unauthorized")
+    }
+    try{
+        await deleteProfileAndUser(req.user);
+        res.clearCookie("token");
+        req.user = null;
+    }
+    catch(e){
+        return res.status(500).send(e);
+    }
 
 
 })

@@ -1,41 +1,28 @@
 
 function togglePunctuation() {
     hasPunctuation = !hasPunctuation;
-    //reset test
     resetTest()
-    if(hasPunctuation) {
-        const sequence = generateRandomWords(wordLength);
-        convertParagraphToCharacters(sequence);
-
-        document.getElementById('punctuation').classList.add('setting__active');
-    } else {
-        document.getElementById('punctuation').classList.remove('setting__active');
-    }
+    const sequence = generateRandomWords(wordLength);
+    convertParagraphToCharacters(sequence);
+    document.getElementById('punctuation').classList.add('setting__active');
 }
 
 function toggleCapital() {
     hasCapital = !hasCapital;
     resetTest()
-    if(hasCapital) {
-        const sequence = generateRandomWords(wordLength);
-        convertParagraphToCharacters(sequence);
-        document.getElementById('capital').classList.add('setting__active');
-    } else {
-        document.getElementById('capital').classList.remove('setting__active');
-    }
+    const sequence = generateRandomWords(wordLength);
+    convertParagraphToCharacters(sequence);
+    document.getElementById('capital').classList.add('setting__active');
     document.getElementById('capital').blur()
 }
 
 function toggleNumbers() {
     hasNumbers = !hasNumbers;
     resetTest()
-    if(hasNumbers) {
-        const sequence = generateRandomWords(wordLength);
-        convertParagraphToCharacters(sequence);
-        document.getElementById('numbers').classList.add('setting__active');
-    } else {
-        document.getElementById('numbers').classList.remove('setting__active');
-    }
+    const sequence = generateRandomWords(wordLength);
+    convertParagraphToCharacters(sequence);
+    document.getElementById('numbers').classList.add('setting__active');
+
 }
 
 function resetTest(){

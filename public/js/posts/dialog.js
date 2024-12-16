@@ -89,7 +89,7 @@ function showDialog(post) {
         accuracy = 0
     }
     else{
-        accuracy = ((1 - post.test.missed_words.length / post.test.content.split(" ").length).toFixed(2) * 100)
+        accuracy = ((1 - post.test.missed_words.filter(word => word !== "" && word !== null).length / post.test.content.split(" ").length).toFixed(2) * 100)
     }
 
     document.getElementById("post-d-accuracy-badge").textContent = "Accuracy: " + accuracy + "%"

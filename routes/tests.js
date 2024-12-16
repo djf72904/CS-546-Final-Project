@@ -4,6 +4,7 @@ import { updateOverallProfileStats } from "../scripts/db/config/triggers.js";
 import {levels} from "../constants.js";
 import {Profile} from "../scripts/db/config/schema.js";
 import {songs} from "../songs.js";
+import {testHandler} from "../middleware.js";
 let router = express.Router();
 
 
@@ -40,7 +41,7 @@ function markDefaultSongs(groupedSongs, levelIndexPairs) {
     return updatedSongs;
 }
 
-router.get('/', async function(req, res, next) {
+router.get('/',  testHandler, async function(req, res, next) {
 
     const songsLst = (await Profile.findById(req.user)).favorite_songs
     const groups = groupByLevel(songs)
@@ -51,7 +52,7 @@ router.get('/', async function(req, res, next) {
                                             });
 });
 
-router.post('/', async function(req, res, next) {
+router.post('/', testHandler, async function(req, res, next) {
 
 
 
@@ -60,7 +61,7 @@ router.post('/', async function(req, res, next) {
         wpm: Math.round(req.body.wpm),
         song: req.body.song,
         options: req.body.options,
-        missed_words: req.body.missed_words,
+        missed_words: req.body.missed_words.filter(word => word !== "" && word !== null),
         level_reached: req.body.level_reached,
         type: req.body.type,
         accuracy: req.body.accuracy,

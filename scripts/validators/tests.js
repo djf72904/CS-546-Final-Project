@@ -17,8 +17,8 @@ export const createTestValidator = async (data) => {
         throw "createTest Error: options must be of type Object";
 
     //check missed words
-    if (!Array.isArray(data.missed_words)) throw "createTest Error: missed_words must be an array of strings"; 
-    for (let word of data.missed_words) { 
+    if (!Array.isArray(data.missed_words.filter(word => word !== "" && word !== null))) throw "createTest Error: missed_words must be an array of strings";
+    for (let word of data.missed_words.filter(word => word !== "" && word !== null)) {
         if (typeof word !== 'string') 
             throw "createTest Error: each item in missed_words must be of type String"; 
         } 

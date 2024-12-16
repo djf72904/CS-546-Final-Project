@@ -236,7 +236,7 @@ export const FriendsSchema = new Schema({
 });
 
 export const User = mongoose.model('users', UsersSchema);
-export const Friends = mongoose.model('Friends', FriendsSchema);
+export const Friend = mongoose.model('Friends', FriendsSchema);
 //export const Song = mongoose.model('Song', SongSchema);
 export const Post = mongoose.model('Post', PostsSchema);
 export const Comment = mongoose.model('Comment', CommentsSchema);

@@ -1,13 +1,13 @@
-import {Friends} from "../config/schema.js";
+import {Friend} from "../config/schema.js";
 
 export const createFriends = async (user_1, user_2) => {
-    const friends = await Friends.findOne({ user_1, user_2 }).exec();
+    const friends = await Friend.findOne({ user_1, user_2 }).exec();
 
     if (friends) {
         return null;
     }
 
-    const newFriends = await new Friends({ user_1, user_2 });
+    const newFriends = await new Friend({ user_1, user_2 });
 
     await newFriends.save();
 
@@ -16,12 +16,12 @@ export const createFriends = async (user_1, user_2) => {
 }
 
 export const deleteFriends = async (id) => {
-    await Friends.findByIdAndDelete(id)
+    await Friend.findByIdAndDelete(id)
 }
 
 export const getFriends = async (user_id) => {
     //since friends are bidirectional, we need to check both directions
-    return await Friends.find({
+    return await Friend.find({
                                   $or: [{user_1: user_id}, {user_2: user_id}]
     }).exec();
 }

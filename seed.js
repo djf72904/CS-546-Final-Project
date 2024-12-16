@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { User, Profile, Post, Comment, Test, Friends } from './scripts/db/config/schema.js'; // Replace './models' with the correct path to your models
+import { User, Profile, Post, Comment, Test, Friend } from './scripts/db/config/schema.js'; // Replace './models' with the correct path to your models
 import { v4 as uuidv4 } from 'uuid';
 import {hashPassword} from "./scripts/handlers/authHandlers.js";
 import connectToDatabase from "./config/mongoConnection.js";
@@ -18,7 +18,7 @@ async function seedDatabase() {
         await Comment.deleteMany();
         await Test.deleteMany();
         //await Song.deleteMany();
-        await Friends.deleteMany();
+        await Friend.deleteMany();
 
         // Seed Users
 
@@ -82,7 +82,7 @@ async function seedDatabase() {
                 wpm: randomWpm(levelReached),
                 song: randomSongForLevel(levelReached), 
                 options: { difficulty: 'medium' },
-                missed_words: [1, 3, 7],
+                missed_words: ['Lorem'],
                 type: 'test',
                 content: 'Lorem ipsum test content.',
                 accuracy: Math.floor(Math.random() * 101),
@@ -121,7 +121,7 @@ async function seedDatabase() {
             user_1: user._id,
             user_2: users[idx + 1]._id,
         }));
-        await Friends.insertMany(friends);
+        await Friend.insertMany(friends);
         console.log('Friends seeded');
 
         console.log('Database seeded successfully');

@@ -42,9 +42,10 @@ function hasConsecutiveLetters(word) {
  * Additional effects, like punctuation, capitalization, and numbers, are conditionally applied.
  *
  * @param {number} wordCount - The number of random words to generate.
+ * @param revert
  * @return {string} A string representing the generated sequence of random words.
  */
-function generateRandomWords(wordCount) {
+function generateRandomWords(wordCount, revert=false) {
 
     const url = new URL(window.location.href);
     const params = new URLSearchParams(url.search);

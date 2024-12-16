@@ -69,4 +69,9 @@ app.use(function(err, req, res, next) {
   res?.render('error');
 });
 
+app.listen(3000, () => {
+    console.log("We've now got a server!");
+    console.log('Your routes will be running on http://localhost:3000');
+});
+
 export default app;
