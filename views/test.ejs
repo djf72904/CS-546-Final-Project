@@ -98,14 +98,14 @@
                     </div>
                 </div>
                 <div class="px-4 py-3 sm:flex sm:px-6 gap-4 justify-between w-full items-center">
-                    <a id="song-btn" onClick="onSongButtonClick(currLevel, songs)" target="_blank">
+                    <a id="song-btn" onClick="onSongButtonClick(currLevel, '<%- songs %>', songs)" target="_blank">
                         <div class="primary__btn cursor-pointer">Listen to Song</div>
                     </a>
                     
                     <div class="">
                         <button 
                             type="button" 
-                            onClick="()=> hideDialog(); onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, '<%- songNames %>', '<%- artists %>', songs, currLevel)" 
+                            onClick="()=> hideDialog(); onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, '<%- songNames %>', '<%- songs %>', '<%- artists %>', songs, currLevel, false)"
                             id="secondary__btn">
                             Done
                         </button>
@@ -116,7 +116,7 @@
                     <label for="test-inp" class="flex-grow">
                         <input id="test-inp" type="text" class="w-full p-2 bg-gray-300 rounded-lg" placeholder="Add a message...">
                     </label>
-                    <button type="button" onClick="()=>hideDialog(); createPost(createTest(((wordProgress - missedWords.filter(word=>word?.length > 0)) / elapsedTime) * 60, time, missedWords, {name:'<%- (songNames) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], link: '<%- (songs) %>'.split(',')[levels.findIndex(level => level.level === currLevel)], artist: '<%- artists %>'.split(',')[levels.findIndex(level => level.level === currLevel)]} )); window.location.href='/profile' " class="primary__btn">Post</button>
+                    <button type="button" onClick="()=>hideDialog(); onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, '<%- songNames %>', '<%- songs %>', '<%- artists %>', songs, currLevel, true); " class="primary__btn">Post</button>
                 </div>
             </div>
         </div>
@@ -171,33 +171,56 @@
 
     let selectedSong; 
 
-    function onSongButtonClick(currLevel, songs) {
-        selectedSong = getRandomSong(currLevel, songs);
-        window.open(selectedSong.link, '_blank');
+    function onSongButtonClick(currLevel, songLinks, songsObj) {
+
+        if(songLinks.split(',')[levels.findIndex(level => level.level === currLevel)] === "") {
+            selectedSong = getRandomSong(currLevel, songsObj)
+            window.open(selectedSong.link, '_blank');
+        }else{
+            selectedSong = songLinks.split(',')[levels.findIndex(level => level.level === currLevel)];
+            window.open(selectedSong, '_blank');
+        }
+
+
     }
 
-    function onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, songNames, artists, songs, currLevel) {
+    function onDoneButtonClick(wordProgress, missedWords, elapsedTime, time, levels, songNames, songLinks, artists, songsObj, currLevel, isPost) {
         const adjustedWords = wordProgress - missedWords.filter(word => word?.length > 0);
         const speed = (adjustedWords / elapsedTime) * 60;
+        let song;
 
-        const song = selectedSong || getRandomSong(currLevel, songs);
+        if(songNames.split(',')[levels.findIndex(level => level.level === currLevel)] === "Random"){
+            song = selectedSong || getRandomSong(currLevel, songsObj)
+        }
+        else{
+            song = songLinks.split(',')[levels.findIndex(level => level.level === currLevel)]
+        }
 
-        createTest(
+        let ret = createTest(
             speed,
             time,
             missedWords,
             {
                 name: song.name || songNames.split(',')[levels.findIndex(level => level.level === currLevel)],
-                link: song.link || songs.split(',')[levels.findIndex(level => level.level === currLevel)],
+                link: typeof song.link === "string" ? song.link : song,
                 artist: song.artist || artists.split(',')[levels.findIndex(level => level.level === currLevel)]
             }
         );
         window.location.href = '/test';
+        selectedSong = null;
+
+        if(isPost){
+            createPost(ret)
+            window.location.href = '/profile';
+        }else{
+            window.location.href = '/test';
+        }
+
     }
 
     function getRandomSong(currLevel, songs) {
         const filteredSongs = songs.filter(song => song.level === currLevel);
-        const randomIndex = Math.floor(Math.random() * Math.min(filteredSongs.length, 3));
+        const randomIndex = Math.floor(Math.random() * 3 + 1);
         return filteredSongs[randomIndex];
     }
 
