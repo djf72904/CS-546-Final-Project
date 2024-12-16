@@ -6,7 +6,9 @@ let router = express.Router();
 
 router.get('/', postsHandler, async function(req, res, next) {
 
-    const posts = await getAllPosts(req.user)
+    const posts = await getAllPosts()
+
+    console.log(posts)
 
     res.render('feed', {
         posts: posts,
