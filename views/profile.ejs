@@ -7,12 +7,20 @@
   <body>
     <%- include('./partials/_header.ejs'); %>
     <section class="mx-auto w-full">
-      <div class="flex justify-between items-center mb-4">
-        <h1 class="text-3xl font-bold"><%= profile.display_name %></h1>
+      <div class="flex justify-between items-center">
+        <form id="dn-form" class="mb-0">
+          <label class="flex items-center">
+            <input id="dp-inp" name="display_name" placeholder="<%= profile.display_name %>" class="text-2xl font-bold bg-gray-200 rounded-md mr-2 py-1 px-4"/>
+            <button type="submit" class="primary__btn">Save Username</button>
+          </label>
+        </form>
+
+
         <% if(self){ %>
         <div class="flex space-x-2 items-center">
           <a href="/settings/songs" class="info__btn">My Songs</a>
           <button id="logout" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Logout</button>
+          <hr class=" border-gray-200 border h-10 inline-block">
           <button id="delete-profile" onClick="deleteProfile()" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-red-500">Delete Profile</button>
         </div>
         <% } %>
@@ -318,8 +326,8 @@
               </div>
             </div>
           <% } %>
-
     </section>
+
     <script>
       function handleTabs(evt, name) {
         let i, tabcontent, tablinks;
@@ -439,6 +447,36 @@
 
         window.location.href = '/logout';
       }
+
+      document.addEventListener("DOMContentLoaded", (event) => {
+        document.getElementById("dp-inp").value = "<%= profile.display_name %>"
+      })
+
+      const dpform = document.getElementById('dn-form');
+
+      dpform.onsubmit = (e) => {
+
+        const formData = new FormData(dpform);
+
+        const display_name = formData.get('display_name');
+
+        $.ajax({
+                 url: '/profile',
+                 method: 'PATCH',
+                 contentType: 'application/json',
+                 data: JSON.stringify({ display_name }),
+                success: function () {
+                },
+                 error: function () {
+                   showAlert('Display name not changed')
+
+                 }
+               });
+        showAlert('Display name changed')
+
+        e.preventDefault();
+      }
+
     </script>
 
   </body>
