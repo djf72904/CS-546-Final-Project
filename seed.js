@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
-import { User, Profile, Post, Comment, Test, Song, Friends } from './scripts/db/config/schema.js'; // Replace './models' with the correct path to your models
+import { User, Profile, Post, Comment, Test, Friends } from './scripts/db/config/schema.js'; // Replace './models' with the correct path to your models
 import { v4 as uuidv4 } from 'uuid';
 import {hashPassword} from "./scripts/handlers/authHandlers.js";
 import connectToDatabase from "./config/mongoConnection.js";
 import { songs } from "./songs.js";
+import { levels } from "./constants.js";
 
 async function seedDatabase() {
 
@@ -16,7 +17,7 @@ async function seedDatabase() {
         await Post.deleteMany();
         await Comment.deleteMany();
         await Test.deleteMany();
-        await Song.deleteMany();
+        //await Song.deleteMany();
         await Friends.deleteMany();
 
         // Seed Users
@@ -38,15 +39,27 @@ async function seedDatabase() {
         const profiles = users.map((user) => ({
             _id: user._id,
             display_name: `User_${Math.random().toString(36).substring(2, 8)}`,
-            best_wpm: Math.floor(Math.random() * 120),
+            best_wpm: Math.floor(Math.random() * 141),
             avg_wpm: Math.floor(Math.random() * 100),
             max_level: Math.floor(Math.random() * 10) + 1,
             avg_accuracy: Math.random().toFixed(2) * 100,
             common_missed_words: ['the', 'example', 'word'],
+            favorite_songs: {
+                1:  0,
+                2:  0,
+                3:  0,
+                4:  0,
+                5:  0,
+                6:  0,
+                7:  0,
+                8:  0,
+                9:  0,
+                10: 0}
         }));
         await Profile.insertMany(profiles);
         console.log('Profiles seeded');
 
+        /*
         // Seed Songs
         const songs = Array.from({ length: 5 }).map(() => ({
             _id: uuidv4(),
@@ -56,23 +69,27 @@ async function seedDatabase() {
         }));
         await Song.insertMany(songs);
         console.log('Songs seeded');
+        */
 
         // Seed Tests
-        const tests = users.map((user) => ({
-            _id: uuidv4(),
-            user_id: user._id,
-            timestamp: Date.now(),
-            wpm: Math.floor(Math.random() * 120),
-            song_id: songs[Math.floor(Math.random() * songs.length)]._id,
-            options: { difficulty: 'medium' },
-            missed_words: [1, 3, 7],
-            level_reached: Math.floor(Math.random() * 10) + 1,
-            type: 'test',
-            content: 'Lorem ipsum test content.',
-            accuracy: Math.floor(Math.random() * 101),
-            time: Math.floor(Math.random() * 120) + 30,
-            layout: 'qwerty',
-        }));
+        const tests = users.map((user) => {
+            const levelReached = Math.floor(Math.random() * 10) + 1;
+            return {
+                _id: uuidv4(),
+                user_id: user._id,
+                timestamp: Date.now(),
+                level_reached: levelReached, 
+                wpm: randomWpm(levelReached),
+                song: randomSongForLevel(levelReached), 
+                options: { difficulty: 'medium' },
+                missed_words: [1, 3, 7],
+                type: 'test',
+                content: 'Lorem ipsum test content.',
+                accuracy: Math.floor(Math.random() * 101),
+                time: Math.floor(Math.random() * 120) + 30,
+                layout: 'qwerty',
+            };
+        });
         await Test.insertMany(tests);
         console.log('Tests seeded');
 
@@ -114,6 +131,22 @@ async function seedDatabase() {
         await mongoose.connection.close();
         console.log('Connection closed');
     }
+}
+
+function randomWpm(level_reached) {
+    const thisLevel = levels.find(l => l.level === level_reached);
+    return Math.floor(Math.random() * (thisLevel.upperBound - thisLevel.lowerBound + 1)) + thisLevel.lowerBound;
+}
+
+function randomSongForLevel(level_reached) {
+    const filteredSongs = songs.filter(song => song.level === level_reached);
+    const randomIndex = Math.floor(Math.random() * 2);
+    const randomSong = filteredSongs[randomIndex];
+    return {
+        name: randomSong.name,
+        link: randomSong.link,
+        artist: randomSong.artist
+    };
 }
 
 seedDatabase()
