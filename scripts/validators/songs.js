@@ -1,6 +1,6 @@
 // This file is responsible for handling all the data validation for the songs database functions
 import { validate as uuidValidate } from 'uuid';
-import {Song} from "../db/config/schema.js";
+//import {Song} from "../db/config/schema.js";
 
 
 export const getSongValidator = async (id) => {

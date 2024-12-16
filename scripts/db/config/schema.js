@@ -194,6 +194,7 @@ export const TestSchema = new Schema({
     },
 });
 
+/*
 export const SongSchema = new Schema({
     _id: {
         type: String,
@@ -215,6 +216,7 @@ export const SongSchema = new Schema({
         default: 0
     },
 })
+*/
 
 export const FriendsSchema = new Schema({
     _id: {
