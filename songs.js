@@ -2,33 +2,33 @@ export const songs = [
     {
         level: 1,
         name: "Random",
-        bpm: 50
+        bpm: 40
     },
     {
         level: 1,
         bpm: 40,
-        name: "",
-        artist: "",
-        link: ""
+        name: "Winterlude",
+        artist: "Bob Dylan",
+        link: "https://www.youtube.com/watch?v=BM-1X4SjkU4"
     },
     {
         level: 1,
         bpm: 40,
-        name: "",
-        artist: "",
-        link: ""
+        name: "Xcogitate",
+        artist: "Prince",
+        link: "https://www.youtube.com/watch?v=5jisdQc41Zw"
     },
     {
         level: 1,
         bpm: 40,
-        name: "",
-        artist: "",
-        link: ""
+        name: "One Love",
+        artist: "Massive Attack",
+        link: "https://www.youtube.com/watch?v=qvkyXiOeq9o"
     },
     {
         level: 2,
         name: "Random",
-        bpm: 60
+        bpm: 50
     },
     {
         level: 2,
@@ -54,7 +54,7 @@ export const songs = [
     {
         level: 3,
         name: "Random",
-        bpm: 70
+        bpm: 60
     },
     {
         level: 3,
@@ -80,7 +80,7 @@ export const songs = [
     {
         level: 4,
         name: "Random",
-        bpm: 80
+        bpm: 70
     },
     {
         level: 4,
@@ -106,7 +106,7 @@ export const songs = [
     {
         level: 5,
         name: "Random",
-        bpm: 90
+        bpm: 80
     },
     {
         level: 5,
@@ -132,7 +132,7 @@ export const songs = [
     {
         level: 6,
         name: "Random",
-        bpm: 100
+        bpm: 90
     },
     {
         level: 6,
@@ -158,7 +158,7 @@ export const songs = [
     {
         level: 7,
         name: "Random",
-        bpm: 110
+        bpm: 100
     },
     {
         level: 7,
@@ -184,7 +184,7 @@ export const songs = [
     {
         level: 8,
         name: "Random",
-        bpm: 120
+        bpm: 110
     },
     {
         level: 8,
@@ -210,7 +210,7 @@ export const songs = [
     {
         level: 9,
         name: "Random",
-        bpm: 130
+        bpm: 120
     },
     {
         level: 9,
@@ -236,7 +236,7 @@ export const songs = [
     {
         level: 10,
         name: "Random",
-        bpm: 140
+        bpm: 130
     },
     {
         level: 10,
@@ -260,4 +260,3 @@ export const songs = [
         link: "https://www.youtube.com/watch?v=cI0QizfB7qo"
     }
 ]
-
