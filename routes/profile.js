@@ -1,5 +1,5 @@
 import express from "express";
-import {deleteProfileAndUser, getProfile, getUserByDisplayName} from "../scripts/db/data/profiles.js";
+import {deleteProfileAndUser, editDisplayName, getProfile, getUserByDisplayName} from "../scripts/db/data/profiles.js";
 import {getAllPostsByUser} from "../scripts/db/data/posts.js";
 import {getAllTestsByUser} from "../scripts/db/data/tests.js";
 import {levels} from "../constants.js";
@@ -78,7 +78,6 @@ router.get('/:display_name', async function(req, res, next) {
         const friends = await getFriends(req.user);
 
         if(!Array.from(friends).find(f=>{
-            console.log((f.user_1 === req.user && f.user_2 === id) || (f.user_2 === req.user && f.user_1 === id))
             return (f.user_1 === req.user && f.user_2 === id) || (f.user_2 === req.user && f.user_1 === id)
         })){
             throw new Error(
@@ -128,7 +127,26 @@ router.delete('/', async function(req, res, next) {
     catch(e){
         return res.status(500).send(e);
     }
+})
 
+router.patch('/', async function(req, res, next) {
+    if(!req.user){
+        return res.status(401).send("Unauthorized")
+    }
+
+    if(!req.body.display_name){
+        return res.status(400).send("Display Name not supplied")
+    }
+
+    try{
+        if(!await editDisplayName(req.user, req.body.display_name)){
+            return new Error("Display name taken")
+        }
+        return res.status(200)
+    }
+    catch(e){
+        return res.status(500).send(e);
+    }
 
 })
 export default router;

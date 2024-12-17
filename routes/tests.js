@@ -21,6 +21,8 @@ function groupByLevel(songs) {
 function markDefaultSongs(groupedSongs, levelIndexPairs) {
     const updatedSongs = { ...groupedSongs };
 
+    console.log(levelIndexPairs);
+
     levelIndexPairs.forEach(([level, index]) => {
         if (updatedSongs[level] && updatedSongs[level][index]) {
             updatedSongs[level][index] = {
@@ -45,6 +47,8 @@ router.get('/',  testHandler, async function(req, res, next) {
 
     const songsLst = (await Profile.findById(req.user)).favorite_songs
     const groups = groupByLevel(songs)
+
+
 
     return res.render('test', {songNames: (Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.name),
                                             songs: (Object.values(markDefaultSongs(groups,  Object.entries(songsLst))).flat().filter(s=>s.default)).map(s=>s.link),

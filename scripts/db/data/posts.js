@@ -40,7 +40,7 @@ export const getPost = async (post_id) => {
     }
 }
 
-export const getAllPosts = async (user_id) => {
+export const getAllPosts = async () => {
     const allPosts =  await Post.find({})
 
 
@@ -48,8 +48,6 @@ export const getAllPosts = async (user_id) => {
 
         const tests = await getTest(r.test_id)
         const comments = await getAllCommentsForPost(r._id)
-
-
 
         const comm = comments.map(async c=>{
             return {
@@ -62,7 +60,7 @@ export const getAllPosts = async (user_id) => {
         return {
             ...r.toObject(),
             timeAgo: timeAgo(r.timestamp),
-            profile: await getProfile(user_id),
+            profile: await getProfile(r.user_id),
             comments: await Promise.all(comm),
             test: tests
         }

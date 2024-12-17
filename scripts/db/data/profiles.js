@@ -18,19 +18,36 @@ export const getProfile = async (user_id) => {
 }
 
 export const editDisplayName = async (user_id, display_name) => {
-    Validators.profiles.editDisplayNameValidator(user_id, display_name)
-    const user = await User.findOneAndUpdate(
-        { _id: user_id }, 
-        { display_name: display_name }, 
-        { new: true } 
-    );
 
-    const profile = await Profile.findOne({ _id: user_id }); 
-    
-    return {
-        ...user.toObject(),
-        ...profile.toObject()
+
+    try{
+
+        const profiles = await Profile.find({display_name})
+
+        if(profiles.length){
+            throw new Error(e)
+        }
+
+        await Validators.profiles.editDisplayNameValidator(user_id, display_name)
+        const user = await Profile.findOneAndUpdate(
+            { _id: user_id },
+            { display_name: display_name },
+            { new: true }
+        );
+
+
+        const profile = await Profile.findOne({ _id: user_id });
+
+        return {
+            ...user.toObject(),
+            ...profile.toObject()
+        }
     }
+    catch(e){
+        throw new Error(e)
+    }
+
+
 }
 
 //TODO: Add a function to delete a profile entry and its respective user entry
@@ -38,11 +55,12 @@ export const deleteProfileAndUser = async (user_id) => {
     try{
         await Validators.profiles.deleteProfileAndUserValidator(user_id)
 
-        await Post.findOneAndDelete({ user_id: user_id });
-        await Friend.findOneAndDelete({ $or: [{user_1: user_id}, {user_2: user_id}] });
-        await Test.findOneAndDelete({ user_id: user_id });
-        await User.findOneAndDelete({ _id: user_id });
-        await Profile.findOneAndDelete({ _id: user_id });
+        await Comment.deleteMany({ user_id: user_id });
+        await Post.deleteMany({ user_id: user_id });
+        await Friend.deleteMany({ $or: [{user_1: user_id}, {user_2: user_id}] });
+        await Test.deleteMany({ user_id: user_id });
+        await User.deleteOne({ _id: user_id });
+        await Profile.deleteOne({ _id: user_id });
     }
     catch{
         throw new Error("Error deleting account")

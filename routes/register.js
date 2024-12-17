@@ -5,6 +5,7 @@ import {User} from "../scripts/db/config/schema.js";
 import {authHandlers} from "../middleware.js";
 import { validatePassword } from '../scripts/validators/password.js';
 let router = express.Router();
+import { v4 as uuidv4 } from 'uuid';
 
 /* GET users listing. */
 router.get('/', authHandlers, function(req, res, next) {
@@ -32,9 +33,8 @@ router.post('/', authHandlers,  async (req, res) => {
 
   const encryptedPassword = hashPassword(password);
 
-  const newUser = new User({ password: encryptedPassword, email });
+  const newUser = new User({ _id: uuidv4().toString(), password: encryptedPassword, email });
   await newUser.save();
-
 
   const token = createSecretToken(newUser._id);
 

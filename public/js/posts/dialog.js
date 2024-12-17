@@ -128,5 +128,7 @@ async function makeComment(){
  * @return {void} No return value.
  */
 function hideDialog() {
+    const commentEl = document.getElementById("comm-lst");
+    commentEl.innerHTML = "";
     dialog.classList.add("hidden");
 }

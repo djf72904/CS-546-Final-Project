@@ -66,11 +66,10 @@
     }
 
     if (result.success) {
-      // Redirect to the index page after successful login
         alert("User Registration Complete");
         window.location.href = '/profile';
     } else {
-      alert(result.message); // Show error message if login failed
+      alert(result.message);
     }
   });
 </script>
