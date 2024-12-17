@@ -82,7 +82,7 @@ function handleTyping(event) {
         if(event.which === 32 && currentIndex !== spanLength-1) {
             wordProgress++;
             currentMissedWord = "";
-            document.getElementById('wordProg').textContent = `${wordProgress}/${wordLength}`;
+            document.getElementById('wordProg').textContent = `${wordProgress-1}/${wordLength}`;
         }
 
         if (currentIndex < sequence.length) {
