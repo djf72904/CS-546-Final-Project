@@ -5,6 +5,7 @@ import {hashPassword} from "./scripts/handlers/authHandlers.js";
 import connectToDatabase from "./config/mongoConnection.js";
 import { songs } from "./songs.js";
 import { levels } from "./constants.js";
+import {updateOverallProfileStats} from "./scripts/db/config/triggers.js";
 
 async function seedDatabase() {
 
@@ -88,9 +89,9 @@ async function seedDatabase() {
                 },
                 missed_words: ['Lorem'],
                 type: "wordLength",
-                content: "Lorem ipsum test content.",
+                content: "Lorem ipsum test content",
                 accuracy: Math.floor(Math.random() * 101),
-                time: Math.floor(Math.random() * 120) + 30,
+                time: 0 ,
                 layout: "qwerty"
             };
         });
@@ -113,7 +114,7 @@ async function seedDatabase() {
                 },
                 missed_words: ['Lorem'],
                 type: "time",
-                content: "Lorem ipsum test content.",
+                content: "Lorem ipsum test content ",
                 accuracy: Math.floor(Math.random() * 101),
                 time: [30, 60, 120][Math.floor(Math.random() * 3)],
                 layout: "qwerty"
@@ -152,6 +153,11 @@ async function seedDatabase() {
         }));
         await Friend.insertMany(friends);
         console.log('Friends seeded');
+
+
+        for(let i=0; i<users.length; i++){
+            await updateOverallProfileStats(users[i]._id);
+        }
 
         console.log('Database seeded successfully');
     } catch (error) {

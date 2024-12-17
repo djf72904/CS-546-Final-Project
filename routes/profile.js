@@ -53,6 +53,13 @@ router.get('/:display_name', async function(req, res, next) {
 
     let status = 500;
 
+
+    let currentUser = await getProfile(req.user);
+    if(req.params.display_name === (currentUser.display_name)) {
+        console.log("match")
+        return res.redirect("/profile");
+    }
+
     let id;
     try{
         id = (await getUserByDisplayName(req.params.display_name))?._id

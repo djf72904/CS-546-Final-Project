@@ -146,7 +146,7 @@
                   <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                 </div>
                 <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                  <p class="text-sm">Level: <%- test.level === 0 ? 1 : test.level %></p>
+                  <p class="text-sm">Level: <%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %></p>
                 </div>
                 <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                   <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
@@ -156,6 +156,9 @@
                     <p class="text-sm">Time: <%- test.time %>s</p>
                   </div>
                 <% } %>
+                <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit">
+                  <p class="text-sm">Song: <i><%- test.song.name %></i></p>
+                </div>
                 <p>•</p>
                 <div class="py-1" >
                   <p class="text-sm"><%- test.content %></p>
@@ -190,7 +193,7 @@
                     </div>
                   </div>
                   <div class="flex space-x-2 items-center justify-end">
-                    <% if( !(profile.display_name ===  friend.user_1.display_name || profile.display_name ===  friend.user_2.display_name)){ %>
+                    <% if( (profile.display_name ===  friend.user_1.display_name || profile.display_name ===  friend.user_2.display_name)){ %>
                       <button onClick="window.location.href = '/profile/' + '<%- profile.display_name ===  friend.user_1.display_name ? friend.user_2.display_name : friend.user_1.display_name %>'" class="primary__btn">Visit</button>
                     <% } %>
                     <% if(self){ %>

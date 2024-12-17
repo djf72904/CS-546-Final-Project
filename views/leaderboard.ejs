@@ -112,7 +112,7 @@
                                 <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm">Level: <%- test.level === 0 ? 1 : test.level %></p>
+                                <p class="text-sm">Level: <%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                                 <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
@@ -129,7 +129,7 @@
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>
@@ -160,7 +160,7 @@
                                 <p class="text-sm">Accuracy: <%- test.accuracy %>%</p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
-                                <p class="text-sm">Level: <%- test.level === 0 ? 1 : test.level%></p>
+                                <p class="text-sm">Level: <%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %></p>
                             </div>
                             <div class="bg-gray-300 text-nowrap px-2 py-1 rounded-full h-fit" >
                                 <p class="text-sm"><%- test.type === "wordLength" ? test.content.split(" ").length : test.content.split(" ").length-1 %> Words</p>
@@ -177,7 +177,7 @@
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>
