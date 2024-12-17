@@ -3,7 +3,7 @@ import {createProfileFromUser} from "../scripts/db/config/triggers.js";
 import {createSecretToken, hashPassword} from "../scripts/handlers/authHandlers.js";
 import {User} from "../scripts/db/config/schema.js";
 import {authHandlers} from "../middleware.js";
-import { validatePassword } from '../scripts/validators/password.js';
+import { validateRegister } from '../scripts/validators/register.js';
 let router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
 
@@ -21,7 +21,7 @@ router.post('/', authHandlers,  async (req, res) => {
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    if (userName) {
+    if (display_name) {
       return res.status(400).json({ message: 'Username taken' });
     }
   } catch {
@@ -29,7 +29,14 @@ router.post('/', authHandlers,  async (req, res) => {
   }
 
   try {
-    validatePassword(password);
+    validateRegister.validateUserName(display_name);
+  } 
+  catch (error) {
+    return res.status(400).json({ message: error.message });
+  }
+
+  try {
+    validateRegister.validatePassword(password);
   } 
   catch (error) {
     return res.status(400).json({ message: error.message });
