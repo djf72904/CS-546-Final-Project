@@ -97,7 +97,7 @@
                         <div class="p-2 flex space-x-4 flex-nowrap items-center">
                             <div class="flex space-x-3.5 w-full flex-nowrap items-center justify-start">
                                 <div class="avatar">
-                                    <P><%- test.profile.display_name[0] %></P>
+                                    <P><%- test.profile.display_name[0].toUpperCase() %></P>
                                 </div>
                                 <div class="flex flex-wrap justify-end">
                                     <div class="w-auto">
@@ -129,7 +129,7 @@
 
                             </div>
                         </div>
-                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %>`, `<%- test.time %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
+                        <button onClick="showDialog(`<%- test.wpm %>`, `<%- test.accuracy  %>`, `<%- test.content %>`, `<%- test.profile.display_name %>`,`<%- test.timestamp %>`, '<%- test.song.name%>', `<%- test.level === 0 && test.wpm < 40 ? 1 : test.level === 0 && test.wpm >= 140 ? 10 : test.level %>`, `<%- test.time %>`, `<%- test.missed_words %>`)" class="text-white hover:bg-red-600 px-4 py-2 rounded-md bg-black">More Info</button>
 
                     </div>
                 </div>

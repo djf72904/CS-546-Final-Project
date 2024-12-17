@@ -181,7 +181,9 @@
           </form>
           <% } %>
           <div id="friend-lst">
-            <% friends.forEach(friend => { %>
+            <% friends.filter(f=>{
+              return f.user_2._id !== profile._id && f.user_1._id !== profile._id
+            }).forEach(friend => { %>
               <div class="mb-4" id="friend-entry-<%- friend._id %>">
                 <div class="px-5 py-3 bg-gray-200 rounded-lg w-full flex space-x-3.5 flex-nowrap items-center">
                   <div class="flex space-x-3.5 w-full flex-nowrap items-center">

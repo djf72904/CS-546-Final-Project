@@ -33,11 +33,16 @@ function timeAgo(timestamp) {
  *
  * @return {void} This function does not return a value.
  */
-function showDialog(wpm, accuracy, content, user, timestamp, song, level, time) {
+function showDialog(wpm, accuracy, content, user, timestamp, song, level, time, missed_words) {
+
+
+
     dialog.classList.remove("hidden");
     document.getElementById("wpm-badge").innerText = `WPM: ${wpm}`;
     document.getElementById("acc-badge").innerText = `Accuracy: ${accuracy}%`;
-    document.getElementById("content-sec").innerText = content;
+    document.getElementById("content-sec").innerHTML = content.split(" ").map(word=>{
+        return '<span>' + word + ' <span>'
+    }).join('</span>')
     document.getElementById("avtr-i").innerText = user[0];
     document.getElementById("username").innerText = user;
     document.getElementById("time-taken").innerText = timeAgo((timestamp));
