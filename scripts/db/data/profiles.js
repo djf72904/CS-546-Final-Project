@@ -1,6 +1,6 @@
 // This file is responsible for handling all the database interactions for profiles
 import Validators from "../../validators/client.js";
-import {Friend, Post, Profile, Test, User} from "../config/schema.js";
+import {Friend, Post, Profile, Test, User, Comment} from "../config/schema.js";
 import {getAllTestsByUser} from "./tests.js";
 
 export const getProfile = async (user_id) => {
@@ -61,7 +61,8 @@ export const deleteProfileAndUser = async (user_id) => {
         await User.deleteOne({ _id: user_id });
         await Profile.deleteOne({ _id: user_id });
     }
-    catch{
+    catch(e){
+        console.log(e)
         throw new Error("Error deleting account")
     }
 
