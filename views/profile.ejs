@@ -130,7 +130,11 @@
       </section>
       <section class="flex justify-start space-x-4">
         <button class="tablinks" onClick="handleTabs(event, 'recent-tests')">Recent Tests</button>
+        <% if(self){ %>
+
         <button class="tablinks" onClick="handleTabs(event, 'friends')">Friends</button>
+        <% } %>
+
         <button class="tablinks" onClick="handleTabs(event, 'posts')">Posts</button>
         <button class="tablinks" onClick="handleTabs(event, 'badges')">Badges</button>
       </section>
@@ -181,9 +185,7 @@
           </form>
           <% } %>
           <div id="friend-lst">
-            <% friends.filter(f=>{
-              return f.user_2._id !== profile._id && f.user_1._id !== profile._id
-            }).forEach(friend => { %>
+            <% self && friends.forEach(friend => { %>
               <div class="mb-4" id="friend-entry-<%- friend._id %>">
                 <div class="px-5 py-3 bg-gray-200 rounded-lg w-full flex space-x-3.5 flex-nowrap items-center">
                   <div class="flex space-x-3.5 w-full flex-nowrap items-center">
@@ -204,7 +206,6 @@
                       <button onClick="removeFriend('<%- friend._id %>')" class="danger__btn">Remove</button>
                     <% } %>
                   </div>
-
                 </div>
               </div>
             <% }); %>
