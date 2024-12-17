@@ -17,12 +17,8 @@ router.post('/', authHandlers,  async (req, res) => {
 
   try {
     const user = await User.findOne({ email }).exec();
-    const userName = await User.findOne({ _id }).exec();
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
-    }
-    if (userName) {
-      return res.status(400).json({ message: 'Username taken' });
     }
   } catch {
     return res.status(400).json({ message: 'Error creating user' });
@@ -30,14 +26,8 @@ router.post('/', authHandlers,  async (req, res) => {
 
   try {
     validateUserName(display_name);
-  } 
-  catch (error) {
-    return res.status(400).json({ message: error.message });
-  }
-
-  try {
     validatePassword(password);
-  } 
+  }
   catch (error) {
     return res.status(400).json({ message: error.message });
   }

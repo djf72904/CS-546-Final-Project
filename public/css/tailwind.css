@@ -967,6 +967,10 @@ video {
   overflow-y: auto;
 }
 
+.overflow-y-scroll {
+  overflow-y: scroll;
+}
+
 .text-nowrap {
   text-wrap: nowrap;
 }

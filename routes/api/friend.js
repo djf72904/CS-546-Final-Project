@@ -12,6 +12,11 @@ router.post('/', async (req, res) => {
     if(!profile){
         res.status(404).send("Profile not found");
     }
+
+    if(profile.id === req.user){
+        res.status(401).send("Unable to add yourself as a friend");
+    }
+
     else{
         let entry = await createFriends(
             req.user,

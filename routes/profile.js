@@ -121,10 +121,14 @@ router.delete('/', async function(req, res, next) {
     }
     try{
         await deleteProfileAndUser(req.user);
-        res.clearCookie("token");
         req.user = null;
+        res.clearCookie("token");
+
+        return res.status(200).send({success: true})
+
     }
     catch(e){
+        console.log(e)
         return res.status(500).send(e);
     }
 })

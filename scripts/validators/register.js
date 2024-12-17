@@ -24,8 +24,6 @@ export const validateUserName = (userName) => {
         throw new Error('Error: Input display name must be a string.');
     if (/\s/.test(userName)) 
         throw new Error('Error: Input display name cannot contain spaces.');
-    if (password.length < 5) 
-        throw new Error ('Error: Input password must be at least 8 characters long.');
     // if (!/\d/.test(password)) 
     //     throw new Error('Error: Input password must contain at least one number.');
     // Not with our seed right now

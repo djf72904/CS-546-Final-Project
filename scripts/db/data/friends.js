@@ -1,4 +1,5 @@
 import {Friend} from "../config/schema.js";
+import { v4 as uuidv4 } from 'uuid';
 
 export const createFriends = async (user_1, user_2) => {
     const friends = await Friend.findOne({ user_1, user_2 }).exec();
@@ -7,7 +8,7 @@ export const createFriends = async (user_1, user_2) => {
         return null;
     }
 
-    const newFriends = await new Friend({ user_1, user_2 });
+    const newFriends = await new Friend({ user_1, user_2, _id: uuidv4().toString() });
 
     await newFriends.save();
 

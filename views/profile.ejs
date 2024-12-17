@@ -379,7 +379,7 @@
         const username = form.find('[name="username"]').val();
 
         if (!username) {
-          alert('Please enter a valid email address or password');
+          showAlert('Please enter a valid username');
           return;
         }
 
@@ -409,6 +409,8 @@
               `);
                  },
                  error: function (e) {
+                   showAlert(e.responseText);
+
                    alert(e.responseText);
                  }
                });
@@ -433,19 +435,21 @@
 
 
       function deleteProfile() {
-        if (confirm('Are you sure you want to delete this profile? All your tests and data will be deleted')) {
 
-          $.ajax({
-                   url: '/profile',
-                   method: 'DELETE',
-                   contentType: 'application/json',
-                   error: function (e) {
-                     alert("Error: " + JSON.stringify(e));
-                   }
-                 });
-        }
+          fetch('/profile', {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json'
+            }
+          }).then((response) => response.json())
+            .then((result) => {if(result.success) {
+              document.cookie = "token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
+              window.location.href = '/logout';
+            }
+        } )
 
-        window.location.href = '/logout';
+
+
       }
 
       document.addEventListener("DOMContentLoaded", (event) => {
