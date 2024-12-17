@@ -3,10 +3,11 @@ import {User} from "../scripts/db/config/schema.js";
 import {comparePassword, createSecretToken} from "../scripts/handlers/authHandlers.js";
 import app from "../app.js";
 import {getProfile} from "../scripts/db/data/profiles.js";
+import {authHandlers} from "../middleware.js";
 let router = express.Router();
 
 /* GET users listing. */
-router.get('/', function(req, res, next) {
+router.get('/',  authHandlers, function(req, res, next) {
   res.render('login', { title: 'Login', user: null });
 });
 
@@ -45,6 +46,8 @@ router.post('/', async (req, res) => {
   });
 
   const profile = await getProfile(user._id);
+
+
 
   return res.status(200).json({token, success: true, profile});
 });

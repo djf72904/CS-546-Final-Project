@@ -53,12 +53,11 @@ export const editDisplayName = async (user_id, display_name) => {
 //TODO: Add a function to delete a profile entry and its respective user entry
 export const deleteProfileAndUser = async (user_id) => {
     try{
-        await Validators.profiles.deleteProfileAndUserValidator(user_id)
-
-        await Comment.deleteMany({ user_id: user_id });
-        await Post.deleteMany({ user_id: user_id });
-        await Friend.deleteMany({ $or: [{user_1: user_id}, {user_2: user_id}] });
-        await Test.deleteMany({ user_id: user_id });
+        // await Validators.profiles.deleteProfileAndUserValidator(user_id)
+        // await Comment.deleteMany({ user_id: user_id });
+        // await Post.deleteMany({ user_id: user_id });
+        // await Friend.deleteMany({ $or: [{user_1: user_id}, {user_2: user_id}] });
+        // await Test.deleteMany({ user_id: user_id });
         await User.deleteOne({ _id: user_id });
         await Profile.deleteOne({ _id: user_id });
     }
