@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Leaderboard</title>
@@ -185,7 +186,7 @@
         <% }); %>
 
     </section>
-    <div class="relative z-10 hidden" aria-labelledby="modal-title" id="favDialog" role="dialog" aria-modal="true">
+    <div class="relative z-10 hidden"  id="favDialog" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
 
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -248,29 +249,29 @@
     </div>
 </div>
     <script src="/js/leaderboard/dialog.js"></script>
-<script>
-    function handleTabs(evt, name) {
-        let i, tabcontent, tablinks;
-        tabcontent = document.getElementsByClassName("tabcontent");
-        for (i = 0; i < tabcontent.length; i++) {
-            tabcontent[i].style.display = "none";
-        }
+    <script>
+        function handleTabs(evt, name) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tabcontent");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].style.display = "none";
+            }
 
-        tablinks = document.getElementsByClassName("tablinks");
-        for (i = 0; i < tablinks.length; i++) {
-            tablinks[i].classList.remove("bg-gray-200", "text-gray-900", "font-medium", "rounded-full", "py-2", "px-4", "text-sm");
-        }
+            tablinks = document.getElementsByClassName("tablinks");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("bg-gray-200", "text-gray-900", "font-medium", "rounded-full", "py-2", "px-4", "text-sm");
+            }
 
-        document.getElementById(name).style.display = "block";
+            document.getElementById(name).style.display = "block";
 
-        evt.currentTarget.classList.add("bg-gray-200", "text-gray-900", "font-medium", "rounded-full", "py-2", "px-4", "text-sm");
-    }
-    document.addEventListener("DOMContentLoaded", () => {
-        const defaultTab = document.getElementsByClassName("tablinks")[0];
-        if (defaultTab) {
-            defaultTab.click();
+            evt.currentTarget.classList.add("bg-gray-200", "text-gray-900", "font-medium", "rounded-full", "py-2", "px-4", "text-sm");
         }
-    });
-</script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const defaultTab = document.getElementsByClassName("tablinks")[0];
+            if (defaultTab) {
+                defaultTab.click();
+            }
+        });
+    </script>
 </body>
 </html>

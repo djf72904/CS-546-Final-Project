@@ -78,7 +78,17 @@ router.post('/', async function(req, res, next) {
 
     const input = req.body.data
 
-    await Profile.updateOne({_id: req.user}, {favorite_songs: arrayToObject(updateLevelData(input, Object.entries(songsLst)))})
+    try{
+        await Profile.updateOne({_id: req.user}, {favorite_songs: arrayToObject(updateLevelData(input, Object.entries(songsLst)))})
+        return res.status(200).send({})
+
+    }
+    catch{
+        return res.status(500).send({})
+    }
+
+
+
 })
 
 export default router;

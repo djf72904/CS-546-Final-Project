@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>My Songs</title>
@@ -28,7 +29,7 @@
                     </div>
                     <div class="flex space-x-2">
                       <a target="_blank" href="<%- song[1].find(l => l.default).link ? song[1].find(l => l.default).link : song[1][Math.floor(Math.random() * 3 + 1)].link %>" class=primary__btn>Listen</a>
-                      <label for="song">
+                      <label for="song-dd-<%- i %>">
                         <select id="song-dd-<%-i%>" class="w-auto p-2 bg-gray-300 rounded-lg">
                         <% song[1].forEach((s, i) => { %>
                             <option <%= (song[1].find(l => l.default)?.link === s.link ? "selected" : "") %> value="<%- s.level + "_" + i %>"><%- s.name %></option>
@@ -57,7 +58,8 @@
             body: JSON.stringify({
                                    data: this.value
                                  }),
-          })
+          }).then(res => window.location.reload())
+
         })
       }
 

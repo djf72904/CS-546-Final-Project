@@ -104,7 +104,7 @@ router.get('/:display_name', async function(req, res, next) {
             profile: profileData,
             friends: await Promise.all(deepFriend),
             tests: modTest.sort((a,b) => b.timestamp - a.timestamp),
-            posts: await getAllPostsByUser(req.user),
+            posts: await getAllPostsByUser(id),
             testsForWordLength: modTest.filter(test=>test.type === 'wordLength').length,
             testsForTime: modTest.filter(test=>test.type === 'time').length,
             self: false
@@ -145,10 +145,9 @@ router.patch('/', async function(req, res, next) {
         return res.status(401).send("Unauthorized")
     }
 
-    if(!req.body.display_name){
+    if(!req.body.display_name.trim()){
         return res.status(400).send("Display Name not supplied")
     }
-
     try{
         if(!await editDisplayName(req.user, req.body.display_name)){
             return new Error("Display name taken")

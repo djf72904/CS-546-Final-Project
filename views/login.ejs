@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <title>Login</title>
@@ -21,46 +22,45 @@
         <button type="submit" class="bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-md">Login</button>
       </form>
     </section>
-  </body>
+    <script>
+      const form = document.getElementById('login-form');
 
-  <script>
-    const form = document.getElementById('login-form');
+      form.addEventListener('submit', async (e) => {
+        e.preventDefault();
 
-    form.addEventListener('submit', async (e) => {
-      e.preventDefault();
+        const formData = new FormData(form);
 
-      const formData = new FormData(form);
+        const email = formData.get('email');
+        const password = formData.get('password');
 
-      const email = formData.get('email');
-      const password = formData.get('password');
+        if(!email || !password){
+          alert('Please enter valid email address or password');
+        }
 
-      if(!email || !password){
-        alert('Please enter valid email address or password');
-      }
+        const response = await fetch('/login', {
+          method: 'POST',
+          body: JSON.stringify({
+                                 email,
+                                 password,
+                               }),
+          headers: {
+            'Content-Type': 'application/json',
+          },
+        });
 
-      const response = await fetch('/login', {
-        method: 'POST',
-        body: JSON.stringify({
-          email,
-          password,
-        }),
-        headers: {
-          'Content-Type': 'application/json',
-        },
-      });
+        const result = await response.json();
 
-      const result = await response.json();
-
-      if(result.profile){
+        if(result.profile){
           window.location.href = "/"
-      }
+        }
 
-      const error = document.getElementById('error');
+        const error = document.getElementById('error');
 
-      if(result){
-        error.classList.remove('hidden');
-        error.textContent = `${result.message}`;
-      }
-    });
-  </script>
+        if(result){
+          error.classList.remove('hidden');
+          error.textContent = `${result.message}`;
+        }
+      });
+    </script>
+  </body>
 </html>

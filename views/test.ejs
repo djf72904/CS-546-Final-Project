@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Test</title>
@@ -16,8 +17,8 @@
         <Label for="diff-inp"></Label>
         <select name="layouts" id="diff-inp" class="bg-gray-200 rounded-full p-2 pr-4 text-gray-700 focus:outline-none focus:ring-indigo-500">
             <option value="0">Top 200</option>
-            <option value="1">< 4 letters</option>
-            <option value="2">< 5 letters</option>
+            <option value="1">&lt; 4 letters</option>
+            <option value="2">&lt; 5 letters</option>
             <option value="3">Consecutive Letters</option>
         </select>
         <button class="" id="punctuation" onclick="togglePunctuation()">
@@ -54,7 +55,7 @@
     <div class="mx-auto text-center max-w-4xl mt-2 h-[300px] overflow-y-scroll" id="seq_container">
         <p class="text-3xl font-bold" id="testSequence"></p>
     </div>
-    <div class="relative z-10 hidden" aria-labelledby="modal-title" id="favDialog" role="dialog" aria-modal="true">
+    <div class="relative z-10 hidden"  id="favDialog" role="dialog" aria-modal="true">
     <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
 
     <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
@@ -121,7 +122,7 @@
             </div>
         </div>
     </div>
-        <canvas id="confetti-canvas" width="100%" height="100%"></canvas>
+        <canvas id="confetti-canvas"></canvas>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/js-confetti@latest/dist/js-confetti.browser.js"></script>
     <script src="/js/test/levels.js"></script>

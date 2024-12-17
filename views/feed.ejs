@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <title>Leaderboard</title>
@@ -13,7 +14,7 @@
 </section>
 <div class="mt-4">
     <section class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        <% posts.forEach(post => { %>
+        <% posts.forEach((post, i) => { %>
             <div class="flex space-x-4 w-full flex-nowrap items-center mb-4">
                 <div class="px-5 py-4 bg-gray-200 rounded-lg w-full">
                         <div class="w-auto p-2">
@@ -38,14 +39,14 @@
                             <p class="mt-2 max-w-lg"><%- post.content %></p>
                             <div class="flex space-x-2 items-center mt-2">
                                 <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                    <p id="post-wpm-badge" class="text-sm">WPM: <%- post.test.wpm %></p>
+                                    <p id="post-wpm-badge-<%- i %>" class="text-sm">WPM: <%- post.test.wpm %></p>
                                 </div>
                                 <div class="bg-gray-300 px-2 py-1 rounded-full">
-                                    <p id="post-accuracy-badge" class="text-sm">Accuracy: <%-  post.test.accuracy %>%</p>
+                                    <p id="post-accuracy-badge-<%- i %>" class="text-sm">Accuracy: <%-  post.test.accuracy %>%</p>
                                 </div>
                             </div>
                             <div class="bg-gray-300 px-2 py-1 rounded-full w-fit my-2">
-                                <p class="text-sm text-nowrap">Song: <i><%- post.test.song.name%></i> by <i><%- post.test.song.artist%></i></p>
+                                <p class="text-sm text-nowrap-<%- i %>">Song: <i><%- post.test.song.name%></i> by <i><%- post.test.song.artist%></i></p>
                             </div>
                             <div class="flex space-x-2 mt-4 justify-between items-center">
                                 <button onClick="showDialog('<%= JSON.stringify(post) %>')" class=" info__btn">More Info</button>
@@ -58,7 +59,7 @@
             </div>
         <% }); %>
     </section>
-    <div class="relative z-10 hidden" aria-labelledby="modal-title" id="favDialog" role="dialog" aria-modal="true">
+    <div class="relative z-10 hidden"  id="favDialog" role="dialog" aria-modal="true">
         <div class="fixed inset-0 bg-gray-500/75 transition-opacity" aria-hidden="true"></div>
 
         <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
