@@ -357,7 +357,7 @@
       // Logout Button Handler
       const button = $("#logout");
       button.on("click", () => {
-        if (window.confirm("Are you sure you want to log out?")) {
+
           $.ajax({
                    url: '/logout',
                    method: 'GET',
@@ -368,7 +368,7 @@
                      alert('Error logging out');
                    }
                  });
-        }
+
       });
 
       // Friend Form Submit Handler

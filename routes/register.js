@@ -21,7 +21,7 @@ router.post('/', authHandlers,  async (req, res) => {
       return res.status(400).json({ message: 'User already exists' });
     }
   } catch {
-    return res.status(400).json({ message: 'Error creeating user' });
+    return res.status(400).json({ message: 'Error creating user' });
   }
 
   try {
