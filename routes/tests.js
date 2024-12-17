@@ -5,6 +5,7 @@ import {levels} from "../constants.js";
 import {Profile} from "../scripts/db/config/schema.js";
 import {songs} from "../songs.js";
 import {testHandler} from "../middleware.js";
+import xss from "xss";
 let router = express.Router();
 
 
@@ -58,7 +59,7 @@ router.get('/',  testHandler, async function(req, res, next) {
 
 router.post('/', testHandler, async function(req, res, next) {
 
-
+    req.body.content = xss(req.body.content)
 
     let testInfo = {
         timestamp: new Date().getTime(),

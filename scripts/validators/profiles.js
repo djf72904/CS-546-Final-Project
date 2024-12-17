@@ -10,7 +10,7 @@ export const editDisplayNameValidator = async (user_id, display_name) => {
 
         if(! (typeof user_id === 'string')) throw "editDisplayName Error: user_id must be of type String"
         if(!uuidValidate(user_id)) throw "editDisplayName Error: user_id must be valid uuid"
-        if (/\s/.test(userName)) 
+        if (display_name.includes(" "))
             throw new Error('Error: Input display name cannot contain spaces.');
     
     const user = await User.findOne({_id: user_id});

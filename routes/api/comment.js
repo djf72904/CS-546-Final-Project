@@ -1,10 +1,13 @@
 import express from "express";
 import {createComment} from "../../scripts/db/data/comments.js";
+import xss from "xss";
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
 
+    req.body.content = xss(req.body.content);
+    
     let data = {
         timestamp: new Date().getTime(),
         user_id: req.user,

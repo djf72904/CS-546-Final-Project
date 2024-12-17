@@ -6,6 +6,7 @@ import {authHandlers} from "../middleware.js";
 import { validateUserName, validatePassword } from '../scripts/validators/register.js';
 let router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
+import xss from "xss";
 
 /* GET users listing. */
 router.get('/', authHandlers, function(req, res, next) {
@@ -13,6 +14,11 @@ router.get('/', authHandlers, function(req, res, next) {
 });
 
 router.post('/', authHandlers,  async (req, res) => {
+
+  req.body.display_name = xss(req.body.display_name);
+  req.body.email = xss(req.body.email);
+  req.body.password = xss(req.body.password);
+
   const { display_name, email, password } = req.body;
 
   try {

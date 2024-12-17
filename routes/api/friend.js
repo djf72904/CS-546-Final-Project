@@ -2,10 +2,14 @@ import express from "express";
 import {getProfile, getUserByDisplayName} from "../../scripts/db/data/profiles.js";
 import jwt from "jsonwebtoken";
 import {createFriends, deleteFriends} from "../../scripts/db/data/friends.js";
+import xss from "xss";
 
 const router = express.Router();
 
 router.post('/', async (req, res) => {
+
+    req.body.username = xss(req.body.username);
+
     const {username} = req.body;
     const profile = await getUserByDisplayName(username)
 

@@ -4,6 +4,7 @@ import {comparePassword, createSecretToken} from "../scripts/handlers/authHandle
 import app from "../app.js";
 import {getProfile} from "../scripts/db/data/profiles.js";
 import {authHandlers} from "../middleware.js";
+import xss from "xss";
 let router = express.Router();
 
 /* GET users listing. */
@@ -12,6 +13,10 @@ router.get('/',  authHandlers, function(req, res, next) {
 });
 
 router.post('/', async (req, res) => {
+
+  req.body.email = xss(req.body.email);
+  req.body.password = xss(req.body.password);
+
   const { email, password } = req.body;
 
   if(!email.trim()){

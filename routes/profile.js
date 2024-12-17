@@ -5,6 +5,7 @@ import {getAllTestsByUser} from "../scripts/db/data/tests.js";
 import {levels} from "../constants.js";
 import {getFriends} from "../scripts/db/data/friends.js";
 import {profileHandler} from "../middleware.js";
+import xss from "xss";
 let router = express.Router();
 
 
@@ -141,6 +142,9 @@ router.delete('/', async function(req, res, next) {
 })
 
 router.patch('/', async function(req, res, next) {
+
+    req.body.display_name = xss(req.body.display_name)
+
     if(!req.user){
         return res.status(401).send("Unauthorized")
     }
@@ -152,7 +156,7 @@ router.patch('/', async function(req, res, next) {
         if(!await editDisplayName(req.user, req.body.display_name)){
             return new Error("Display name taken")
         }
-        return res.status(200)
+        return res.status(200).send({})
     }
     catch(e){
         return res.status(500).send(e);
