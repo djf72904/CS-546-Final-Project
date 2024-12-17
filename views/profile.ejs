@@ -384,7 +384,7 @@
       form.on('submit', (e) => {
         e.preventDefault();
 
-        const username = form.find('[name="username"]').val();
+        const username = form.find('[name="username"]').val().toString().trim()
 
         if (!username) {
           showAlert('Please enter a valid username');
@@ -395,7 +395,7 @@
                  url: '/api/friend',
                  method: 'POST',
                  contentType: 'application/json',
-                 data: JSON.stringify({ username }),
+                 data: JSON.stringify({ username: username.toLowerCase() }),
                  success: function (result) {
                    $('#friend-lst').append(`<div class="mb-4">
                 <div class="px-5 py-3 bg-gray-200 rounded-lg w-full flex space-x-3.5 flex-nowrap items-center">

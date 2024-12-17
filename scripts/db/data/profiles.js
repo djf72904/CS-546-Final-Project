@@ -79,5 +79,5 @@ export const updateProfileStats = async (user_id, stats) => {
 }
 
 export const getUserByDisplayName = async (username) => {
-    return Profile.findOne({display_name: username});
+    return Profile.findOne({'display_name': {'$regex': username,$options:'i'}});
 }
