@@ -3,7 +3,7 @@ import {createProfileFromUser} from "../scripts/db/config/triggers.js";
 import {createSecretToken, hashPassword} from "../scripts/handlers/authHandlers.js";
 import {User} from "../scripts/db/config/schema.js";
 import {authHandlers} from "../middleware.js";
-import { validateRegister } from '../scripts/validators/register.js';
+import { validateUserName, validatePassword } from '../scripts/validators/register.js';
 let router = express.Router();
 import { v4 as uuidv4 } from 'uuid';
 
@@ -29,14 +29,14 @@ router.post('/', authHandlers,  async (req, res) => {
   }
 
   try {
-    validateRegister.validateUserName(display_name);
+    validateUserName(display_name);
   } 
   catch (error) {
     return res.status(400).json({ message: error.message });
   }
 
   try {
-    validateRegister.validatePassword(password);
+    validatePassword(password);
   } 
   catch (error) {
     return res.status(400).json({ message: error.message });
