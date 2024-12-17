@@ -198,7 +198,10 @@ const wordList = [
     "course",
     "change",
     "help",
-    "line"
+    "line",
+    "might",
+    "from",
+
 ];
 
 let wordProgress = 1;

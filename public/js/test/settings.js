@@ -4,7 +4,12 @@ function togglePunctuation() {
     resetTest()
     const sequence = generateRandomWords(wordLength);
     convertParagraphToCharacters(sequence);
-    document.getElementById('punctuation').classList.add('setting__active');
+    if(!hasPunctuation) {
+        document.getElementById('punctuation').classList.remove('setting__active');
+    }
+    else{
+        document.getElementById('punctuation').classList.add('setting__active');
+    }
 }
 
 function toggleCapital() {
@@ -12,8 +17,12 @@ function toggleCapital() {
     resetTest()
     const sequence = generateRandomWords(wordLength);
     convertParagraphToCharacters(sequence);
-    document.getElementById('capital').classList.add('setting__active');
-    document.getElementById('capital').blur()
+    if(!hasCapital) {
+        document.getElementById('capital').classList.remove('setting__active');
+    }
+    else{
+        document.getElementById('capital').classList.add('setting__active');
+    }
 }
 
 function toggleNumbers() {
@@ -21,8 +30,12 @@ function toggleNumbers() {
     resetTest()
     const sequence = generateRandomWords(wordLength);
     convertParagraphToCharacters(sequence);
-    document.getElementById('numbers').classList.add('setting__active');
-
+    if(!hasNumbers) {
+        document.getElementById('numbers').classList.remove('setting__active');
+    }
+    else{
+        document.getElementById('numbers').classList.add('setting__active');
+    }
 }
 
 function resetTest(){
