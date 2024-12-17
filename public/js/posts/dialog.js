@@ -83,6 +83,7 @@ function showDialog(post) {
     dialog.classList.remove("hidden");
     const commentEl = document.getElementById("comm-lst");
     document.getElementById("post-d-wpm-badge").textContent = "WPM: " + post.test.wpm
+    document.getElementById("content-area").textContent = post.content
 
     let accuracy;
     if(post.test.content.length === 0){
