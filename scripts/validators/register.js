@@ -24,8 +24,8 @@ export const validateUserName = (userName) => {
         throw new Error('Error: Input display name must be a string.');
     if (/\s/.test(userName)) 
         throw new Error('Error: Input display name cannot contain spaces.');
-    if(!uuidValidate(userName)) 
-        throw new Error("editDisplayName Error: user_id must be valid uuid");
+    // if(!uuidValidate(userName)) 
+    //     throw new Error("editDisplayName Error: user_id must be valid uuid");
     // if (!/\d/.test(password)) 
     //     throw new Error('Error: Input password must contain at least one number.');
     // Not with our seed right now
