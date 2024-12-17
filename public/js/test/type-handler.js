@@ -96,7 +96,6 @@ function handleTyping(event) {
             if(currentMissedWord === "") {
                 currentMissedWord = currentSequence.split(" ")[wordProgress-1];
                 missedWords.push(currentMissedWord);
-                console.log(missedWords);
             }
             currentChar.classList.add('error');
         }

@@ -26,7 +26,6 @@ async function seedDatabase() {
         const users = Array.from({ length: 10 }).map(() => {
             const email = `user${Math.random().toString(36).substring(2, 10)}@example.com`;
             const pswd = Math.random().toString(36).substring(2, 10);
-            console.log(email, pswd);
             return ({
                 _id: uuidv4(),
                 email: email,

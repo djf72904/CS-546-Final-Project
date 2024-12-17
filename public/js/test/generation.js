@@ -63,7 +63,6 @@ function generateRandomWords(wordCount, revert=false) {
     }
     if(setting === '2'){
         wl = wordList.filter(w => w.length < 6)
-        console.log(wl)
 
     }
     if(setting === '3'){

@@ -48,7 +48,6 @@ function showDialog(wpm, accuracy, content, user, timestamp, song, level, time, 
     document.getElementById("time-taken").innerText = timeAgo((timestamp));
     document.getElementById("song-badge-inner").innerText = song;
     document.getElementById("lvl-badge").innerText = "Level: " + (level == 0 ? 1 : level) + "";
-    console.log(timeAgo(timestamp))
     if(time > 0){
         document.getElementById("time-badge").innerText = "Time: " + time + "s";
     }

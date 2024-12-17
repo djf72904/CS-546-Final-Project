@@ -62,7 +62,6 @@ export const deleteProfileAndUser = async (user_id) => {
         await Profile.deleteOne({ _id: user_id });
     }
     catch(e){
-        console.log(e)
         throw new Error("Error deleting account")
     }
 

@@ -10,7 +10,6 @@ export const createTest = async (profile_id, stats) => {
         stats.user_id = profile_id;
         stats._id = uuidv4().toString();
 
-        console.log(stats)
 
         await createTestValidator(stats);
 
@@ -20,7 +19,6 @@ export const createTest = async (profile_id, stats) => {
         return newTest
     }
     catch(e){
-        console.log(e)
         throw new Error('Error creating test')
     }
 

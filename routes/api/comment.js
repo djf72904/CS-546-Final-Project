@@ -14,7 +14,6 @@ router.post('/', async (req, res) => {
     try{
         await createComment(req.body.post_id, data);
     }catch(e){
-        console.log(e)
         return res.status(400).send("Error: Failed to create comment");
     }
 

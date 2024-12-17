@@ -44,19 +44,3 @@ export const verifyToken = (token) => {
     }
 };
 
-
-export function authenticateToken(req, res, next) {
-    const token = req.headers.cookie.startsWith("token")
-    const authHeader = req.headers.authorization;
-
-    console.log(authHeader);
-
-
-    if (token == null) return res.sendStatus(401);
-
-    jwt.verify(token, 'CS546Secret!!23!!', (err, user) => {
-        if (err) return res.sendStatus(403);
-        req.session.user = user;
-        next();
-    });
-}
