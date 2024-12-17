@@ -21,7 +21,7 @@ router.post('/', authHandlers,  async (req, res) => {
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
-    if (display_name) {
+    if (userName) {
       return res.status(400).json({ message: 'Username taken' });
     }
   } catch {
