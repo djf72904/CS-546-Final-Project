@@ -17,11 +17,15 @@ router.post('/', authHandlers,  async (req, res) => {
 
   try {
     const user = await User.findOne({ email }).exec();
+    const userName = await User.findOne({ _id }).exec();
     if (user) {
       return res.status(400).json({ message: 'User already exists' });
     }
+    if (userName) {
+      return res.status(400).json({ message: 'Username taken' });
+    }
   } catch {
-    return res.status(400).json({ message: 'Error creeating user' });
+    return res.status(400).json({ message: 'Error creating user' });
   }
 
   try {
